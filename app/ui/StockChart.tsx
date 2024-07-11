@@ -2,51 +2,33 @@
 
 import { useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { processStockData } from '@/lib/utils/processStockData';
 import axios from 'axios';
 import { JSONObject } from '@/lib/definations';
+import * as Utils from "@/lib/utils/utils";
 
-/**
- * 
- * 	Dow Jones Industrial Average (DJIA)--- Symbol: DJIA
-	S&P 500--- Symbol: SPX
-	NASDAQ Composite --- Symbol: IXIC
-	Russell 2000--- Symbol: RUT
-	S&P 100--- Symbol: OEX
-	NYSE Composite--- Symbol: NYA
-	FTSE 100 (UK)--- Symbol: FTSE
-	DAX (Germany)--- Symbol: GDAXI
-	CAC 40 (France)--- Symbol: FCHI
-	Nikkei 225 (Japan)--- Symbol: N225
-	Hang Seng Index (Hong Kong)--- Symbol: HSI
-	Shanghai Composite Index (China)--- Symbol: SSEC
-	S&P/TSX Composite (Canada)--- Symbol: GSPTSE
- *
- */
+
 export default function StockChart({ title, symbol }: { title: string, symbol: string }) {
 	const [chartData, setChartData] = useState<JSONObject[]>([]);
 
+	console.log("fasdfdas");
 	const fetchStockData = async () => {
 		try {
 			const response = await axios.get(`/api/stock-chart-data`, {
 				params: {
 					"symbol": symbol,
-					interval: '5min', // Change this as needed
+					"startDate": Utils.get7DaysFromCurrentDate().startDate
 				},
 			});
-
-			// const processedData = processStockData(response.data);
-			setChartData(response.data);
+console.log(response);
+			setChartData(response.data.quotes);
 		} catch (error) {
 			console.error('Error fetching stock data:', error);
-		} finally {
-			//   setLoading(false);
 		}
 	};
 
 	useEffect(() => {
 		fetchStockData();
-	}, []);
+	}, [symbol]);
 
 
 	return (

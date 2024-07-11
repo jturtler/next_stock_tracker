@@ -1,6 +1,5 @@
-import { processStockData } from '@/lib/utils/processStockData';
 import axios from 'axios';
-import { JSONObject } from '../definations';
+import { JSONObject } from './../definations';
 
 /**
  * 
@@ -24,7 +23,7 @@ S&P/TSX Composite (Canada) --- Symbol: GSPTSE
 export default async function fetchData(symbol: string): Promise<JSONObject> {
 
 	try {
-		const response = await axios.get(`/api/stock`, {
+		const response = await axios.get(`/api/stock-chart-data`, {
 			params: {
 				symbol,
 				interval: "5min", // Change this as needed,
@@ -32,10 +31,10 @@ export default async function fetchData(symbol: string): Promise<JSONObject> {
 			},
 		});
 
-		return {status: "success", data: processStockData(response.data)};
+		return ({status: "success", data: response.data});
 	} catch (error) {
 		console.error('Error fetching stock data:', error);
-		return {status: "error"};
+		return ({status: "error"});
 	}
 }
 

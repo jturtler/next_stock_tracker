@@ -6,32 +6,16 @@ import * as Utils from "@/lib/utils/utils";
 import yahooFinance from 'yahoo-finance2';
 
 
-const API_KEY = process.env.FINANCIAL_MODELING_PREP;
-const BASE_URL = 'https://financialmodelingprep.com/api/v3';
-
-// export const fetchStockIndexData = async (symbol: string) => {
-
-// };
-
-
 export async function GET(request: NextRequest) {
 
 	const { searchParams } = new URL(request.url);
 	const symbol = searchParams.get("symbol");
-	const startDate = searchParams.get("startDate");
 
 	try {
-		const query = symbol!; // '^DJI';
-		const queryOptions = { period1: startDate! }// { period1: '2024-01-01', /* ... */ };
-		const result = await yahooFinance.chart(query, queryOptions);
+		const result = await yahooFinance.quote(symbol!);
 
 		return NextResponse.json(result, { status: 200 });
 	} catch (error: any) {
-		// if (error instanceof Error) {
-		//     return NextResponse.json({ error: 'Error fetching data: ' + error.message }, { status: 500 });
-		// } else {
-		//     return NextResponse.json({ error: 'Unknown error occurred' }, { status: 500 });
-		// }
 
 		if (error instanceof yahooFinance.errors.FailedYahooValidationError) {
 			// See the validation docs for examples of how to handle this
@@ -45,7 +29,6 @@ export async function GET(request: NextRequest) {
 			return NextResponse.json({ error: `Skipping yf.quote("${symbol}"): [${error.name}] ${error.message}` }, { status: 500 });
 			// return;
 		}
-
 	}
 
 }
