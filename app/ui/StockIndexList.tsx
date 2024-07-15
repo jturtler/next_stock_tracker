@@ -7,6 +7,7 @@ import * as Constant from "@/lib/constant";
 import StockIndexItem from "./StockIndexItem";
 import fetchStockIndexes from "@/lib/utils/fetchStockIndexes";
 import StockChart from "./StockChart";
+import StockIndexDetails from "./StockIndexDetails";
 
 export default function CurrentStockIndexList() {
 	
@@ -58,7 +59,10 @@ export default function CurrentStockIndexList() {
 				))}
 			</div> 
 
-			{activeItem.displayName !== undefined && <StockChart title={activeItem.displayName} symbol={activeItem.symbol} />}
+			{activeItem.displayName !== undefined && <>
+				{/* <StockChart curIndexData={activeItem} /> */}
+				<StockIndexDetails curIndexData={activeItem} />
+			</> }
 		
 		</div>
 

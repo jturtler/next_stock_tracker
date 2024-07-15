@@ -1,4 +1,5 @@
 import { JSONObject } from "../definations";
+import { format, parseISO } from 'date-fns';
 
 
 export const getDateRangeFromCurrentDate = (dayNo: number): JSONObject => {
@@ -39,11 +40,6 @@ export const getDateRange_Years = (yearNo: number): JSONObject => {
         startDate: formatToDbDate(startDate),
         endDate: formatToDbDate(curDate)
     }
-    
-    // return {
-    //     startDate: formatToDbDate(startDate),
-    //     endDate: formatToDbDate(curDate)
-    // }
 }
 
 export const formatToDbDate = (date: Date): string => {
@@ -52,6 +48,13 @@ export const formatToDbDate = (date: Date): string => {
 
     return `${date.getFullYear()}-${month}-${day}`;
 }
+
+
+export const formatDistplayDateTime = (dateStr: string): string => {
+    const date = parseISO(dateStr);
+    return format(date, 'MMM dd yyyy HH:mm');
+}
+
 
 
 export const cloneJSONObject = ( obj: JSONObject | JSONObject[]) => {

@@ -31,7 +31,7 @@ export default function StockIndexItem({stockData, active, handleOnClick}: {stoc
             onClick={() => handleOnClickItem(stockData.displayName)}>
 
             {percent >= 0 && <>
-                <div className="px-3 py-3 rounded-lg bg-green-100 text-green-700"><FaArrowUp /></div>
+                <div className="px-3 py-3 rounded-lg bg-green-100 text-green-700"><FaArrowUp className="text-green-700"/></div>
                 <div className={`flex flex-col`}>
                     <div className="whitespace-nowrap font-semibold">{stockData.displayName}</div>
                     <div className="whitespace-nowrap">+{closePrice}</div>

@@ -5,70 +5,83 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import axios from 'axios';
 import { JSONObject } from '@/lib/definations';
 import * as Utils from "@/lib/utils/utils";
+import ChartDateRange from './ChartDateRange';
+import { format, parseISO } from 'date-fns';
 
 
-export default function StockChart({ title, symbol }: { title: string, symbol: string }) {
-	const [active, setActive] = useState("7D");
+export default function StockChart({ curIndexData }: { curIndexData: JSONObject }) {
+	const [active, setActive] = useState("1D");
 	const [chartData, setChartData] = useState<JSONObject[]>([]);
 
-	const fetchStockData = async (dateRange: JSONObject, interval: string, isOneDay: boolean) => {
+	const dateRangeList = ["1D", "7D", "1M", "3M", "6M", "9M", "1Y", "2Y", "5Y","All"];
+
+	const fetchStockData = async (dateRange: JSONObject, interval: string | undefined, isOneDay: boolean) => {
 		try {
 			const response = await axios.get(`/api/stock-chart-data`, {
 				params: {
-					"symbol": symbol,
+					"symbol": curIndexData.symbol,
 					"startDate": dateRange.startDate,
 					"endDate": dateRange.endDate,
 					"interval": interval
 				},
 			});
-
-			const data = getChartDataInLatestDate( response.data.quotes );
-			setChartData(data);
+			
+			const dataList = response.data.quotes;
+			if( dataList === undefined ) {
+				setChartData([]);
+			}
+			else if( isOneDay ) {
+				setChartData( getChartDataInLatestDate( response.data.quotes ) ); 
+			}
+			else {
+				setChartData(dataList);
+			}
 		} catch (error) {
 			console.error('Error fetching stock data:', error);
 		}
 	};
 
+
 	useEffect(() => {
-		fetchStockDataByDateRange("7D");
-	}, [symbol]);
+		fetchStockDataByDateRange(active);
+	}, [curIndexData.symbol]);
+
 
 	const getChartDataInLatestDate = (stockData: JSONObject[]) => {
 		let data = [];
-		if( chartData !== undefined && chartData.length > 0 ) {
-			var latestDate = chartData[0].date.split("T")[0];
-			for( var i=0; i<chartData.length; i++ ) {
-				if( latestDate == chartData[i].split("T")[0] ) {
-					data.push(chartData[i]);
+		if( stockData !== undefined && stockData.length > 0 ) {
+			var latestDate = stockData[0].date.split("T")[0];
+			for( var i=0; i<stockData.length; i++ ) {
+				if( latestDate == stockData[i].date.split("T")[0] ) {
+					data.push(stockData[i]);
 				}
 				else {
 					return data;
 				}
-			}
+			} 
 		}
 
 		return data;
 	}
 
-
 	const fetchStockDataByDateRange = (rangeName: string) => {
 		let dateRange: JSONObject = {};
-		let interval: string = "";
+		let interval: string | undefined;
 		let isOneDay = false;
 
 		switch( rangeName ) {
 			case "1D":
-				dateRange = Utils.getDateRangeFromCurrentDate(7); 
+				dateRange = Utils.getDateRangeFromCurrentDate(5); 
 				isOneDay = true;
 				interval = "1m";
 				break;
 			case "7D":
 				dateRange = Utils.getDateRangeFromCurrentDate(7); 
-				interval = "1d";
+				interval = "1m";
 				break;
 			case "1M":
 				dateRange = Utils.getDateRange_Months(1);
-				interval = "1d";
+				interval = "5m";
 				break;
 			case "3M":
 				dateRange = Utils.getDateRange_Months(3);
@@ -103,8 +116,42 @@ export default function StockChart({ title, symbol }: { title: string, symbol: s
 		fetchStockData(dateRange, interval, isOneDay);
 	}
 
+	const tickFormatter = (tick: string): string => {
+		// return tick.split("T")[0];
 
-	const getTicks = (): string[] => {
+		const date = parseISO(tick);
+		let label = "";
+		let interval = 0;
+		if( active == "1D" ) {
+			return format(date, 'HH:mm');
+		}
+		else if( active == "7D" || active == "1M" ) {
+			return format(date, 'MMM dd yyyy');
+		}
+		else if( active == "3M" || active == "6M" || active == "9M" ) {
+			return format(date, 'MMM yyyy');
+		}	
+		
+		return format(date, 'yyyy');
+	};
+	
+	
+	const xInterval = (): number => {
+
+		if( active == "1D" ) {
+			return 60 * 2;
+		}
+		else if( active == "7D" || active == "1M" ) {
+			return 60 * 24;
+		}
+		else if( active == "3M" || active == "6M" || active == "9M" ) {
+			return 30;
+		}	
+		
+		return 360;
+	};
+
+	const getYTicks = (): string[] => {
 		let ticks = [];
 		let tempTicks = [];
 		if( chartData != undefined ) {
@@ -118,25 +165,28 @@ export default function StockChart({ title, symbol }: { title: string, symbol: s
 			tempTicks = tempTicks.sort((a, b) => a - b);
 			const minTick = Math.ceil(tempTicks[0]);
 			const maxTick = Math.round( tempTicks[tempTicks.length - 1] );
-			for( var i=minTick; i<=maxTick; i+=10 ) {
+
+			const step = Math.round(( maxTick - minTick ) / 10 );
+			for( var i=minTick; i<=maxTick; i+=step ) {
 				ticks.push(i.toFixed(2));
 			} 
+
+			// Remove the last item, add the "maxTick" as last item
+			ticks.pop();
+			ticks.push( maxTick.toFixed(2) );
 		}
 
 		return ticks;
 	}
 
-	const ticks = getTicks();
+	const yTicks = getYTicks();
 	
-	return (
-		<div className="m-3 py-10 bg-white px-3">
-			<h2 className="font-bold text-3xl py-5">{title}</h2>
-			<div className="text-4xl pb-3 font-bold">{chartData.length > 0 && chartData[chartData.length-1].close}$</div>
-			<hr className="text-black border mb-3"/>
 
+	return (
+		<div className="m-3 py-10  px-3">
 			<ResponsiveContainer width="100%" height={500}>
 				<ComposedChart
-					height={500}
+					height={400}
 					data={chartData}
 					margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
 				>
@@ -144,37 +194,40 @@ export default function StockChart({ title, symbol }: { title: string, symbol: s
 
 					<defs>
 						<linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-							<stop offset="45%" stopColor="#86efac" stopOpacity={0.8}/>
-							<stop offset="95%" stopColor="#ccfbf1" stopOpacity={0.2}/>
+							<stop offset="45%" stopColor="#60a5fa" stopOpacity={0.8}/>
+							<stop offset="95%" stopColor="#60a5fa " stopOpacity={0.2}/>
 						</linearGradient>
 					</defs>
 
-					<XAxis dataKey="date" />
+					<XAxis dataKey="date" 
+					axisLine={false}
+					tick={false}
+						// tickFormatter={tickFormatter}
+						// interval={xInterval()} // Ensures every tick is displayed
+						// ticks={chartData.map(item => item.date.split("T")[0])} // Ensures unique ticks for each date entry
+					/>
 					<YAxis
-						domain={[ticks[0], ticks[ticks.length - 1]]}  // Customize the vertical axis range
-						tickCount={ticks.length - 1}       // Set the number of ticks
-						ticks = {ticks}
+						orientation="right"
+						domain={[yTicks[0], yTicks[yTicks.length - 1]]}  // Customize the vertical axis range
+						tickCount={yTicks.length - 1}       // Set the number of ticks
+						ticks = {yTicks}
 						// tick={false}  // Hide the Y-axis labels
 						axisLine={false}  // Optionally hide the Y-axis line
         				tickLine={false}  // Optionally hide the tick lines
 					/>
 					 <Tooltip />
-					 {/* <Bar dataKey="volume" fill="#413ea0" /> */}
-					<Area type="monotone" dataKey="close" stroke="#037b66" strokeWidth={1} activeDot={{ r: 8 }}  dot={false} fill="url(#colorUv)"/>
+					 {/* <Area type="monotone"  dataKey="low"  />
+					 <Area type="monotone"  dataKey="high" />
+					 <Area type="monotone"  dataKey="open" /> */}
+					<Area type="monotone"  
+					dataKey="close" strokeWidth={1} activeDot={{ r: 8 }}  dot={false} fill="url(#colorUv)"/>
 				</ComposedChart>
 			</ResponsiveContainer>
 
 			<div className="flex flex-row space-x-6 px-3 font-semibold p-3">
-				<div onClick={() => fetchStockDataByDateRange("1D")} className={`${active=="1D" ? "text-blue-600 bg-slate-200" : ""} hover:bg-slate-200 rounded-xl p-2 hover:text-blue-600`}>1D</div>
-				<div onClick={() => fetchStockDataByDateRange("7D")} className={`${active=="7D" ? "text-blue-600 bg-slate-200" : ""} hover:bg-slate-200 rounded-xl p-2 hover:text-blue-600`}>7D</div>
-				<div onClick={() => fetchStockDataByDateRange("1M")} className={`${active=="1M" ? "text-blue-600 bg-slate-200" : ""} hover:bg-slate-200 rounded-xl p-2 hover:text-blue-600`}>1M</div>
-				<div onClick={() => fetchStockDataByDateRange("3M")} className={`${active=="3M" ? "text-blue-600 bg-slate-200" : ""} hover:bg-slate-200 rounded-xl p-2 hover:text-blue-600`}>3M</div>
-				<div onClick={() => fetchStockDataByDateRange("6M")} className={`${active=="6M" ? "text-blue-600 bg-slate-200" : ""} hover:bg-slate-200 rounded-xl p-2 hover:text-blue-600`}>6M</div>
-				<div onClick={() => fetchStockDataByDateRange("9M")} className={`${active=="9M" ? "text-blue-600 bg-slate-200" : ""} hover:bg-slate-200 rounded-xl p-2 hover:text-blue-600`}>9M</div>
-				<div onClick={() => fetchStockDataByDateRange("1Y")} className={`${active=="1Y" ? "text-blue-600 bg-slate-200" : ""} hover:bg-slate-200 rounded-xl p-2 hover:text-blue-600`}>1Y</div>
-				<div onClick={() => fetchStockDataByDateRange("2Y")} className={`${active=="2Y" ? "text-blue-600 bg-slate-200" : ""} hover:bg-slate-200 rounded-xl p-2 hover:text-blue-600`}>2Y</div>
-				<div onClick={() => fetchStockDataByDateRange("5Y")} className={`${active=="5Y" ? "text-blue-600 bg-slate-200" : ""} hover:bg-slate-200 rounded-xl p-2 hover:text-blue-600`}>5Y</div>
-				<div onClick={() => fetchStockDataByDateRange("All")} className={`${active=="All" ? "text-blue-600 bg-slate-200" : ""} hover:bg-slate-200 rounded-xl p-2 hover:text-blue-600`}>All</div>
+				{dateRangeList.map((item, i) => (
+					<ChartDateRange key={i} name={item} selected={active==item} handleOnClick={(name: string) => { fetchStockDataByDateRange(name); setActive(name);}} />
+				))}
 			</div>
 			
 			<hr className="text-black border mb-3"/>

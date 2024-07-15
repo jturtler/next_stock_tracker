@@ -1,4 +1,4 @@
-import { ChartOptionsWithReturnObject } from './../../../node_modules/yahoo-finance2/dist/cjs/src/modules/chart.d';
+import { ChartOptionsWithReturnArray, ChartOptionsWithReturnObject } from './../../../node_modules/yahoo-finance2/dist/cjs/src/modules/chart.d';
 
 // utils/fetchStockIndexData.ts
 import axios from 'axios';
@@ -13,7 +13,7 @@ const BASE_URL = 'https://financialmodelingprep.com/api/v3';
 // export const fetchStockIndexData = async (symbol: string) => {
 
 // };
-type ValidInterval = "1m" | "2m" | "5m" | "15m" | "30m" | "60m" | "90m" | "1h" | "1d" | "5d" | "1wk" | "1mo" | "3mo";
+type ValidInterval = "1m" | "2m" | "5m" | "15m" | "30m" | "60m" | "90m" | "1h" | "1d" | "5d" | "1wk" | "1mo" | "3mo" | undefined;
 
 
 export async function GET(request: NextRequest) {
@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
 		const query = symbol!; // '^DJI';
 		
 		// const queryOptions = { period1: startDate!, interval: '1m' }; // { period1: '2024-01-01', /* ... */ };
-		const queryOptions: ChartOptionsWithReturnObject = {
+		const queryOptions: ChartOptionsWithReturnArray = {
 			// period1: Math.floor(new Date().getTime() / 1000),
 			// period2: Math.floor(new Date().getTime() / 1000),
 			// period1: startTimestamp,
@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
 			period1: startDate,
 			period2: endDate,
 			interval: interval as ValidInterval,
-			return: 'object' // Ensure the 'return' property is set correctly
+			return: 'array' // Ensure the 'return' property is set correctly, 'object' or 'array'
 		  };
 
 		const result = await yahooFinance.chart(query, queryOptions);
