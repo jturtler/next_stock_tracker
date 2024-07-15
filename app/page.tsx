@@ -1,14 +1,21 @@
+import { AuthProvider } from "./contexts/AuthContext";
+import { MainUiProvider } from "./contexts/MainUiContext";
 import HomePage from "./ui/HomePage";
 import Footer from "./ui/layout/Footer";
 import Header from "./ui/layout/Header";
 
 export default function Home() {
 	return (
-		<>
-			<Header />
-			<main className="flex min-h-screen flex-col">
-				<HomePage />
-			</main>
-		</>
+		<div className="flex flex-col h-screen">
+			<MainUiProvider>
+				<AuthProvider>
+					<Header />
+					<main className="flex-1">
+						<HomePage />
+					</main>
+					<Footer />
+				</AuthProvider>
+			</MainUiProvider>
+		</div>
 	)
 }

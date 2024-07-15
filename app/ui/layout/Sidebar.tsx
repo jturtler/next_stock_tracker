@@ -1,32 +1,30 @@
 'use client';
 
 import { useState } from "react";
-// import * as Constant from "@/lib/constants";
+// import * as Constant from "@/lib/constant";
 // import { useAuth } from "@/contexts/AuthContext";
 // import { useMainUi } from "@/contexts/MainUiContext";
-import { MdOutlineDashboard } from "react-icons/md";
-import { FaSackDollar } from "react-icons/fa6";
 import { IoLogOutOutline } from "react-icons/io5";
-import { FaChartBar } from "react-icons/fa";
-import { GiMoneyStack } from "react-icons/gi";
-import { GiReceiveMoney } from "react-icons/gi";
+import { useAuth } from "@/contexts/AuthContext";
+import { useMainUi } from "@/contexts/MainUiContext";
+import * as Constant from "@/lib/constant";
 
 
 export default function SlideBar({handleOnClose = () => {}}: {handleOnClose: () => void}) {
 
-	// const { logout } = useAuth();
-	// const { setMainPage } = useMainUi();
+	const { logout } = useAuth();
+	const { setMainPage } = useMainUi();
 
 	const [isVisible, setIsVisible] = useState<boolean>(false);
 
 	const handleOnLogout = () => {
-		// const ok = confirm("Are you sure you want to log-out ?");
-		// if( ok ) {
-		// 	logout();
-        //     setMainPage(Constant.UI_LOGIN_PAGE);
-		// }
+		const ok = confirm("Are you sure you want to log-out ?");
+		if( ok ) {
+			logout();
+            setMainPage(Constant.UI_PAGE_LOGIN);
+		}
 
-		// handleOnClose();
+		handleOnClose();
 	}
 	
 	

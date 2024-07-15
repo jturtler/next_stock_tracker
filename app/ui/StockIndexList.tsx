@@ -42,7 +42,7 @@ export default function CurrentStockIndexList() {
 
 	
 	return (
-		<>
+		<div className="p-2">
 			{/* <div className="grid grid-flow-row py-1 grid-cols-6 w-[calc(100vh-200px)] font-semibold items-center">
 				<div className="uppercase">Markets</div>
 				<div className={`hover:bg-teal-100 cursor-pointer rounded-xl text-center py-2 ${active === Constant.COUNTRY_US && "bg-teal-100"}`} onClick={() => setActive(Constant.COUNTRY_US)}>{Constant.COUNTRY_US}</div>
@@ -59,7 +59,8 @@ export default function CurrentStockIndexList() {
 			</div> 
 
 			{activeItem.displayName !== undefined && <StockChart title={activeItem.displayName} symbol={activeItem.symbol} />}
-		</>
+		
+		</div>
 
     )
 
