@@ -2,14 +2,14 @@
 
 import { useState } from 'react';
 import axios from 'axios';
-import StockChart from './StockChart';
+import StockChart from './data-item/StockChart';
 import CurrentStockIndexes from './StockIndexList';
 import CustomNavigation from './layout/CustomNavigation';
 
 export default function HomePage() {
 
 	return (
-		<div className="">
+		<div>
 			<CustomNavigation />
 			<CurrentStockIndexes />
 		</div>

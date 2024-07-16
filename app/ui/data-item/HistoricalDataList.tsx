@@ -1,0 +1,91 @@
+'use client';
+
+import { JSONObject } from "@/lib/definations";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import * as Utils from "@/lib/utils";
+import HistoricalDataItem from "./HistoricalDataItem";
+import ChartDateRange from "./ChartDateRange";
+
+export default function HistoricalDataList({curPriceData}: {curPriceData: JSONObject}) {
+    
+    const [selectedDateRange, setSelectedDateRange] = useState("1Y");
+    const [historicalData, setHistoricalData] = useState([]);
+
+
+    const fetchData = async ( dateRange: JSONObject ) => {
+		try {
+			const response = await axios.get(`/api/stock-chart-data`, {
+				params: {
+					"symbol": curPriceData.symbol,
+					"startDate": dateRange.startDate,
+					"endDate": dateRange.endDate,
+					"interval": '1d'
+				},
+			});
+
+			const dataList = response.data.quotes;
+			if (dataList !== undefined) {
+				setHistoricalData(dataList);
+			}
+			
+		} catch (error) {
+			console.error('Error fetching stock data:', error);
+		}
+	};
+
+    
+    useEffect(() => {
+        fetchDataByDataRangeName( selectedDateRange );
+    }, []);
+
+	const fetchDataByDataRangeName = (dateRangeName: string) => {
+		const dateRange = Utils.getDateRange(dateRangeName);
+        fetchData( dateRange );
+	}
+	
+	let dateRangeList = Utils.dateRangeList.slice();
+	dateRangeList.shift();
+	console.log(dateRangeList); 
+
+    return (
+        <div className="w-full flex flex-col">
+			{/* <div className="shadow-lg bg-white grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 px-5 py-3 "> */}
+				<div className="flex flex-row space-x-6 px-3 font-semibold p-1 bg-slate-300 shadow-sm my-2">
+				{dateRangeList.map((item, i) => (
+					<ChartDateRange key={i} name={item} selected={selectedDateRange == item} handleOnClick={(name: string) => { fetchDataByDataRangeName(name); setSelectedDateRange(name); }} />
+				))}
+			</div>
+			{/* </div> */}
+
+			<div className="flex-1 hidden md:block">
+  				<div className="overflow-y-auto h-[calc(100vh-280px)]">
+					<table className="min-w-full border border-gray-400">
+						<thead className="bg-white">
+							<tr className="border border-gray-300">
+								<th className="px-4 py-1 text-start font-semibold">Date</th>
+								<th className="px-4 py-1 text-end font-semibold">Open</th>
+								<th className="px-4 py-1 text-end font-semibold">High</th>
+								<th className="px-4 py-1 text-end font-semibold">Low</th>
+								<th className="px-4 py-1 text-end font-semibold">Close</th>
+								<th className="px-4 py-1 text-end font-semibold">Volume</th>
+							</tr>
+						</thead>
+						<tbody>
+							{historicalData.map((data: JSONObject, index: number) => (
+								<HistoricalDataItem key={index} data={data} style="large" index={index} />
+							))}
+						</tbody>
+					</table>
+				</div>
+			</div>
+				
+			{/* <!-- Divs for smaller screens --> */}
+			<div className="md:hidden">
+				{historicalData.map((expense: JSONObject, index: number) => (
+					<HistoricalDataItem style="small" key={expense._id} data={expense} index={index} />
+				))}
+			</div>
+		</div>
+    )
+}

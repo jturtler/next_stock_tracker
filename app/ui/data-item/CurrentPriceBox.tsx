@@ -4,7 +4,7 @@ import { FaArrowUp } from "react-icons/fa";
 import { FaArrowDown } from "react-icons/fa";
 
 
-export default function StockIndexItem({stockData, active, handleOnClick}: {stockData: JSONObject, active: boolean, handleOnClick: (name: string) => void}) {
+export default function CurrentPriceBox({stockData, active, handleOnClick}: {stockData: JSONObject, active: boolean, handleOnClick: (name: string) => void}) {
 
     const percent = stockData.regularMarketChangePercent;
     const closePrice = stockData.regularMarketPrice;

@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect } from "react"
 
 export default function ChartDateRange({name, selected, handleOnClick}: {name: string, selected: boolean, handleOnClick: (name: string) => void}) {

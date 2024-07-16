@@ -1,6 +1,11 @@
 import { JSONObject } from "@/lib/definations";
 import StockChart from "./StockChart";
 import * as Utils from "@/lib/utils";
+import CurrentPriceDetails from "./CurrentPriceDetails";
+import DetailsMenu from "./DetailsMenu";
+import { useState } from "react";
+import * as Constant from "@/lib/constant";
+import HistoricalDataList from "./HistoricalDataList";
 
 // {
 //     "language": "en-US",
@@ -68,41 +73,33 @@ import * as Utils from "@/lib/utils";
 //     "symbol": "^DJI"
 //   }
 
-export default function StockIndexDetails({curIndexData}: {curIndexData: JSONObject}) {
+export default function StockIndexDetails({curPriceData}: {curPriceData: JSONObject}) {
+    const [page, setPage] = useState(Constant.UI_CHART);
+
     return (
-        <>
-            <h2 className="font-bold text-3xl py-5">{curIndexData.displayName}</h2>
-            <div className="text-xs">As of {Utils.formatDistplayDateTime(curIndexData.regularMarketTime)} {curIndexData.exchangeTimezoneShortName}. Market Open.</div>
-            <div className="flex flex-row">
-                {/* <div className="text-4xl pb-3 font-bold">{chartData.length > 0 && chartData[chartData.length-1].close.toFixed(2)}$</div> */}
-                {/* <hr className="text-black border mb-3"/> */}
+        <div className="flex flex-row">
+            <div className="">
+                <DetailsMenu curPriceData={curPriceData} handleOnClick={(name: string) => setPage(name)} />
+            </div>
+            <div className="flex-1">
+                <h2 className="font-bold text-3xl py-5">{curPriceData.displayName}</h2>
+                
+                <div className="text-xs">As of {Utils.formatDistplayDateTime(curPriceData.regularMarketTime)} {curPriceData.exchangeTimezoneShortName}. Market Open.</div>
+                
+                <div className="flex flex-row">
+                    {page == Constant.UI_CHART && <div className="flex-1">
+                        <StockChart curPriceData={curPriceData} />
+                    </div>}
 
+                    {page == Constant.UI_HISTORICAL_DATA && <div className="flex-1">
+                        <HistoricalDataList curPriceData={curPriceData} />
+                    </div>}
 
-                <div className="flex-1">
-                    <StockChart curIndexData={curIndexData} />
-                </div>
-
-                <div className="m-3">
-                    <ul className="whitespace-nowrap w-fit list-none p-3 text-s">
-                        <li className="flex flex-row justify-between py-2 border-b border-dotted border-gray-400">
-                            <span>Previous Close</span>
-                            <span className="font-semibold">{curIndexData.regularMarketPreviousClose.toFixed(2)}</span>
-                        </li>
-                        <li className="flex flex-row justify-between py-2 border-b border-dotted border-gray-400">
-                            <span>Open</span>
-                            <span className="font-semibold">{curIndexData.regularMarketOpen.toFixed(2)}</span>
-                        </li>
-                        <li className="flex flex-row justify-between py-2 border-b border-dotted border-gray-400">
-                            <span className="pr-3">Date Range</span>
-                            <span className="font-semibold">{curIndexData.regularMarketDayLow.toFixed(2)} - {curIndexData.regularMarketDayHigh.toFixed(2)}</span>
-                        </li>
-                        <li className="flex flex-row justify-between py-2 border-b border-dotted border-gray-400">
-                            <span>Volume</span>
-                            <span className="font-semibold">{curIndexData.regularMarketVolume}</span>
-                        </li>
-                    </ul>
+                    <div className="m-3">
+                        <CurrentPriceDetails priceData={curPriceData} />
+                    </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
