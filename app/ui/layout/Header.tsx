@@ -7,7 +7,7 @@ export default function Header() {
 
 	return (
 		<>
-			<header className="w-full px-3 py-3 flex text-slate-700 flex-row space-x-3" >
+			<header className="w-full px-3 py-3 flex text-slate-700 flex-row space-x-3 bg-yellow-200" >
 				<div className="flex-1 mx-3 flex items-center space-x-3 hidden md:flex">
 					<div className="flex flex-row space-x-3">
 						<FaChartLine size={30} className="text-slate-500" />
