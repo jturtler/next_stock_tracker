@@ -82,7 +82,7 @@ export default function HistoricalDataList({curPriceData}: {curPriceData: JSONOb
 				
 			{/* <!-- Divs for smaller screens --> */}
 			<div className="md:hidden">
-				{historicalData.map((expense: JSONObject, index: number) => (
+				{historicalData.reverse().map((expense: JSONObject, index: number) => (
 					<HistoricalDataItem style="small" key={expense._id} data={expense} index={index} />
 				))}
 			</div>

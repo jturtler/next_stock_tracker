@@ -18,7 +18,9 @@ export default function CurrentStockIndexList() {
 		const fetchIndexes = async() => {
 			const response = await fetchStockIndexes();
 			if( response.status == "success" ) {
+				console.log(response.data);
 				setStockIndexes( response.data );
+
 			}
 		}
 
@@ -28,14 +30,14 @@ export default function CurrentStockIndexList() {
 	
 	return (
 		<div>
-			{activeItem.displayName === undefined && <div className="flex flex-row space-x-2">
+			{activeItem.longName === undefined && <div className="flex flex-row space-x-2">
 				{stockIndexes.map((item, i) => (
-					<CurrentPriceBox key={i} stockData={item} active={activeItem.displayName === item.displayName} handleOnClick={(e) => setActiveItem(item)} />
+					<CurrentPriceBox key={i} stockData={item} active={activeItem.longName === item.longName} handleOnClick={(e) => setActiveItem(item)} />
 				))}
 			</div>}
 
-			{activeItem.displayName !== undefined && <>
-				<StockIndexDetails curPriceData={activeItem} />
+			{activeItem.longName !== undefined && <>
+				<StockIndexDetails curPriceData={activeItem} handleOnClose={() => setActiveItem({})}/>
 			</> }
 		</div>
 

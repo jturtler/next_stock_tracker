@@ -1,18 +1,16 @@
 
-// utils/fetchStockIndexData.ts
-import axios from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
-import * as Utils from "@/lib/utils/utils";
 import yahooFinance from 'yahoo-finance2';
 
 
 export async function GET(request: NextRequest) {
 
 	const { searchParams } = new URL(request.url);
-	const symbol = searchParams.get("symbol");
+	const symbols = searchParams.get("symbols");
 
 	try {
-		const result = await yahooFinance.quote(symbol!);
+		const arrSymbols = symbols!.split(",");
+		const result = await yahooFinance.quote(arrSymbols);
 
 		return NextResponse.json(result, { status: 200 });
 	} catch (error: any) {
@@ -22,11 +20,11 @@ export async function GET(request: NextRequest) {
 			// error.result will be a partially validated / coerced result.
 		} else if (error instanceof yahooFinance.errors.HTTPError) {
 			// Probably you just want to log and skip these
-			return NextResponse.json({ error: (`Skipping yf.quote("${symbol}"): [${error.name}] ${error.message}`) }, { status: 500 });
+			return NextResponse.json({ error: (`Skipping yf.quote("${symbols}"): [${error.name}] ${error.message}`) }, { status: 500 });
 			// return;
 		} else {
 			// Same here
-			return NextResponse.json({ error: `Skipping yf.quote("${symbol}"): [${error.name}] ${error.message}` }, { status: 500 });
+			return NextResponse.json({ error: `Skipping yf.quote("${symbols}"): [${error.name}] ${error.message}` }, { status: 500 });
 			// return;
 		}
 	}

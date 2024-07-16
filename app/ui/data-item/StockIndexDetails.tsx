@@ -73,17 +73,27 @@ import HistoricalDataList from "./HistoricalDataList";
 //     "symbol": "^DJI"
 //   }
 
-export default function StockIndexDetails({curPriceData}: {curPriceData: JSONObject}) {
+export default function StockIndexDetails({curPriceData, handleOnClose}: {curPriceData: JSONObject, handleOnClose: () => void}) {
     const [page, setPage] = useState(Constant.UI_CHART);
+
+    const handleMenuItemClicked = (name: string) => {
+        if( name === "" ) {
+            handleOnClose();
+        }
+        else {
+            setPage(name);
+        }
+    }
 
     return (
         <div className="flex flex-row">
             <div className="">
-                <DetailsMenu curPriceData={curPriceData} handleOnClick={(name: string) => setPage(name)} />
+                <DetailsMenu curPriceData={curPriceData} handleOnClick={(name: string) => handleMenuItemClicked(name)} />
             </div>
             <div className="flex-1">
-                <h2 className="font-bold text-3xl py-5">{curPriceData.displayName}</h2>
+                <h2 className="font-bold text-3xl py-5">{curPriceData.longName}</h2>
                 
+                <div className="text-xs mb-1">Currency: <span className="font-semibold">{curPriceData.currency}</span></div>
                 <div className="text-xs">As of {Utils.formatDistplayDateTime(curPriceData.regularMarketTime)} {curPriceData.exchangeTimezoneShortName}. Market Open.</div>
                 
                 <div className="flex flex-row">
