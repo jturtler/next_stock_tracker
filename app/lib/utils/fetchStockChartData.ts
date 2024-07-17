@@ -26,7 +26,7 @@ S&P/TSX Composite (Canada) --- Symbol: GSPTSE
  * @param symbols For example "DJIA"
  * @returns 
  */
-export default async function fetchChartData(symbol: string, periodName: string): Promise<JSONObject> {
+export default async function fetchStockChartData(symbol: string, periodName: string): Promise<JSONObject> {
 	const options = getOptions(periodName);
 
 	try {

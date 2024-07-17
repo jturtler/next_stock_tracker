@@ -9,7 +9,7 @@ import { useState } from "react";
 import * as Constant from "@/lib/constant";
 
 
-export default function DetailsMenu({ curPriceData, handleOnClick }: { curPriceData: JSONObject, handleOnClick: (name: string) => void }) {
+export default function DetailsMenu({handleOnClick }: {handleOnClick: (name: string) => void }) {
 	const [active, setActive] = useState(Constant.UI_CHART);
 
 	const handleItemOnClick = (name: string) => {
@@ -22,7 +22,6 @@ export default function DetailsMenu({ curPriceData, handleOnClick }: { curPriceD
 			<div className="p-4">
 				<div className="flex items-center mb-8 space-x-2">
 					<RiStockLine />
-					<h2 className="font-bold">{curPriceData.longName}</h2>
 					<hr className="border-2" />
 				</div>
 				<ul className="space-y-2">

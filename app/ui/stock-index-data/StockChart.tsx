@@ -8,7 +8,7 @@ import * as Utils from "@/lib/utils";
 import ChartDateRange from './ChartDateRange';
 import { format, parseISO } from 'date-fns';
 import { TooltipProps } from 'recharts';
-import fetchChartData from "@/lib/utils/fetchStockChartData";
+import fetchStockChartData from "@/lib/utils/fetchStockChartData";
 
 const CustomTooltip = ({ active, payload, label }: any) => {
 	if (label && active && payload && payload.length) {
@@ -60,7 +60,7 @@ export default function StockChart({ curPriceData }: { curPriceData: JSONObject 
 
 	const fetchStockData = async() => {
 		try{
-			const response = await fetchChartData(curPriceData.symbol, active);
+			const response = await fetchStockChartData(curPriceData.symbol, active);
 			if( response.status == "success" ) {
 				setChartData( response.data );
 			}
