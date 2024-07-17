@@ -3,7 +3,7 @@ import { ChartOptionsWithReturnArray, ChartOptionsWithReturnObject } from './../
 // utils/fetchStockIndexData.ts
 import axios from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
-import * as Utils from "@/lib/utils/utils";
+import * as Utils from "@/lib/utils";
 import yahooFinance from 'yahoo-finance2';
 
 

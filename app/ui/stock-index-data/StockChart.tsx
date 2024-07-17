@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area, ComposedChart, Bar } from 'recharts';
 import axios from 'axios';
 import { JSONObject } from '@/lib/definations';
-import * as Utils from "@/lib/utils/utils";
+import * as Utils from "@/lib/utils";
 import ChartDateRange from './ChartDateRange';
 import { format, parseISO } from 'date-fns';
 import { TooltipProps } from 'recharts';
-
+import fetchChartData from "@/lib/utils/fetchStockChartData";
 
 const CustomTooltip = ({ active, payload, label }: any) => {
 	if (label && active && payload && payload.length) {
@@ -58,26 +58,14 @@ export default function StockChart({ curPriceData }: { curPriceData: JSONObject 
 
 	// const dateRangeList = ["1D", "7D", "1M", "3M", "6M", "9M", "1Y", "2Y", "5Y", "All"];
 
-	const fetchStockData = async (dateRange: JSONObject, interval: string | undefined, isOneDay: boolean) => {
-		try {
-			const response = await axios.get(`/api/stock-chart-data`, {
-				params: {
-					"symbol": curPriceData.symbol,
-					"startDate": dateRange.startDate,
-					"endDate": dateRange.endDate,
-					"interval": interval
-				},
-			});
-
-			const dataList = response.data.quotes;
-			if (dataList === undefined) {
-				setChartData([]);
-			}
-			else if (isOneDay) {
-				setChartData(getChartDataInLatestDate(response.data.quotes));
+	const fetchStockData = async() => {
+		try{
+			const response = await fetchChartData(curPriceData.symbol, active);
+			if( response.status == "success" ) {
+				setChartData( response.data );
 			}
 			else {
-				setChartData(dataList);
+				console.error(response.message);
 			}
 		} catch (error) {
 			console.error('Error fetching stock data:', error);
@@ -86,83 +74,9 @@ export default function StockChart({ curPriceData }: { curPriceData: JSONObject 
 
 
 	useEffect(() => {
-		fetchStockDataByDateRange(active);
-	}, [curPriceData.symbol]);
-
-
-	const getChartDataInLatestDate = (stockData: JSONObject[]) => {
-		let data = [];
-		if (stockData !== undefined && stockData.length > 0) {
-			var latestDate = stockData[0].date.split("T")[0];
-			for (var i = 0; i < stockData.length; i++) {
-				if (latestDate == stockData[i].date.split("T")[0]) {
-					data.push(stockData[i]);
-				}
-				else {
-					return data;
-				}
-			}
-		}
-
-		return data;
-	}
-
-	const fetchStockDataByDateRange = (rangeName: string) => {
-		let dateRange: JSONObject = Utils.getDateRange(rangeName);
-		let interval: string | undefined;
-		let isOneDay = false;
-
-		if(rangeName == "1D" ) {
-			isOneDay = true;
-			interval = "1m";
-		}
-		else if(rangeName == "7D" ) {
-			interval = "1m";
-		}
-		else if(rangeName == "1M" ) {
-			interval = "5m";
-		}
-		else {
-			interval = "1d";
-		}
-
-		fetchStockData(dateRange, interval, isOneDay);
-	}
-
-	// const tickFormatter = (tick: string): string => {
-	// 	// return tick.split("T")[0];
-
-	// 	const date = parseISO(tick);
-	// 	let label = "";
-	// 	let interval = 0;
-	// 	if( active == "1D" ) {
-	// 		return format(date, 'HH:mm');
-	// 	}
-	// 	else if( active == "7D" || active == "1M" ) {
-	// 		return format(date, 'MMM dd yyyy');
-	// 	}
-	// 	else if( active == "3M" || active == "6M" || active == "9M" ) {
-	// 		return format(date, 'MMM yyyy');
-	// 	}	
-
-	// 	return format(date, 'yyyy');
-	// };
-
-
-	// const xInterval = (): number => {
-
-	// 	if( active == "1D" ) {
-	// 		return 60 * 2;
-	// 	}
-	// 	else if( active == "7D" || active == "1M" ) {
-	// 		return 60 * 24;
-	// 	}
-	// 	else if( active == "3M" || active == "6M" || active == "9M" ) {
-	// 		return 30;
-	// 	}	
-
-	// 	return 360;
-	// };
+		fetchStockData();
+	}, [curPriceData.symbol, active]);
+	
 
 	const getYTicks = (): string[] => {
 		let ticks = [];
@@ -261,7 +175,7 @@ export default function StockChart({ curPriceData }: { curPriceData: JSONObject 
 
 			<div className="flex flex-row space-x-6 px-3 font-semibold p-3">
 				{Utils.dateRangeList.map((item, i) => (
-					<ChartDateRange key={i} name={item} selected={active == item} handleOnClick={(name: string) => { fetchStockDataByDateRange(name); setActive(name); }} />
+					<ChartDateRange key={`dateRange_${i}`} name={item} selected={active == item} handleOnClick={(name: string) => setActive(name)} />
 				))}
 			</div>
 

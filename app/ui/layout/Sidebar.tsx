@@ -21,7 +21,7 @@ export default function SlideBar({handleOnClose = () => {}}: {handleOnClose: () 
 		const ok = confirm("Are you sure you want to log-out ?");
 		if( ok ) {
 			logout();
-            setMainPage(Constant.UI_PAGE_LOGIN);
+            // setMainPage(Constant.UI_PAGE_LOGIN);
 		}
 
 		handleOnClose();

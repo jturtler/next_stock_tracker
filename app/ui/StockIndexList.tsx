@@ -4,9 +4,9 @@ import { JSONObject } from "@/lib/definations";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import * as Constant from "@/lib/constant";
-import CurrentPriceBox from "./data-item/CurrentPriceBox";
+import CurrentPriceBox from "./stock-index-data/CurrentPriceBox";
 import fetchStockIndexes from "@/lib/utils/fetchStockIndexes";
-import StockIndexDetails from "./data-item/StockIndexDetails";
+import StockIndexDetails from "./stock-index-data/StockIndexDetails";
 
 export default function CurrentStockIndexList() {
 	
@@ -32,7 +32,7 @@ export default function CurrentStockIndexList() {
 		<div>
 			{activeItem.longName === undefined && <div className="flex flex-row space-x-2">
 				{stockIndexes.map((item, i) => (
-					<CurrentPriceBox key={i} stockData={item} active={activeItem.longName === item.longName} handleOnClick={(e) => setActiveItem(item)} />
+					<CurrentPriceBox key={`stockList_${i}`} stockData={item} active={activeItem.longName === item.longName} handleOnClick={(e) => setActiveItem(item)} />
 				))}
 			</div>}
 

@@ -15,7 +15,7 @@ export default async function fetchStockIndexes(): Promise<JSONObject> {
 }
 
 
-async function fetchIndividualData( symbols: string ): Promise<JSONObject> {
+export async function fetchIndividualData( symbols: string ): Promise<JSONObject> {
 	try {
 		const response = await axios.get(`/api/stock-index`, {
 			params: {

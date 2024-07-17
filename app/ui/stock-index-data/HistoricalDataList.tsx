@@ -53,7 +53,7 @@ export default function HistoricalDataList({curPriceData}: {curPriceData: JSONOb
 			{/* <div className="shadow-lg bg-white grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 px-5 py-3 "> */}
 				<div className="flex flex-row space-x-6 px-3 font-semibold p-1 bg-slate-300 shadow-sm my-2">
 				{dateRangeList.map((item, i) => (
-					<ChartDateRange key={i} name={item} selected={selectedDateRange == item} handleOnClick={(name: string) => { fetchDataByDataRangeName(name); setSelectedDateRange(name); }} />
+					<ChartDateRange key={`historyData_${i}`} name={item} selected={selectedDateRange == item} handleOnClick={(name: string) => { fetchDataByDataRangeName(name); setSelectedDateRange(name); }} />
 				))}
 			</div>
 			{/* </div> */}
@@ -73,7 +73,7 @@ export default function HistoricalDataList({curPriceData}: {curPriceData: JSONOb
 						</thead>
 						<tbody>
 							{historicalData.map((data: JSONObject, index: number) => (
-								<HistoricalDataItem key={index} data={data} style="large" index={index} />
+								<HistoricalDataItem key={`historyData_${index}`} data={data} style="large" index={index} />
 							))}
 						</tbody>
 					</table>
@@ -83,7 +83,7 @@ export default function HistoricalDataList({curPriceData}: {curPriceData: JSONOb
 			{/* <!-- Divs for smaller screens --> */}
 			<div className="md:hidden">
 				{historicalData.reverse().map((expense: JSONObject, index: number) => (
-					<HistoricalDataItem style="small" key={expense._id} data={expense} index={index} />
+					<HistoricalDataItem style="small" key={`historyData_${expense._id}`} data={expense} index={index} />
 				))}
 			</div>
 		</div>

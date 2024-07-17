@@ -1,3 +1,4 @@
+import * as Utils from '@/lib/utils';
 import axios from 'axios';
 import { JSONObject } from './../definations';
 
@@ -17,25 +18,83 @@ Nikkei 225 (Japan) --- Symbol: N225
 Hang Seng Index (Hong Kong) --- Symbol: HSI
 Shanghai Composite Index (China) --- Symbol: SSEC
 S&P/TSX Composite (Canada) --- Symbol: GSPTSE
-
+...
 */
 
-export default async function fetchData(symbol: string): Promise<JSONObject> {
+/**
+ * 
+ * @param symbols For example "DJIA"
+ * @returns 
+ */
+export default async function fetchChartData(symbol: string, periodName: string): Promise<JSONObject> {
+	const options = getOptions(periodName);
 
 	try {
 		const response = await axios.get(`/api/stock-chart-data`, {
 			params: {
-				symbol,
-				interval: "5min", // Change this as needed,
-				outputsize: "full"
+				"symbol": symbol,
+				"startDate": options.startDate,
+				"endDate": options.endDate,
+				"interval": options.interval
 			},
 		});
+		
+		let dataList = response.data.quotes;
+		if (dataList === undefined) {
+			dataList = []
+		}
+		else if (options.isOneDay) {
+			dataList = getChartDataInLatestDate(response.data.quotes);
+		}
 
-		return ({status: "success", data: response.data});
+		return ({status: "success", data: dataList});
 	} catch (error) {
-		console.error('Error fetching stock data:', error);
-		return ({status: "error"});
+		return ({status: "error", message: `Error fetching stock data. ${error}` });
 	}
 }
 
-// function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&outputsize=full&apikey=demo
+
+const getOptions = (periodName: string): JSONObject => {
+	let dateRange: JSONObject = Utils.getDateRange(periodName);
+	let interval: string | undefined;
+	let isOneDay = false;
+
+	if(periodName == "1D" ) {
+		isOneDay = true;
+		interval = "1m";
+	}
+	else if(periodName == "7D" ) {
+		interval = "1m";
+	}
+	else if(periodName == "1M" ) {
+		interval = "5m";
+	}
+	else {
+		interval = "1d";
+	}
+
+	return ( {
+		startDate: dateRange.startDate, 
+		endDate: dateRange.endDate, 
+		interval, 
+		isOneDay
+	} );
+}
+
+
+const getChartDataInLatestDate = (dataList: JSONObject[]) => {
+	let data = [];
+	if (dataList !== undefined && dataList.length > 0) {
+		var latestDate = dataList[0].date.split("T")[0];
+		for (var i = 0; i < dataList.length; i++) {
+			if (latestDate == dataList[i].date.split("T")[0]) {
+				data.push(dataList[i]);
+			}
+			else {
+				return data;
+			}
+		}
+	}
+
+	return data;
+}
