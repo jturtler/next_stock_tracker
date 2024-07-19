@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import * as Contanst from "@/lib/constant";
+import * as Constant from "@/lib/constant";
 
 interface MainUiContextProps {
 	mainPage: string;
@@ -27,8 +27,7 @@ export const useMainUi = (): MainUiContextProps => {
 };
 
 export const MainUiProvider = ({ children }: { children: ReactNode }) => {
-	// const [mainPage, setMainPage] = useState<string>(Contanst.UI_INTRO_PAGE);
-	const [mainPage, setMainPage] = useState<string>("");
+	const [mainPage, setMainPage] = useState<string>(Constant.UI_PAGE_HOME);
 	const [subPage, setSubPage] = useState<string | null>(null);
 
 	return (

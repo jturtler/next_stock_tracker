@@ -8,10 +8,12 @@ import * as Utils from "@/lib/utils";
 import ChartDateRange from './ChartDateRange';
 import { format, parseISO } from 'date-fns';
 import { TooltipProps } from 'recharts';
-import fetchStockChartData from "@/lib/utils/fetchStockChartData";
+import fetchStockChartData from '@/lib/utils/fetchStockChartData';
 
-const CustomTooltip = ({ active, payload, label }: any) => {
-	if (label && active && payload && payload.length) {
+const CustomTooltip = ({payload, label}: any) => {
+
+	if (payload && payload.length) {
+
 		const formattedDate = format(parseISO(label), "dd MMM yyyy HH:mm");
 		const data = payload[0].payload;
 		return (
@@ -53,14 +55,15 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 
 
 export default function StockChart({ curPriceData }: { curPriceData: JSONObject }) {
-	const [active, setActive] = useState("1D");
+	const [dateRangeName, setDateRangeName] = useState("1D");
 	const [chartData, setChartData] = useState<JSONObject[]>([]);
 
-	// const dateRangeList = ["1D", "7D", "1M", "3M", "6M", "9M", "1Y", "2Y", "5Y", "All"];
+	// const { chartData, errMsg, dateTimeStamp } = useStockChartData(curPriceData.symbol, dateRangeName);
+	console.log("------------------ StockChart");
 
 	const fetchStockData = async() => {
 		try{
-			const response = await fetchStockChartData(curPriceData.symbol, active);
+			const response = await fetchStockChartData(curPriceData.symbol, dateRangeName);
 			if( response.status == "success" ) {
 				setChartData( response.data );
 			}
@@ -72,10 +75,9 @@ export default function StockChart({ curPriceData }: { curPriceData: JSONObject 
 		}
 	};
 
-
 	useEffect(() => {
 		fetchStockData();
-	}, [curPriceData.symbol, active]);
+	}, [curPriceData]);
 	
 
 	const getYTicks = (): string[] => {
@@ -118,9 +120,10 @@ export default function StockChart({ curPriceData }: { curPriceData: JSONObject 
 
 	const yTicks = getYTicks();
 
+	// if (errMsg) return <div>{errMsg}</div>;
 
 	return (
-		<div className="m-3 py-10  px-3">
+		<div className="py-10">
 			<ResponsiveContainer width="100%" height={500}>
 				<ComposedChart
 					height={400}
@@ -175,7 +178,7 @@ export default function StockChart({ curPriceData }: { curPriceData: JSONObject 
 
 			<div className="flex flex-row space-x-6 px-3 font-semibold p-3">
 				{Utils.dateRangeList.map((item, i) => (
-					<ChartDateRange key={`dateRange_${i}`} name={item} selected={active == item} handleOnClick={(name: string) => setActive(name)} />
+					<ChartDateRange key={`dateRange_${i}`} name={item} selected={dateRangeName == item} handleOnClick={(name: string) => setDateRangeName(name)} />
 				))}
 			</div>
 

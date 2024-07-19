@@ -79,3 +79,18 @@ export const removeFromArray = function( list: JSONObject[], value: string, prop
 
 	return list;
 };
+
+
+export const findFromArray = function( list: JSONObject[], value: string, propertyName: string )
+{
+	for( let i = 0; i < list.length; i++ )
+	{
+		var item = list[i];
+		if ( item[ propertyName ] == value ) 
+		{
+			return item;
+		}
+	}
+	
+	return;
+};

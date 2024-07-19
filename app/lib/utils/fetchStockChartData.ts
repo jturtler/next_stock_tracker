@@ -26,7 +26,7 @@ S&P/TSX Composite (Canada) --- Symbol: GSPTSE
  * @param symbols For example "DJIA"
  * @returns 
  */
-export default async function fetchStockChartData(symbol: string, periodName: string): Promise<JSONObject> {
+export default async function fetchChartData(symbol: string, periodName: string): Promise<JSONObject> {
 	const options = getOptions(periodName);
 
 	try {
@@ -41,13 +41,13 @@ export default async function fetchStockChartData(symbol: string, periodName: st
 		
 		let dataList = response.data.quotes;
 		if (dataList === undefined) {
-			dataList = []
+			response.data.data = []
 		}
 		else if (options.isOneDay) {
-			dataList = getChartDataInLatestDate(response.data.quotes);
+			response.data.data = getChartDataInLatestDate(response.data.quotes);
 		}
 
-		return ({status: "success", data: dataList});
+		return response;
 	} catch (error) {
 		return ({status: "error", message: `Error fetching stock data. ${error}` });
 	}

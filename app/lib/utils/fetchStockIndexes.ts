@@ -3,16 +3,22 @@ import { JSONObject } from '../definations';
 import * as Constant from "@/lib/constant";
 
 
-export default async function fetchStockIndexes(symbols: string[]): Promise<JSONObject> {
-	try {
-		// const arrSymbols = [Constant.SYMBOL_DOW_JONES, Constant.SYMBOL_S_AND_P_500, Constant.SYMBOL_NASDAQ ];
-		const dataList = await fetchIndividualData( symbols.join(",") );
+// export default function fetchStockIndexes(symbols: string[]): Promise<JSONObject> {
+// 	try {
+// 		// const arrSymbols = [Constant.SYMBOL_DOW_JONES, Constant.SYMBOL_S_AND_P_500, Constant.SYMBOL_NASDAQ ];
+// 		const dataList = await fetchIndividualData( symbols.join(",") );
 
-		return {status: "success", data: dataList.data};
-	} catch (error) {
-		return {status: "error"};
-	}
-}
+// 		// dataList.data = dataList.data.map((item: any) => (
+// 		// 	item.longName = item.longName + new Date().toDateString()
+// 		// ));
+// 		// console.log("========= fetchStockIndexes");
+// 		// console.log(dataList.data);
+
+// 		return {status: "success", data: dataList.data};
+// 	} catch (error) {
+// 		return {status: "error"};
+// 	}
+// }
 
 
 export async function fetchIndividualData( symbols: string ): Promise<JSONObject> {

@@ -25,13 +25,14 @@ export default function DetailsMenu({handleOnClick }: {handleOnClick: (name: str
 					<hr className="border-2" />
 				</div>
 				<ul className="space-y-2">
-					<li className={`${active == Constant.UI_CHART && "bg-purple-400"} flex items-center space-x-3 p-3 rounded-lg hover:bg-purple-400 transition duration-300`} onClick={(e) => handleItemOnClick(Constant.UI_CHART)}>
+					<li className={`${active == Constant.UI_CHART && "bg-purple-400"} border-b-2 border-gray-300  flex items-center space-x-3 p-3 hover:bg-purple-400 transition duration-300`} onClick={(e) => handleItemOnClick(Constant.UI_CHART)}>
 						<IoBarChart /> <span className="font-medium">Chart</span>
 					</li>
-					<li className={`${active == Constant.UI_HISTORICAL_DATA && "bg-purple-400"} flex items-center space-x-3 p-3 rounded-lg hover:bg-purple-400 transition duration-300`} onClick={(e) => handleItemOnClick(Constant.UI_HISTORICAL_DATA)}>
+					
+					<li className={`${active === Constant.UI_HISTORICAL_DATA && "bg-purple-400"} border-b-2 border-gray-300 flex items-center space-x-3 p-3  transition hover:bg-purple-400 duration-300 `} onClick={(e) => handleItemOnClick(Constant.UI_HISTORICAL_DATA)}>
 						<MdHistory /> <span className="font-medium">Historical Data</span>
 					</li>
-					<li className={`flex items-center space-x-3 p-3 rounded-lg hover:bg-purple-400 transition duration-300`} onClick={(e) => handleItemOnClick("")}>
+					<li className={`flex items-center space-x-3 p-3 border-b-2 border-gray-300 hover:bg-purple-400 transition duration-300`} onClick={(e) => handleItemOnClick("")}>
 						<SiFuturelearn /> <span className="font-medium">Close</span>
 					</li>
 				</ul>

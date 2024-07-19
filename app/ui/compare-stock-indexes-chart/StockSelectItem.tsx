@@ -6,6 +6,7 @@ import * as Utils from "@/lib/utils";
 import StockSearchForm from "./StockSearchForm";
 import Modal from "../layout/Modal";
 import { fetchIndividualData } from "@/lib/utils/fetchStockIndexes";
+// import { fetchIndividualData } from "@/lib/utils/fetchStockIndexes";
 // import fetchStockChartData from "@/lib/utils/fetchStockChartData";
 
 
