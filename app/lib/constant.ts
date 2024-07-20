@@ -20,11 +20,11 @@ export const SYMBOL_DEFAULT_LIST = ["^DJI",
                                 "AAPL",
                                 "MSFT",
                                 "AMZN",
-                                "GOOGL",
-                                "GOOG",
-                                "TSLA",
-                                "NVDA",
-                                "JNJ"
+                                // "GOOGL",
+                                // "GOOG",
+                                // "TSLA",
+                                // "NVDA",
+                                // "JNJ"
                             ];
 
 export const UI_PAGE_HOME = "UI_PAGE_HOME";
