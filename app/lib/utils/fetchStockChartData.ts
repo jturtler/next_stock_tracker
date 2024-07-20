@@ -29,7 +29,7 @@ S&P/TSX Composite (Canada) --- Symbol: GSPTSE
 export default async function fetchChartData(symbol: string, periodName: string): Promise<JSONObject> {
 	const options = getOptions(periodName);
 
-	try {
+	// try {
 		const response = await axios.get(`/api/stock-chart-data`, {
 			params: {
 				"symbol": symbol,
@@ -41,16 +41,16 @@ export default async function fetchChartData(symbol: string, periodName: string)
 		
 		let dataList = response.data.quotes;
 		if (dataList === undefined) {
-			response.data.data = []
+			response.data.quotes = []
 		}
 		else if (options.isOneDay) {
-			response.data.data = getChartDataInLatestDate(response.data.quotes);
+			response.data.quotes = getChartDataInLatestDate(response.data.quotes);
 		}
 
 		return response;
-	} catch (error) {
-		return ({status: "error", message: `Error fetching stock data. ${error}` });
-	}
+// 	} catch (error) {
+// 		return ({status: "error", message: `Error fetching stock data. ${error}` });
+// 	}
 }
 
 

@@ -19,12 +19,13 @@ const fetcher = (symbols: string[]) => axios.get(`/api/stock-index`, {
 
 const useStockData = (symbols: string[]) => {
 	const {data, mutate, error, isValidating} = useSWR(symbols, fetcher, {
-		refreshInterval: 3 * 1000, // Fetch data every 5 minutes
+		// refreshInterval: 5 * 1000, //  Fetch data every 5 seconds
+		refreshInterval: 5 * 60 * 60 * 1000, // Fetch data every 5 minutes
 		revalidateOnFocus: true,
 		revalidateOnReconnect: true,
 	});
 
-console.log(JSON.stringify(data));
+
 	let stockPriceList: JSONObject[] = [];
 	let errMsg = "";
 	if( data !== undefined ) {
@@ -37,7 +38,10 @@ console.log(JSON.stringify(data));
 	}
 	
 	useEffect(() => {
-		// Return a cleanup function to stop revalidation by calling mutate 
+		 // Fetch data immediately
+		 mutate();
+		
+		// // Return a cleanup function to stop revalidation by calling mutate 
 		return () => {
 		  mutate(undefined, false); // Stop revalidation on unmount
 		};
@@ -46,6 +50,7 @@ console.log(JSON.stringify(data));
 	return {
 		stockPriceList: stockPriceList,
 		errMsg: errMsg,
+		isLoading: !error && !data, isValidating,
 		dateTimeStamp: new Date().getTime()
 	};
 };

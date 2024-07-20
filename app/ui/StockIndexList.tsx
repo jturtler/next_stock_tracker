@@ -1,58 +1,36 @@
 'use client';
 
-import { JSONObject } from "@/lib/definations";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import React from 'react';
+import StockIndex from '@/ui/StockIndex';
+import useStockData from '@/lib/hooks/useStockData';
 import * as Constant from "@/lib/constant";
-import CurrentPriceBox from "./stock-index-data/CurrentPriceBox";
-// import fetchStockIndexes from "@/lib/utils/fetchStockIndexes";
-import StockIndexDetails from "./stock-index-data/StockIndexDetails";
-import useStockData from "@/lib/hooks/useStockData";
-import * as Utils from "@/lib/utils";
-import { useMainUi } from "@/contexts/MainUiContext";
+import { JSONObject } from '@/lib/definations';
+import { useMainUi } from '@/contexts/MainUiContext';
 
 
 export default function CurrentStockIndexList({handleOnItemClick}: {handleOnItemClick: (item: JSONObject) => void}) {
+
+	const {setMainPage, setSubPage} = useMainUi();
 	
-	const {setMainPage} = useMainUi();
-	const [activeItem, setActiveItem] = useState<JSONObject>({});
-
-	const symbols = [Constant.SYMBOL_DOW_JONES, Constant.SYMBOL_S_AND_P_500, Constant.SYMBOL_NASDAQ ];
-	
-	const { stockPriceList } = useStockData(symbols);
-
-	useEffect(() => {
-		if( activeItem.longName !== undefined ) {
-			const found = Utils.findFromArray( stockPriceList, activeItem.longName, "longName" );
-
-			if( found ) {
-				setActiveItem(Utils.cloneJSONObject(found));
-			}
-		}
-	}, [stockPriceList]);
-
+	const { stockPriceList, isLoading } = useStockData(Constant.SYMBOL_DEFAULT_LIST);
 
 	const itemOnClick = (item: JSONObject) => {
-		setActiveItem(item);
 		setMainPage(Constant.UI_SYMBOL_DETAILS);
+		setSubPage( Constant.UI_CHART);
 		handleOnItemClick(item);
 	}
-	
-	// if (isLoading || stockPriceList === undefined ) return <div>Loading...</div>;
-	// if (isError) return <div>Error loading data</div>;
-	return (
-		<div>
-			<div className="flex flex-row space-x-2">
-				{stockPriceList.map((item: JSONObject, i: number) => (
-					<CurrentPriceBox key={`stockList_${i}`} stockData={item} active={activeItem.longName === item.longName} handleOnClick={(e) => itemOnClick(item) } />
-				))}
-			</div>
 
-			{/* {activeItem.longName !== undefined && <>
-				<StockIndexDetails curPriceData={activeItem} handleOnClose={() => setActiveItem({})}/>
-			</> } */}
-		</div>
+	if( isLoading ) return <div>Loading ...</div>
 
-    )
-
-}
+  return (
+    <div className="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {stockPriceList.map((stock) => (
+        <StockIndex
+          key={stock.symbol}
+          stockData={stock}
+		  handleOnClick={(e) => itemOnClick(stock) }
+        />
+      ))}
+    </div>
+  );
+};

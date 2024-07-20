@@ -7,37 +7,37 @@ import { useEffect } from 'react';
 import * as Utils from "@/lib/utils";
 
 
-const fetcher = ({ symbol, periodName }: { symbol: string, periodName: string }) =>  axios.get(`/api/stock-chart-data`, {
-	params: {
-		"symbol": symbol,
-		"startDate": options.startDate,
-		"endDate": options.endDate,
-		"interval": options.interval
-	},
-});
+const fetcher = ({ symbol, periodName }: { symbol: string, periodName: string }) => fetchStockChartData(symbol, periodName);
 
 const useStockChartData = (symbol: string, periodName: string) => {
 	const { data, error, isValidating, mutate } = useSWR({ symbol, periodName }, fetcher, {
-		refreshInterval: 5 * 1000, // Fetch data every 5 minutes
+		// refreshInterval: 5 * 1000, // Fetch data every 5 seconds
+		refreshInterval: 5 * 60 * 60 * 1000, // Fetch data every 5 minutes
+		revalidateOnFocus: true,
+		revalidateOnReconnect: true,
 	});
-	let chartData: JSONObject[] = [];
+
+	let chartData: JSONObject | null = null;
 	let errMsg = "";
-	if (data != undefined) {
-		if (data!.status !== "success") {
-			chartData = Utils.cloneJSONObject(data.data);
+	if( data !== undefined ) {
+		if( data.statusText !== "OK" ) {
+			errMsg = "Error while fetching stock data.";
 		}
 		else {
-			errMsg = `Error while fetching stock details data. ${data.message}`;
+			chartData = Utils.cloneJSONObject(data.data);
 		}
 	}
 
-console.log(chartData);
+	
 	useEffect(() => {
+		 // Fetch data immediately
+		 mutate();
+		 
 		// Return a cleanup function to stop revalidation by calling mutate 
 		return () => {
 			mutate(undefined, false); // Stop revalidation on unmount
 		};
-	}, [mutate]);
+	}, [symbol, periodName, mutate]);
 	
 	return {
 		chartData,

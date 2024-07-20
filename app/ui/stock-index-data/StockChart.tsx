@@ -54,30 +54,27 @@ const CustomTooltip = ({payload, label}: any) => {
 };
 
 
-export default function StockChart({ curPriceData }: { curPriceData: JSONObject }) {
+export default function StockChart({ chartData }: { chartData: JSONObject[] }) {
 	const [dateRangeName, setDateRangeName] = useState("1D");
-	const [chartData, setChartData] = useState<JSONObject[]>([]);
+	// const [chartData, setChartData] = useState<JSONObject[]>([]);
 
-	// const { chartData, errMsg, dateTimeStamp } = useStockChartData(curPriceData.symbol, dateRangeName);
-	console.log("------------------ StockChart");
+	// const fetchStockData = async() => {
+	// 	try{
+	// 		const response = await fetchStockChartData(curPriceData.symbol, dateRangeName);
+	// 		if( response.status == "success" ) {
+	// 			setChartData( response.data );
+	// 		}
+	// 		else {
+	// 			console.error(response.message);
+	// 		}
+	// 	} catch (error) {
+	// 		console.error('Error fetching stock data:', error);
+	// 	}
+	// };
 
-	const fetchStockData = async() => {
-		try{
-			const response = await fetchStockChartData(curPriceData.symbol, dateRangeName);
-			if( response.status == "success" ) {
-				setChartData( response.data );
-			}
-			else {
-				console.error(response.message);
-			}
-		} catch (error) {
-			console.error('Error fetching stock data:', error);
-		}
-	};
-
-	useEffect(() => {
-		fetchStockData();
-	}, [curPriceData]);
+	// useEffect(() => {
+	// 	fetchStockData();
+	// }, [curPriceData]);
 	
 
 	const getYTicks = (): string[] => {

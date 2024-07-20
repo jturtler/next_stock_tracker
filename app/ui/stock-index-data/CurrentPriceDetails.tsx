@@ -5,10 +5,10 @@ import * as Utils from "@/lib/utils";
 export default function CurrentPriceDetails({priceData}: {priceData: JSONObject}) {
 	return (
 		<ul className="whitespace-nowrap w-fit list-none p-3 text-s">
-			<li className="flex flex-row justify-between py-2 border-b border-dotted border-gray-400">
+			{/* <li className="flex flex-row justify-between py-2 border-b border-dotted border-gray-400">
 				<span>Previous Close</span>
-				<span className="font-semibold">{Utils.formatDisplayNumber(priceData.regularMarketPreviousClose)}</span>
-			</li>
+				<span className="font-semibold">{Utils.formatDisplayNumber(priceData.previousClose)}</span>
+			</li> */}
 			<li className="flex flex-row justify-between py-2 border-b border-dotted border-gray-400">
 				<span>Open</span>
 				<span className="font-semibold">{Utils.formatDisplayNumber(priceData.regularMarketOpen)}</span>

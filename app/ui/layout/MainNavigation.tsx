@@ -15,9 +15,9 @@ export default function MainNavigation() {
         setSelected(name)
         setMainPage(name);
 
-        if( name == Constant.UI_SYMBOL_DETAILS ) {
-          setSubPage(Constant.UI_CHART);
-        }
+        // if( name == Constant.UI_SYMBOL_DETAILS ) {
+        //   setSubPage(Constant.UI_CHART);
+        // }
     }
     
     return (

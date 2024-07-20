@@ -26,12 +26,9 @@ console.log(" ============ StockIndexDetails");
             setSubPage(name);
         }
     }
-//     console.log("====== stockDataList");
-// console.log(stockDataList);
-//     const data = (isLoading || isError || stockDataList == undefined || stockDataList.status === "error" ) ? null : stockDataList!.data[0];
-
-    // console.log(data);
-    // if( stockDataList == undefined ) return ( <div>Loading ...</div>)
+    
+    if( chartData == null ) return ( <div>Loading ...</div>)
+    
     return (
         <div className="flex flex-row">
             <div className="">
@@ -45,7 +42,7 @@ console.log(" ============ StockIndexDetails");
                 
                 <div className="flex flex-row">
                     {subPage == Constant.UI_CHART && <div className="flex-1">
-                        <StockChart curPriceData={curPriceData} />
+                        <StockChart chartData={chartData.quotes} />
                     </div>}
 
                     {subPage == Constant.UI_HISTORICAL_DATA && <div className="flex-1">
@@ -53,7 +50,7 @@ console.log(" ============ StockIndexDetails");
                     </div>}
 
                     <div className="m-3">
-                        <CurrentPriceDetails priceData={curPriceData} />
+                        <CurrentPriceDetails priceData={chartData.meta} />
                     </div>
                 </div>
             </div>
