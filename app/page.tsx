@@ -1,5 +1,6 @@
 import { AuthProvider } from "./contexts/AuthContext";
 import { MainUiProvider } from "./contexts/MainUiContext";
+import AppWrapper from "./ui/AppWrapper";
 import HomePage from "./ui/HomePage";
 import Footer from "./ui/layout/Footer";
 import Header from "./ui/layout/Header";
@@ -11,7 +12,7 @@ export default function Home() {
 				<AuthProvider>
 					<Header />
 					<main className="flex-1">
-						<HomePage />
+						<AppWrapper />
 					</main>
 					<Footer />
 				</AuthProvider>

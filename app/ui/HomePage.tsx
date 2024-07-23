@@ -3,27 +3,36 @@
 import { useState } from 'react';
 import axios from 'axios';
 import StockChart from './stock-index-data/StockChart';
-import CurrentStockIndexes from './StockIndexList';
-import MainNavigation from './layout/MainNavigation';
 import * as Constant from "@/lib/constant";
-import CompareStocksChart from './compare-stock-indexes-chart/CompareStockIndexesChart';
 import { useMainUi } from '@/contexts/MainUiContext';
-import StockIndexDetails from './stock-index-data/StockIndexDetails';
 import { JSONObject } from '@/lib/definations';
-
+import StockIndexDetails from './stock-index-data/StockIndexDetails';
+import StockIndexList from './stock-index-list/StockIndexList';
+import SearchStock from './stock-index-list/SearchStock';
+import { fetchIndividualData } from '@/lib/utils/fetchStockIndexes';
+import * as AppStore from "@/lib/AppStore";
 
 export default function HomePage() {
 
-	const {mainPage, setMainPage} = useMainUi();
-	const [selectedSymbolData, setSelectedSymbolData] = useState<JSONObject | null >(null);
+	const { mainPage, setMainPage, setSubPage } = useMainUi();
+	const [selectedStock, setSelectedStock] = useState<JSONObject | null>(null);
+
+	const addItem = async (data: JSONObject) => {
+		const response = await fetchIndividualData(data.symbol);
+		if (response.status == "success") {
+			AppStore.setSelectedSymbolData(response.data[0]);
+			setMainPage(Constant.UI_SYMBOL_DETAILS);
+			setSubPage(Constant.UI_CHART);
+			setSelectedStock(response.data[0]);
+		}
+	}
 
 	return (
-		<div>
-			<MainNavigation  />
-
-			{ mainPage == Constant.UI_PAGE_HOME && <CurrentStockIndexes handleOnItemClick={(item) => setSelectedSymbolData(item)} />}
-			{ mainPage == Constant.UI_SYMBOL_DETAILS && <StockIndexDetails curPriceData={selectedSymbolData!} handleOnClose={()=> setMainPage(Constant.UI_PAGE_HOME)}/>}
-			{ mainPage == Constant.UI_PAGE_COMPARE_STOCK_INDEXES_CHARTS && <CompareStocksChart />}
-		</div>
+		<>
+			{selectedStock === null && <>
+				<SearchStock handleOnItemSelect={(stockData) => addItem(stockData)} handleOnClose={() => { }} />
+				<StockIndexList handleOnItemClick={(item) => AppStore.setSelectedSymbolData(item)} />
+			</>}
+		</>
 	);
 };

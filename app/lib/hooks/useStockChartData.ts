@@ -19,8 +19,9 @@ const useStockChartData = (symbol: string, periodName: string) => {
 
 	let chartData: JSONObject | null = null;
 	let errMsg = "";
+
 	if( data !== undefined ) {
-		if( data.statusText !== "OK" ) {
+		if( data.statusText !== "OK" ) { 
 			errMsg = "Error while fetching stock data.";
 		}
 		else {

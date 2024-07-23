@@ -45,8 +45,6 @@ export async function GET(request: NextRequest) {
 		return NextResponse.json({error: "Invalid query, startDate, endDate, or interval"}, { status: 200 });
 	  }
 	
-	  console.log(new Date(startTimestamp));
-	  console.log(endTimestamp);
 	try {
 		const query = symbol!; // '^DJI';
 		

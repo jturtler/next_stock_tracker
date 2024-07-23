@@ -13,7 +13,14 @@ import { useMainUi } from "@/contexts/MainUiContext";
 
 export default function StockIndexDetails({curPriceData, handleOnClose}: {curPriceData: JSONObject, handleOnClose: () => void}) {
 
-console.log(" ============ StockIndexDetails");
+    
+    console.log("==== StockIndexDetails");
+console.log(curPriceData);
+
+    if( curPriceData === null ) return ( <div>Loading ...</div> );
+    
+    // if( chartData == null ) return ( <div>Loading ...</div>);
+
     const {subPage, setSubPage} = useMainUi();
 	const { chartData, dateTimeStamp } = useStockChartData(curPriceData.symbol, "1D");
 
@@ -26,9 +33,12 @@ console.log(" ============ StockIndexDetails");
             setSubPage(name);
         }
     }
+
+    // if( curPriceData === null ) return ( <div>Loading ...</div> );
     
-    if( chartData == null ) return ( <div>Loading ...</div>)
-    
+    if( chartData == null ) return ( <div>Loading ...</div>);
+
+        
     return (
         <div className="flex flex-row">
             <div className="">
@@ -38,6 +48,10 @@ console.log(" ============ StockIndexDetails");
                 <h2 className="font-bold text-3xl py-5">{curPriceData.longName}</h2>
                 
                 <div className="text-xs mb-1">Currency: <span className="font-semibold">{curPriceData.currency}</span></div>
+                <div className="text-xs mb-1 flex space-x-1">
+                    <div>Close: <span className="font-semibold">{Utils.formatDisplayNumber(curPriceData.regularMarketPrice)}</span></div>
+                    <span className="font-semibold">({curPriceData.regularMarketChange > 0 && "+"}{curPriceData.regularMarketChange * 100}%)</span>
+                </div>
                 <div className="text-xs">As of {Utils.formatDistplayDateTime(curPriceData.regularMarketTime)} {curPriceData.exchangeTimezoneShortName}. Market Open.</div>
                 
                 <div className="flex flex-row">

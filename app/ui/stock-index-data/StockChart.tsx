@@ -72,9 +72,9 @@ export default function StockChart({ chartData }: { chartData: JSONObject[] }) {
 	// 	}
 	// };
 
-	// useEffect(() => {
-	// 	fetchStockData();
-	// }, [curPriceData]);
+	useEffect(() => {
+		// fetchStockData();
+	}, [chartData]);
 	
 
 	const getYTicks = (): string[] => {
@@ -118,6 +118,9 @@ export default function StockChart({ chartData }: { chartData: JSONObject[] }) {
 	const yTicks = getYTicks();
 
 	// if (errMsg) return <div>{errMsg}</div>;
+
+	console.log("============= StockChart : chartData");  
+	console.log(JSON.stringify( chartData)); 
 
 	return (
 		<div className="py-10">
