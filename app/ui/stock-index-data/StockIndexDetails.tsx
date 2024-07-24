@@ -17,10 +17,8 @@ export default function StockIndexDetails({curPriceData, handleOnClose}: {curPri
     console.log("==== StockIndexDetails");
 console.log(curPriceData);
 
-    if( curPriceData === null ) return ( <div>Loading ...</div> );
+    // if( curPriceData === null ) return ( <div>Loading ...</div> );
     
-    // if( chartData == null ) return ( <div>Loading ...</div>);
-
     const {subPage, setSubPage} = useMainUi();
 	const { chartData, dateTimeStamp } = useStockChartData(curPriceData.symbol, "1D");
 

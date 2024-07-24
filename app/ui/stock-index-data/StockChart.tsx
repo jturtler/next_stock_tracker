@@ -119,8 +119,6 @@ export default function StockChart({ chartData }: { chartData: JSONObject[] }) {
 
 	// if (errMsg) return <div>{errMsg}</div>;
 
-	console.log("============= StockChart : chartData");  
-	console.log(JSON.stringify( chartData)); 
 
 	return (
 		<div className="py-10">
