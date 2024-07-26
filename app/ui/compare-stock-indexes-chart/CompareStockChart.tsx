@@ -12,7 +12,7 @@ export default function CompareStockChart({chartData, onUpdateDetails}: {chartDa
 	  };
 
 	const formatYPriceAxis = (tickItem: string) => {
-		return Utils.formatDisplayNumber(tickItem);
+		return Utils.formatDisplayNumber(tickItem) + "%";
 	};
 
 

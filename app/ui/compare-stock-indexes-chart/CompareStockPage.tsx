@@ -14,9 +14,13 @@ interface PercentChange {
 	close: number;
 }
 
+interface CompareStockPageProps {
+	stockList?: JSONObject[]; // Stock is a placeholder type; replace with your actual type
+}
 
-export default function CompareStockPage() {
-	const [stocks, setStocks] = useState<JSONObject[]>([]);
+const CompareStockPage: React.FC<CompareStockPageProps> = ({ stockList = [] }) => {
+
+	const [stocks, setStocks] = useState<JSONObject[]>(stockList);
 	const [details, setDetails] = useState<JSONObject | null>(null);
 
 	const addStockData = (stockData: JSONObject) => {
@@ -27,7 +31,6 @@ export default function CompareStockPage() {
 			temp.push(stockData);
 			setStocks(temp);
 		});
-
 	}
 
 	const calculatePercentChange = (historicalData: JSONObject): PercentChange[] => {
@@ -69,7 +72,8 @@ export default function CompareStockPage() {
 			const chartData = calculatePercentChange(stocks[i].chartData);
 			for (var j = 0; j < chartData.length; j++) {
 				let data: JSONObject = {};
-				data.longname = stocks[i].longname;
+				let longName = stocks[i].longname;
+				data.longname = (longName !== undefined ) ? longName : stocks[i].longName;
 
 				var found = Utils.findFromArray(transformedData, chartData[j].timestamp + "", "timestamp");
 				if (!found) {
@@ -93,6 +97,7 @@ export default function CompareStockPage() {
 			data: transformedData
 		};
 	}
+
 
 	const transformedData = transformChartData();
 
@@ -132,3 +137,5 @@ export default function CompareStockPage() {
 		</div>
 	)
 }
+
+export default CompareStockPage;

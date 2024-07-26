@@ -38,8 +38,7 @@ export default async function fetchHistoricalData(symbol: string, periodName: st
 				"interval": options.interval
 			},
 		});
-console.log	( "============== response" );
-console.log	( response );
+		
 		let dataList = response.data;
 		if (dataList === undefined) {
 			response.data = []
@@ -47,7 +46,6 @@ console.log	( response );
 
 		return response;
 }
-
 
 const getOptions = (periodName: string): JSONObject => {
 	let dateRange: JSONObject = Utils.getDateRange(periodName);

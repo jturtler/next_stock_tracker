@@ -11,14 +11,14 @@ export default function CompareStockDetails({stocks, data}: {stocks: JSONObject[
         return data![`${stock.symbol}_${propName}`];
     }
 
-    
+
     return (
         <div className="flex flex-col space-y-3 font-semibold">
             {data !== null && <div>Date: {Utils.formatDisplayDateFromObj(data.timestamp)}</div> }
             {stocks.map((stock: JSONObject, idx: number) => (
                 <div key={`detail_${idx}`} className="flex flex-row space-x-4 items-center">
                     <div className="w-2 h-4" style={{backgroundColor: Utils.COLORS_LIST[idx % Utils.COLORS_LIST.length]}}> </div>
-                    <div className="flex-1 font-normal" style={{color: Utils.COLORS_LIST[idx % Utils.COLORS_LIST.length]}}>{stock.longname}</div>
+                    <div className="flex-1 font-normal" style={{color: Utils.COLORS_LIST[idx % Utils.COLORS_LIST.length]}}>{stock.longname}{stock.longName}</div>
                     {data !== null && <>
                         {getValue(stock, "percentChange") > 0 ? <> 
                             <div className="text-green-600">{Utils.formatDisplayNumber(getValue(stock, "close"))}</div>

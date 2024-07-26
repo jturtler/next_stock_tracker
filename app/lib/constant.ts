@@ -1,37 +1,27 @@
-/**
- * Dow Jone ^DJI
- * S&P 500 ^GSPC
- * NASDAQ ^IXIC
- * Apple Inc. - AAPL
-Microsoft Corporation - MSFT
-Amazon.com, Inc. - AMZN
-Alphabet Inc. (Class A) - GOOGL
-Alphabet Inc. (Class C) - GOOG
-Tesla, Inc. - TSLA
-Berkshire Hathaway Inc. (Class B) - BRK.B
-NVIDIA Corporation - NVDA
-Meta Platforms, Inc. (formerly Facebook) - META
-Johnson & Johnson - JNJ
- */
-
 import { JSONObject } from "./definations";
 
-// export const SYMBOL_DEFAULT_LIST = ["^DJI",
-//                                 "^GSPC",
-//                                 "^IXIC",
-//                                 "AAPL",
-//                                 "MSFT",
-//                                 "AMZN"
-//                             ];
-
 export const SYMBOL_DEFAULT_LIST: JSONObject = {
-    "US": ["^DJI", // Dow Jones
-            "^GSPC", // S&P 500
-            "^IXIC", // Nasdqe
-            "RUT", // Russell
-            "VIX", // Vix
-        ]    
-}                        
+	"US": ["^DJI", // Dow Jones
+		"^GSPC", // S&P 500
+		"^IXIC", // Nasdqe
+		"^RUT", // Russell
+		"^VIX", // Vix
+	],
+	"EU": ["^GDAXI", // DAX PERFORMANCE-INDEX 
+		"^FTSE", // FTSE 10
+		"CAC", // CAC 40
+		"^IBEX", // IBEX 35
+		"^STOXX", // STOXX 5p
+	],
+	"AS": [
+		"^N225", // Nikkei 225
+		"000001.SS", // SSE Composite Index
+		"^HSI", // Hang Seng Index
+		"^BSESN", // BSE SENSEX
+		"^NSEI", // Hang Seng Index
+	]
+};
+
 
 export const UI_PAGE_HOME = "UI_PAGE_HOME";
 export const UI_PAGE_COMPARE_STOCK_INDEXES_CHARTS = "UI_PAGE_COMPARE_STOCK_INDEXES_CHARTS";

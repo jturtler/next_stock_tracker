@@ -1,7 +1,4 @@
 import { JSONObject } from "@/lib/definations";
-import { useEffect, useState } from "react";
-import { FaArrowUp } from "react-icons/fa";
-import { FaArrowDown } from "react-icons/fa";
 import * as Utils from "@/lib/utils";
 
 
@@ -15,9 +12,9 @@ export default function StockIndex({ stockData, handleOnClick }: { stockData: JS
         handleOnClick(name);
     }
 
-    const calculateChangedValue = (): string => {
-        return (previousClosePrice * percent).toFixed(2);
-    }
+    // const calculateChangedValue = (): string => {
+    //     return (previousClosePrice * percent).toFixed(2);
+    // }
 
     return (
         <div className="p-2 border-b-2"

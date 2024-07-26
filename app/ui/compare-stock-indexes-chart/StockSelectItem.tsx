@@ -16,7 +16,11 @@ export default function StockSelectItem({stockData, handleOnRemoveItem, index}: 
     const bgColor = Utils.COLORS_LIST[index % Utils.COLORS_LIST.length];
     const rgbaColor = `${bgColor}${Math.round(0.3 * 255).toString(16).padStart(2, '0')}`;
    
+    console.log("================ stockData");
+    console.log(stockData);
 
+    const longName = stockData.longname !== undefined ? stockData.longname : stockData.longName;
+    
     return (
         <>
             <div className="flex flex-col items-center w-[150px] h-[60px]">
@@ -26,8 +30,8 @@ export default function StockSelectItem({stockData, handleOnRemoveItem, index}: 
                         <IoCloseCircleOutline size={22} onClick={() => handleOnRemoveStock()} />
                     </div>
 
-                    <div className="text-gray-600 text-xs hidden lg:block">{Utils.truncatedText(stockData.longname)}</div>
-                    <div className="text-gray-600 text-xs lg:hidden">{Utils.truncatedText(stockData.longname, 5)}</div>
+                    <div className="text-gray-600 text-xs hidden lg:block">{Utils.truncatedText(longName)}</div>
+                    <div className="text-gray-600 text-xs lg:hidden">{Utils.truncatedText(longName, 5)}</div>
                 </div>
             </div>
         </>
