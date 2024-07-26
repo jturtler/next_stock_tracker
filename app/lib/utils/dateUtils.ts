@@ -102,3 +102,11 @@ export const formatDistplayDate = (dateStr: string): string => {
 	const date = parseISO(dateStr);
 	return format(date, 'MMM dd, yyyy');
 }
+
+
+export const formatDisplayDateFromObj = (timestamp: string): string => {
+	const date = new Date(parseInt(timestamp) * 1000);
+
+	const dateStr = parseISO(formatToDbDate(date));
+	return format(dateStr, 'MMM dd, yyyy');
+}

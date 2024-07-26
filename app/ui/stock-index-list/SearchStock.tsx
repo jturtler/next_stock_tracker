@@ -55,7 +55,7 @@ export default function SearchStock({ handleOnItemSelect, handleOnClose }: { han
 
 
 	return (
-		<div className="flex flex-col w-1/2 bg-slate-500 shadow-xl z-50 absolute" ref={divRef} >
+		<div className="flex flex-col w-1/2 bg-slate-500 shadow-xl fixed" ref={divRef} >
 
 			<div className="relative m-1" onClick={() => setShowSearchResultList(true)}>
 				<input
@@ -71,7 +71,7 @@ export default function SearchStock({ handleOnItemSelect, handleOnClose }: { han
 				<FaArrowRight className="cursor-pointer absolute right-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" onClick={(e) => searchStock()} />
 			</div>
 
-			{showSearchResultList && <div className="flex-1 px-1 mb-1">
+			{showSearchResultList && <div className="flex-1 px-1 mb-1 ">
 				{list.map((item, i) => (<div key={`stockSearchResult_${i}`}>
 					{item.shortname !== undefined && <div className="text-gray-500 font-medium grid grid-cols-2 px-3 pt-3 space-y-1 border border-gray-200 bg-slate-50 cursor-pointer" onClick={() => handleOnSelect(item)}>
 						{/* <!-- First Row --> */}

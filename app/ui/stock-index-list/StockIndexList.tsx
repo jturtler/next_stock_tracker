@@ -8,11 +8,11 @@ import { useMainUi } from '@/contexts/MainUiContext';
 import StockIndex from './StockIndex';
 
 
-export default function StockIndexList({ handleOnItemClick }: { handleOnItemClick: (item: JSONObject) => void }) {
+export default function StockIndexList({ symbols, handleOnItemClick }: { symbols: string[], handleOnItemClick: (item: JSONObject) => void }) {
 
   const { setMainPage, setSubPage } = useMainUi();
 
-  const { stockPriceList, isLoading } = useStockData(Constant.SYMBOL_DEFAULT_LIST);
+  const { stockPriceList, isLoading } = useStockData(symbols);
 
   const itemOnClick = (item: JSONObject) => {
     setMainPage(Constant.UI_SYMBOL_DETAILS);

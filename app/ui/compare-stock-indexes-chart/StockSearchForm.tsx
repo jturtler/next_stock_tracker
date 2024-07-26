@@ -35,13 +35,13 @@ export default function StockSearchForm({handleOnItemSelect, handleOnClose}: {ha
 
     const handleOnSelect = (data: JSONObject) => {
         handleOnItemSelect(data);
-        handleOnClose();
+        // handleOnClose();
     }
 
     
     return (
         <div className="flex flex-col w-1/2 min-h-96 bg-white rounded-lg">
-            <h2 className="font-medium shadow-sm text-xl p-3 bg-green-200 flex flex-row">
+            <h2 className="font-medium shadow-sm text-xl p-3 bg-[#FFDB58] flex flex-row">
                 <span className="flex-1">Add stock to compare</span>
                 <span className="text-right" onClick={(() => handleOnClose())}><IoClose /></span>
             </h2>
@@ -60,9 +60,9 @@ export default function StockSearchForm({handleOnItemSelect, handleOnClose}: {ha
                 <FaArrowRight className="cursor-pointer absolute right-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" onClick={(e) => searchStock()}/>
             </div> 
  
-            <div className="flex-1 px-3 mb-4"> 
+            <div className="flex-1 px-3 mb-4 space-y-1"> 
                 {list.map((item, i) => (<div key={`stockSearchResult_${i}`}>
-                        {item.shortname !== undefined && <div  className="text-gray-500 font-medium grid grid-cols-2 bg-white px-3 pt-3 space-y-1 border border-gray-200 odd:bg-green-50 cursor-pointer" onClick={() => handleOnSelect(item)}>
+                        {item.shortname !== undefined && <div className={`text-gray-500 font-medium grid grid-cols-2 bg-white px-3 pt-3 border ${i%2 === 0 ? "bg-white" : "bg-stone-100"} cursor-pointer`} onClick={() => handleOnSelect(item)}>
                             {/* <!-- First Row --> */}
                             <div className=" text-blue-700 font-medium">{item.symbol}</div>
                             <div className="text-right">{item.typeDisp}</div>
@@ -71,7 +71,7 @@ export default function StockSearchForm({handleOnItemSelect, handleOnClose}: {ha
                             <div className="text-right">{item.exchange}</div>
                         </div>}
                     </div>
-                ))}
+                 ))}
             </div>
         </div>
     )

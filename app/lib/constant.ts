@@ -14,18 +14,24 @@ Meta Platforms, Inc. (formerly Facebook) - META
 Johnson & Johnson - JNJ
  */
 
-export const SYMBOL_DEFAULT_LIST = ["^DJI",
-                                "^GSPC",
-                                "^IXIC",
-                                "AAPL",
-                                "MSFT",
-                                "AMZN",
-                                // "GOOGL",
-                                // "GOOG",
-                                // "TSLA",
-                                // "NVDA",
-                                // "JNJ"
-                            ];
+import { JSONObject } from "./definations";
+
+// export const SYMBOL_DEFAULT_LIST = ["^DJI",
+//                                 "^GSPC",
+//                                 "^IXIC",
+//                                 "AAPL",
+//                                 "MSFT",
+//                                 "AMZN"
+//                             ];
+
+export const SYMBOL_DEFAULT_LIST: JSONObject = {
+    "US": ["^DJI", // Dow Jones
+            "^GSPC", // S&P 500
+            "^IXIC", // Nasdqe
+            "RUT", // Russell
+            "VIX", // Vix
+        ]    
+}                        
 
 export const UI_PAGE_HOME = "UI_PAGE_HOME";
 export const UI_PAGE_COMPARE_STOCK_INDEXES_CHARTS = "UI_PAGE_COMPARE_STOCK_INDEXES_CHARTS";
