@@ -1,19 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import StockChart from './stock-index-data/StockChart';
 import * as Constant from "@/lib/constant";
 import { useMainUi } from '@/contexts/MainUiContext';
 import { JSONObject } from '@/lib/definations';
-import StockIndexDetails from './stock-index-data/StockIndexDetails';
 import StockIndexList from './stock-index-list/StockIndexList';
 import SearchStock from './stock-index-list/SearchStock';
 import { fetchIndividualData } from '@/lib/utils/fetchStockIndexes';
 import * as AppStore from "@/lib/AppStore";
 import CountryList from './stock-index-list/CountryList';
-import CompareStockPage from './compare-stock-indexes-chart/CompareStockPage';
-import fetchHistoricalData from '@/lib/utils/fetchStockHistoricalData';
 
 
 export default function HomePage() {
@@ -25,7 +20,7 @@ export default function HomePage() {
 
 	useEffect(() => {
 		AppStore.setCompareSymbolList([]);
-	},[])
+	}, [])
 
 	const addItem = async (data: JSONObject) => {
 		const response = await fetchIndividualData(data.symbol);
@@ -53,21 +48,19 @@ export default function HomePage() {
 
 	return (
 		<>
-			{/* {compareStocks === null &&  */}
-				<div className='flex flex-col'>
-					<div><SearchStock handleOnItemSelect={(stockData) => addItem(stockData)} handleOnClose={() => { }} /></div>
-
-					<div className="mt-20 pl-4 mb-2"><CountryList 
-						selectedItem="US" 
-						onSelectedItem={(countryCode) => handleCountryChange(countryCode) }
-						onCompareMarkets={(countryCode) => handleShowCompareChart(countryCode) }
-					/></div>
+			<div className='flex flex-col'>
+				
+				<div className="mt-3 mb-2"><CountryList
+					selectedItem="US"
+					onSelectedItem={(countryCode) => handleCountryChange(countryCode)}
+					onCompareMarkets={(countryCode) => handleShowCompareChart(countryCode)}
+				/></div>
 
 				{symbolList.length > 0 && <div><StockIndexList symbols={symbolList} handleOnItemClick={(item) => AppStore.setSelectedSymbolData(item)} /></div>}
-			</div>
-			{/* } */}
 
-			{/* {compareStocks !== null && <CompareStockPage stockList={compareStocks} />} */}
+				<div className="mt-5 ml-3"><SearchStock handleOnItemSelect={(stockData) => addItem(stockData)} handleOnClose={() => { }} /></div>
+
+			</div>
 		</>
 	);
 };

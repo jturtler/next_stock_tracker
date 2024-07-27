@@ -9,6 +9,7 @@ import CompareStockChart from "./CompareStockChart";
 import * as AppStore from "@/lib/AppStore";
 import * as Constant from "@/lib/constant";
 import { fetchIndividualData } from "@/lib/utils/fetchStockIndexes";
+import Loading from "../layout/Loading";
 
 
 interface PercentChange {
@@ -137,7 +138,7 @@ export default function CompareStockPage() {
 	const transformedData = transformChartData();
 
 
-	if(loading) return ( <div>Loading</div> );
+	if(loading) return ( <Loading /> );
 	
 	return (
 		<div className="m-5 flex flex-col space-y-5">

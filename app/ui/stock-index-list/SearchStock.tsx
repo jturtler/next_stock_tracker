@@ -36,7 +36,6 @@ export default function SearchStock({ handleOnItemSelect, handleOnClose }: { han
 
 	const handleOnSelect = (data: JSONObject) => {
 		handleOnItemSelect(data);
-		// handleOnClose();
 	}
 
 	const handleClickOutside = (event: MouseEvent) => {
@@ -55,11 +54,11 @@ export default function SearchStock({ handleOnItemSelect, handleOnClose }: { han
 
 
 	return (
-		<div className="flex flex-col w-1/2 bg-slate-500 shadow-xl fixed" ref={divRef} >
+		<div className="flex flex-col w-1/2 shadow-sm fixed" ref={divRef} >
 
 			<div className="relative m-1" onClick={() => setShowSearchResultList(true)}>
 				<input
-					className="pl-10 peer block w-full rounded-md border border-gray-400 py-[9px] text-sm outline-2 placeholder:text-gray-500 "
+					className="pl-10 peer block w-full rounded-md border border-gray-400 py-[15px] text-sm outline-2 placeholder:text-gray-500 "
 					id="username"
 					value={searchcKey}
 					placeholder="Search for stock"
