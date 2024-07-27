@@ -11,9 +11,9 @@ import { Document } from "mongoose";
 export async function GET(request: NextRequest) {
 	const { searchParams } = new URL(request.url);
 ``
-	const username = searchParams.get("username");
+	const email = searchParams.get("email");
 	const password = searchParams.get("password");
-	const searchResult = await User.find(({username}));
+	const searchResult = await User.find(({email}));
 
 	// Find the users with the password if there is password in parametters
 	let matchedUser: Document | null = null;

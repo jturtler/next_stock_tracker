@@ -14,23 +14,22 @@ import { useAuth } from "@/contexts/AuthContext";
 
 export default function RegisterForm() {
 
-	// const { setMainPage } = useMainUi();
+	const { setMainPage } = useMainUi();
 	const { loading, error, user, register} = useAuth();
 
 	const [email, setEmail] = useState("");
 
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
-	const [errorMsg, setErrorMsg] = useState("");
+	const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
 
-	useEffect(() => {
-	  if( user != null ) {
-	    // setMainPage( Constant.UI_BUDGET_PAGE );
-	  }
-	},[user])
+	// useEffect(() => {
+	//   if( user != null ) {
+	// 	alert("User is registered")
+	//   }
+	// },[user])
 
-   
 	const handleRegisterBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 
@@ -39,28 +38,45 @@ export default function RegisterForm() {
 		}
 	};
 
-	const checkConfirmPassword = () => {
-		console.log("============ \n password: " + password);
-		console.log("confirmPassword: " + confirmPassword);
-		if( confirmPassword !== password ) {
-			setErrorMsg("Password is not matched");
-			return false;
-		}
+	
+    const validateConfirmPassword = (password: string, confirmPassword: string) => {
+        if (password !== confirmPassword) {
+            setErrorMsg('Passwords do not match!');
+        } else {
+            setErrorMsg(null);
+        }
+    };
 
-		return true;
-	}
 
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const newPassword = e.target.value;
+        setPassword(newPassword);
+        validateConfirmPassword(newPassword, confirmPassword);
+    };
+
+    const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newConfirmPassword = e.target.value;
+        setConfirmPassword(newConfirmPassword);
+        validateConfirmPassword(password, newConfirmPassword);
+    };
+	
 	const checkValidUser = () => {
-		return( email !== "" && password !== "" && confirmPassword !== password );
+		return( email !== "" && password !== "" && confirmPassword === password );
 	}
 
     const handleCancelBtn = () => {
-        // const ok = confirm("Are you sure you don't want to register an account ?")
-        // if( ok ) {
-        //     // setMainPage(Constant.UI_INTRO_PAGE);
-        // }
+        const ok = confirm("Are you sure you don't want to register an account ?")
+        if( ok ) {
+            setMainPage(Constant.UI_PAGE_HOME);
+        }
     }
 	
+	if ( user !== null ) return ( 
+		<div className="m-40 space-y-4">
+			<div className="text-green-600 text-2xl">User <span className="italic font-semibold ">{user.email}</span> is created and logged.</div>
+			<button className="bg-yellow-300 p-3 rounded-lg shadow-md" onClick={() => setMainPage(Constant.UI_PAGE_HOME)}>Go to Home page</button>
+		</div> 
+	);
 
 	return (
 		<div className="max-w-md mx-auto p-8 h-[calc(100vh-138px)]">
@@ -108,7 +124,7 @@ export default function RegisterForm() {
 						required
 						minLength={4}
 						placeholder="Enter your password"
-						onChange={(e) => { setPassword(e.target.value), checkConfirmPassword(); }}
+						onChange={handlePasswordChange}
 					/>
 					<IoKeyOutline className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
 					
@@ -133,11 +149,11 @@ export default function RegisterForm() {
 						required
 						minLength={4}
 						placeholder="Confirm Password"
-						onChange={(e) => {setConfirmPassword(e.target.value); checkConfirmPassword();}}
+						onChange={handleConfirmPasswordChange}
 					/>
 					<IoKeyOutline className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
 
-					{errorMsg !== "" && <span className="text-red-500">{errorMsg}</span>}
+					{errorMsg !== null && <span className="text-red-500">{errorMsg}</span>}
 				</div>
 			</div>
 

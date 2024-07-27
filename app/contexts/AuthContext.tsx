@@ -7,7 +7,7 @@ import * as Utils from "@/lib/utils";
 
 interface AuthContextProps {
 	user: JSONObject | null;
-	login: (username: string, pin: string) => Promise<void>;
+	login: (email: string, password: string) => Promise<void>;
 	logout: () => void;
 	register: (user: JSONObject) => Promise<void>;
 	error: string | null;
@@ -36,11 +36,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
 
-	const login = async (username: string, password: string) => {
+	const login = async (email: string, password: string) => {
 		setLoading(true);
 		setError(null);
 		try {
-			const response = await fetch(`api/auth?username=${username}&password=${password}`);
+			const response = await fetch(`api/auth?email=${email}&password=${password}`);
             
 			if (!response.ok) {
                 setError("Network response was not ok");
@@ -68,12 +68,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const register = async(user: JSONObject) => {
 		setLoading(true);
 		setError(null);
-			
+		
 		try {
 			const response = await fetch("api/auth", {
 				method: "POST",
 				headers: {
-					"Content-type": "appliction/json"
+					"Content-type": "application/json"
 				},
 				body: JSON.stringify(user)
 			});

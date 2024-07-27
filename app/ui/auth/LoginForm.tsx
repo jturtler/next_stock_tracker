@@ -16,7 +16,7 @@ export default function LoginForm() {
 	const { setMainPage } = useMainUi();
 	const { user, login, loading, error } = useAuth();
 
-	const [username, setUsername] = useState("test1");
+	const [email, setEmail] = useState("test1");
 	const [password, setPassword] = useState("1234");
 
 
@@ -30,7 +30,7 @@ export default function LoginForm() {
 	const handleLoginBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 
-		login(username, password);
+		login(email, password);
 	};
 
 	const handleCancelBtn = () => {
@@ -44,20 +44,20 @@ export default function LoginForm() {
 			<div className="mb-4">
 				<label
 					className="block text-xs font-medium text-gray-900"
-					htmlFor="username"
+					htmlFor="email"
 				>
-					Username
+					Email
 				</label>
 				<div className="relative">
 					<input
 						className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500 "
-						id="username"
-						type="username"
-						name="username"
-						value={username}
-						placeholder="Enter your username"
+						id="email"
+						type="email"
+						name="email"
+						value={email}
+						placeholder="Enter your email"
 						required
-						onChange={(e) => { setUsername(e.target.value) }}
+						onChange={(e) => { setEmail(e.target.value) }}
 					/>
 					<CiUser className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900"></CiUser>
 				</div>
