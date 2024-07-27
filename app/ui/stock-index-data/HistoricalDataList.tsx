@@ -46,7 +46,6 @@ export default function HistoricalDataList({curPriceData}: {curPriceData: JSONOb
 	
 	let dateRangeList = Utils.dateRangeList.slice();
 	dateRangeList.shift();
-	console.log(dateRangeList); 
 
     return (
         <div className="w-full flex flex-col">

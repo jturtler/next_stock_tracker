@@ -13,12 +13,6 @@ import { useMainUi } from "@/contexts/MainUiContext";
 
 export default function StockIndexDetails({curPriceData, handleOnClose}: {curPriceData: JSONObject, handleOnClose: () => void}) {
 
-    
-    console.log("==== StockIndexDetails");
-console.log(curPriceData);
-
-    // if( curPriceData === null ) return ( <div>Loading ...</div> );
-    
     const {subPage, setSubPage} = useMainUi();
 	const { chartData, dateTimeStamp } = useStockChartData(curPriceData.symbol, "1D");
 
@@ -32,8 +26,6 @@ console.log(curPriceData);
         }
     }
 
-    // if( curPriceData === null ) return ( <div>Loading ...</div> );
-    
     if( chartData == null ) return ( <div>Loading ...</div>);
 
         

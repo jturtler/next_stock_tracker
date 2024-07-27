@@ -1,11 +1,14 @@
 import { JSONObject } from "@/lib/definations";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import StockSelectItem from "./StockSelectItem";
 import * as Utils from "@/lib/utils";
 import StockAddItem from "./StockAddItem";
 import CompareStockDetails from "./CompareStockDetails";
 import fetchHistoricalData from "@/lib/utils/fetchStockHistoricalData";
 import CompareStockChart from "./CompareStockChart";
+import * as AppStore from "@/lib/AppStore";
+import * as Constant from "@/lib/constant";
+import { fetchIndividualData } from "@/lib/utils/fetchStockIndexes";
 
 
 interface PercentChange {
@@ -14,14 +17,46 @@ interface PercentChange {
 	close: number;
 }
 
-interface CompareStockPageProps {
-	stockList?: JSONObject[]; // Stock is a placeholder type; replace with your actual type
-}
+// interface CompareStockPageProps {
+// 	stockList?: JSONObject[]; // Stock is a placeholder type; replace with your actual type
+// }
 
-const CompareStockPage: React.FC<CompareStockPageProps> = ({ stockList = [] }) => {
+// const CompareStockPage: React.FC<CompareStockPageProps> = ({ stockList = [] }) => {
+export default function CompareStockPage() {
 
-	const [stocks, setStocks] = useState<JSONObject[]>(stockList);
+	const [stocks, setStocks] = useState<JSONObject[]>([]);
 	const [details, setDetails] = useState<JSONObject | null>(null);
+	const [loading, setLoading] = useState(false);
+
+
+	const fetchDataForCompareStocks = async(symbols: string[]) => {
+		let list: JSONObject[] = [];
+		for( var i=0; i<symbols.length; i++ ) {
+			const searchSymbolData = await fetchIndividualData(symbols[i]);
+			const data = await fetchHistoricalData(symbols[i], "7D");
+
+			let chartData = searchSymbolData.data[0];
+			
+			const longName = searchSymbolData.longname !== undefined ? searchSymbolData.longname : searchSymbolData.longName;
+			chartData.longname = longName;
+			chartData.chartData = data.data;
+			list.push( chartData );
+		}
+		setLoading(false);
+		setStocks(list);
+	}
+
+	useEffect(() => {
+		const symbols = AppStore.getCompareSymbolList();
+		if( symbols.length > 0 ) {
+			setLoading(true);
+			fetchDataForCompareStocks(symbols);
+		}
+		else {
+			setLoading(false);
+		}
+	}, []);
+
 
 	const addStockData = (stockData: JSONObject) => {
 		fetchHistoricalData(stockData.symbol, "7D").then(response => {
@@ -102,6 +137,8 @@ const CompareStockPage: React.FC<CompareStockPageProps> = ({ stockList = [] }) =
 	const transformedData = transformChartData();
 
 
+	if(loading) return ( <div>Loading</div> );
+	
 	return (
 		<div className="m-5 flex flex-col space-y-5">
 			{/* Search div */}
@@ -137,5 +174,3 @@ const CompareStockPage: React.FC<CompareStockPageProps> = ({ stockList = [] }) =
 		</div>
 	)
 }
-
-export default CompareStockPage;

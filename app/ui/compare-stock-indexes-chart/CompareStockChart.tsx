@@ -4,21 +4,20 @@ import { format, parseISO } from 'date-fns';
 import * as Utils from "@/lib/utils";
 
 
-export default function CompareStockChart({chartData, onUpdateDetails}: {chartData: JSONObject, onUpdateDetails: (data: JSONObject) => void}) {
+export default function CompareStockChart({ chartData, onUpdateDetails }: { chartData: JSONObject, onUpdateDetails: (data: JSONObject) => void }) {
 
-	console.log(chartData);
 	const formatXAxis = (tickItem: string) => {
 		return Utils.formatDisplayDateFromObj(tickItem);
-	  };
+	};
 
 	const formatYPriceAxis = (tickItem: string) => {
 		return Utils.formatDisplayNumber(tickItem) + "%";
 	};
 
 
-    return (
-        <>
-        <ResponsiveContainer width="100%" height={500}>
+	return (
+		<>
+			<ResponsiveContainer width="100%" height={500}>
 				<ComposedChart
 					height={400}
 					data={chartData.data}
@@ -45,6 +44,6 @@ export default function CompareStockChart({chartData, onUpdateDetails}: {chartDa
 
 				</ComposedChart>
 			</ResponsiveContainer>
-            </>
-    )
+		</>
+	)
 }
