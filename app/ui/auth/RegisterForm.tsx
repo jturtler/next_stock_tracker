@@ -39,9 +39,10 @@ export default function RegisterForm() {
 		}
 	};
 
-	const checkConfirmPassword = (value: string) => {
-		setConfirmPassword(value);
-		if( value !== password ) {
+	const checkConfirmPassword = () => {
+		console.log("============ \n password: " + password);
+		console.log("confirmPassword: " + confirmPassword);
+		if( confirmPassword !== password ) {
 			setErrorMsg("Password is not matched");
 			return false;
 		}
@@ -107,7 +108,7 @@ export default function RegisterForm() {
 						required
 						minLength={4}
 						placeholder="Enter your password"
-						onChange={(e) => { setPassword(e.target.value) }}
+						onChange={(e) => { setPassword(e.target.value), checkConfirmPassword(); }}
 					/>
 					<IoKeyOutline className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
 					
@@ -132,7 +133,7 @@ export default function RegisterForm() {
 						required
 						minLength={4}
 						placeholder="Confirm Password"
-						onChange={(e) => checkConfirmPassword(e.target.value)}
+						onChange={(e) => {setConfirmPassword(e.target.value); checkConfirmPassword();}}
 					/>
 					<IoKeyOutline className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
 
