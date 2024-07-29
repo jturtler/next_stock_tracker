@@ -16,7 +16,7 @@ export default function CountryList({selectedItem, onSelectedItem, onCompareMark
             <div className="flex flex-row font-semibold space-x-3 cursor-pointer">
                 <div 
                     onClick={() => onCompareMarkets(selected)}
-                    className="text-gray-400 p-2 rounded-xl flex space-x-2">
+                    className="text-gray-400 p-2 rounded-xl flex space-x-2 font-normal">
                     <FaCodeCompare />
                     <div>Compare Markets</div></div>
                 <div

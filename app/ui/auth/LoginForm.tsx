@@ -22,7 +22,7 @@ export default function LoginForm() {
 
 	useEffect(() => {
 		if (user != null) {
-			// setMainPage( Constant.UI_DASHBOARD_PAGE );
+			setMainPage( Constant.UI_PAGE_HOME );
 		}
 	}, [user])
 

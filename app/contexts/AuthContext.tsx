@@ -10,6 +10,7 @@ interface AuthContextProps {
 	login: (email: string, password: string) => Promise<void>;
 	logout: () => void;
 	register: (user: JSONObject) => Promise<void>;
+	setUser: (user: JSONObject | null) => void,
 	error: string | null;
 	loading: boolean;
 }
@@ -19,6 +20,7 @@ const AuthContext = createContext<AuthContextProps>({
 	login: async () => { },
 	logout: () => { },
 	register: async(user: JSONObject) => {},
+	setUser: (user: JSONObject | null) => {},
 	error: null,
 	loading: false
 });
@@ -46,9 +48,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 setError("Network response was not ok");
             }
             else {
-                const userList = await response.json();
-                if (userList.length > 0 ) {
-                    setUser(userList[0]);
+                const foundUser = await response.json();
+                if (foundUser != null ) {
+                    setUser(foundUser);
                 }
                 else {
                     setError("Username/password is wrong.");
@@ -94,7 +96,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	}
 
 	return (
-		<AuthContext.Provider value={{ user, loading, error: error, login, logout, register }}>
+		<AuthContext.Provider value={{ user, setUser, loading, error: error, login, logout, register }}>
 			{children}
 		</AuthContext.Provider>
 	);

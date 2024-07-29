@@ -54,7 +54,8 @@ export default function SearchStock({ handleOnItemSelect, handleOnClose }: { han
 
 
 	return (
-		<div className="flex flex-col w-1/2 shadow-sm fixed" ref={divRef} >
+		// <div className="flex flex-col w-1/2 shadow-sm fixed" ref={divRef} >
+		<div className="flex flex-col w-1/2 shadow-sm" ref={divRef} >
 
 			<div className="relative m-1" onClick={() => setShowSearchResultList(true)}>
 				<input

@@ -9,6 +9,7 @@ import * as AppStore from "@/lib/AppStore";
 import CompareStocksPage from './compare-stock-indexes-chart/CompareStockPage';
 import LoginForm from './auth/LoginForm';
 import RegisterForm from './auth/RegisterForm';
+import WatchListPage from './watch-list/WatchListPage';
 
 
 export default function AppWrapper() {
@@ -23,6 +24,7 @@ export default function AppWrapper() {
 				{ mainPage == Constant.UI_PAGE_HOME && <HomePage />}
 				{ mainPage == Constant.UI_SYMBOL_DETAILS && <StockIndexDetails curPriceData={AppStore.getSelectedSymbolData()} />}
 				{ mainPage == Constant.UI_PAGE_COMPARE_STOCK_INDEXES_CHARTS && <CompareStocksPage />}
+				{ mainPage == Constant.UI_PAGE_WATCH_LIST && <WatchListPage />}
 				{ mainPage == Constant.UI_PAGE_LOGIN && <LoginForm />}
 				{ mainPage == Constant.UI_PAGE_AUTH_REGISTRATION && <RegisterForm />}
 			</div>
