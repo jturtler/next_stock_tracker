@@ -12,7 +12,7 @@ const WatchListPage: React.FC = () => {
 
 	const getWatchListGroupNames = (): string[] => {
 		if( user != null ) {
-			return Object.keys( user.watchList );
+			return Object.keys( user.watchlist );
 		}
 
 		return [];
@@ -23,16 +23,16 @@ const WatchListPage: React.FC = () => {
 		return nameList.length == 0 ? "" : nameList[0];
 	}
 
-	const [watchList, setWatchlist] = useState<JSONObject[]>([]);
+	const [watchlist, setWatchlist] = useState<JSONObject[]>([]);
 	const [availableStocks, setAvailableStocks] = useState<JSONObject[]>([]);
 	const [selectedStock, setSelectedStock] = useState<string>('');
 	const [showAddWatchListForm, setShowAddWatchListForm] = useState(false);
 
 
-	// const { watchListByGroup, isLoading } = useWatchList( getInitWatchListGroupName() );
+	// const { watchlistByGroup, isLoading } = useWatchList( getInitWatchListGroupName() );
 
 	useEffect(() => {
-		// const savedWatchlist = localStorage.getItem('watchList');
+		// const savedWatchlist = localStorage.getItem('watchlist');
 		// if (savedWatchlist) {
 		// 	setWatchlist(JSON.parse(savedWatchlist));
 		// }
@@ -59,9 +59,9 @@ const WatchListPage: React.FC = () => {
 
 
 	const removeStockFromWatchlist = (symbol: string) => {
-		const updatedWatchlist = watchList.filter(s => s.symbol !== symbol);
+		const updatedWatchlist = watchlist.filter(s => s.symbol !== symbol);
 		setWatchlist(updatedWatchlist);
-		localStorage.setItem('watchList', JSON.stringify(updatedWatchlist));
+		localStorage.setItem('watchlist', JSON.stringify(updatedWatchlist));
 	};
 
 	return (

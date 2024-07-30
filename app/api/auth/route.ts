@@ -10,17 +10,17 @@ import { Document } from "mongoose";
 
 export async function GET(request: NextRequest) {
 	const { searchParams } = new URL(request.url);
-``
+	``
 	const email = searchParams.get("email");
 	const password = searchParams.get("password");
-	const searchResult = await User.find(({email}));
+	const searchResult = await User.find(({ email }));
 
 	// Find the users with the password if there is password in parametters
 	let matchedUser: Document | null = null;
-	for( let i=0; i< searchResult.length; i++ ) {
+	for (let i = 0; i < searchResult.length; i++) {
 		const user = searchResult[i];
-		const matched = await Encrypt.comparePassword( password!, user.password );
-		if( matched ) {
+		const matched = await Encrypt.comparePassword(password!, user.password);
+		if (matched) {
 			matchedUser = user;
 			break;
 		}
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
 
 	// Hash(encrypt) password before creating
 	const password = payload.password;
-	payload.password = await Encrypt.hashPassword( password );
+	payload.password = await Encrypt.hashPassword(password);
 
 	const newUser = await User.create(payload);
 
@@ -42,81 +42,56 @@ export async function POST(request: NextRequest) {
 
 
 export async function PUT(request: NextRequest) {
-	// payload : {mode: "add/remove", userId: "xxx", groupName: "", stock: watchlist item}
+	// payload : {userId: "xxx", groupName: "", stock: watchlist item}
 	const payload: JSONObject = await request.json();
-	const { action, userId, groupName, stock } = payload;
-
-	// // { new: true } --> return the modified document rather than the original one
-    // const newUser = await User.findByIdAndUpdate(payload._id, payload, { new: true, runValidators: true });
-
-	// return NextResponse.json(newUser, { status: 200 });
-
-	
-	// if( action == "add" ) {
-	// 	try {
-	// 		const userData = await User.updateOne(
-	// 			{ _id: userId, "watchlist.groupName": groupName },
-	// 			{ $push: { "watchlist.$.stocks": stock } },
-	// 			{ new: true }
-	// 		);
-	// 		// console.log('Stock added to watchlist successfully.');
-	// 		return NextResponse.json(userData, { status: 200 });
-	// 	} catch (error) {
-	// 		// console.error('Error adding stock to watchlist:', error);
-	// 		return NextResponse.json({msg: Utils.getErrMessage(error)}, { status: 404 });
-	// 	}
-	// }
-	// else if( action == "remove" ) {
-	// 	try {
-	// 		const userData = await User.updateOne(
-	// 			{ _id: userId, "watchlist.groupName": groupName },
-	// 			{ $pull: { "watchlist.$.stocks": { symbol: stock.symbol } } },
-	// 			{ new: true }
-	// 		);
-	// 		// console.log('Stock removed from watchlist successfully.');
-	// 		return NextResponse.json(userData, { status: 200 });
-	// 	} catch (error) {
-	// 		// console.error('Error removing stock from watchlist:', error);
-	// 		return NextResponse.json({msg: Utils.getErrMessage(error)}, { status: 404 });
-	// 	}
-	// }
-	
+	const { userId, groupName, stock } = payload;
 
 	try {
-        // Define update operations based on the action
-        let updateOperation: any;
-        if (action === 'add') {
-            updateOperation = {
-                $push: { "watchlist.$.stocks": stock }
-            };
-        } else if (action === 'remove') {
-            updateOperation = {
-                $pull: { "watchlist.$.stocks": { symbol: stock.symbol } }
-            };
-        } else {
-            throw new Error('Invalid action specified.');
-        }
+		// Check if the user exists
+		const user = await User.findById(userId);
+		if (!user) {
+			throw new Error('User not found.');
+		}
 
-        // Perform the update and get the updated user document
-        const updatedUser = await User.findOneAndUpdate(
-            { _id: userId, "watchlist.groupName": groupName },
-            updateOperation,
-            { new: true } // Return the updated document
-        );
+		// Check if the group already exists in the watchlist
+		const groupExists = user.watchlist.some((group: any) => group.groupName === groupName);
 
-        if (!updatedUser) {
-            throw new Error('User or watchlist group not found.');
-        }
+		if (groupExists) {
+			// If the group exists, update the stocks array
+			const updatedUser = await User.findOneAndUpdate(
+				{ _id: userId, "watchlist.groupName": groupName },
+				{ $push: { "watchlist.$.stocks": stock } },
+				{ new: true, useFindAndModify: false }
+			).exec();
 
-        // console.log('Watchlist updated successfully.');
-        // return updatedUser; // Return the updated user document
-		return NextResponse.json(updatedUser, { status: 200 });
+			if (!updatedUser) {
+				throw new Error('Failed to update watchlist group.');
+			}
 
-    } catch (error) {
-        // console.error('Error updating watchlist:', error);
-        // throw error; // Re-throw error to handle it at the call site
-		return NextResponse.json({msg: Utils.getErrMessage(error)}, { status: 404 });
-    }
+			console.log('Watchlist updated successfully.');
+
+			return NextResponse.json(updatedUser, { status: 200 });
+
+		} else {
+			// If the group does not exist, create a new group and add the stock
+			const updatedUser = await User.findOneAndUpdate(
+				{ _id: userId },
+				{ $addToSet: { watchlist: { groupName: groupName, stocks: [stock] } } },
+				{ new: true, useFindAndModify: false }
+			).exec();
+
+			if (!updatedUser) {
+				throw new Error('Failed to add new watchlist group.');
+			}
+
+			console.log('Watchlist updated successfully.');
+			return NextResponse.json(updatedUser, { status: 200 }); // Return the updated user document
+		}
+
+
+	} catch (error) {
+		return NextResponse.json({ msg: Utils.getErrMessage(error) }, { status: 404 });
+	}
 
 }
 

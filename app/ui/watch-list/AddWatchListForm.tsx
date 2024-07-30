@@ -14,7 +14,7 @@ export default function AddWatchListForm() {
 
 	const addStockToWatchlist = async() => {
         if( groupName !== "" && selectedSymbol !== null ) {
-            // let availableWatchList = user!.watchList;
+            // let availableWatchList = user!.watchlist;
             // if( availableWatchList === undefined ) availableWatchList = [];
 
             const newStock = { symbol: selectedSymbol.symbol, name: selectedSymbol.longName, addedAt: new Date() };
@@ -50,10 +50,10 @@ export default function AddWatchListForm() {
 			}
         }
 		// const stock = availableStocks.find(s => s.symbol === selectedStock);
-		// if (stock && !watchList.find(s => s.symbol === stock.symbol)) {
-		// 	const updatedWatchlist = [...watchList, stock];
+		// if (stock && !watchlist.find(s => s.symbol === stock.symbol)) {
+		// 	const updatedWatchlist = [...watchlist, stock];
 		// 	setWatchlist(updatedWatchlist);
-		// 	localStorage.setItem('watchList', JSON.stringify(updatedWatchlist));
+		// 	localStorage.setItem('watchlist', JSON.stringify(updatedWatchlist));
 		// }
 	};
 
@@ -72,7 +72,7 @@ export default function AddWatchListForm() {
             <div className="flex flex-row space-x-3">
                 <div>Choose an existing group name</div>
                 <select className="flex-1 border border-gray-300 rounded-md p-3" value={groupName} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setGroupName(e.target.value)}>
-                    {user!.watchList.map((item: JSONObject, idx: number) => (
+                    {user!.watchlist.map((item: JSONObject, idx: number) => (
                         <option key={`groupName_${item.groupName}`} value={item.groupName}>{item.groupName}</option>
                     ))}
                 </select>

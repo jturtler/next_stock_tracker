@@ -7,8 +7,8 @@ export default function WatchList({handleItemClick}: {handleItemClick: (groupIte
 
 	return (
 		<div className="flex flex-col">
-			{user!.watchList.map((item: JSONObject, idx: number) => (
-				<div key={`watchList_${idx}`} onClick={() => handleItemClick(item)}>{item.groupName}</div>
+			{user!.watchlist.map((item: JSONObject, idx: number) => (
+				<div key={`watchlist_${idx}`} onClick={() => handleItemClick(item)}>{item.groupName}</div>
 			))}
 		</div>
 	)
