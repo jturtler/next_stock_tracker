@@ -14,24 +14,8 @@ export default function AddWatchListForm() {
 
 	const addStockToWatchlist = async() => {
         if( groupName !== "" && selectedSymbol !== null ) {
-            // let availableWatchList = user!.watchlist;
-            // if( availableWatchList === undefined ) availableWatchList = [];
-
-            const newStock = { symbol: selectedSymbol.symbol, name: selectedSymbol.longName, addedAt: new Date() };
-
-            // const foundGroup = Utils.findFromArray(availableWatchList, groupName, "groupName");
-            // if( foundGroup ) {
-            //     if( foundGroup.stocks == undefined ) {
-            //         foundGroup.stocks = [];
-            //     }
-            //     foundGroup.stocks.push(newStock)
-            // }
-            // else {
-            //     const group = { groupName, stocks: [] }
-            //     availableWatchList.push(newStock)
-            // }
-
-            const payload = {action: "add", userId: user!._id, groupName: groupName, stock: selectedSymbol}
+            const newStock = { symbol: selectedSymbol.symbol, name: selectedSymbol.shortname, addedAt: new Date() };
+            const payload = {userId: user!._id, groupName: groupName, stock: newStock}
 
             const response = await fetch("api/auth", {
 				method: "PUT",

@@ -13,7 +13,7 @@ import CountryList from './stock-index-list/CountryList';
 
 export default function HomePage() {
 
-	const { mainPage, setMainPage, setSubPage } = useMainUi();
+	const { mainPage, setMainPage } = useMainUi();
 
 	const [selectedStock, setSelectedStock] = useState<JSONObject | null>(null);
 	const [symbolList, setSymbolList] = useState<string[]>(Constant.SYMBOL_DEFAULT_LIST["US"]);
@@ -27,7 +27,6 @@ export default function HomePage() {
 		if (response.status == "success") {
 			AppStore.setSelectedSymbolData(response.data[0]);
 			setMainPage(Constant.UI_SYMBOL_DETAILS);
-			setSubPage(Constant.UI_CHART);
 			setSelectedStock(response.data[0]);
 		}
 	}
@@ -42,7 +41,6 @@ export default function HomePage() {
 		AppStore.setCompareSymbolList(symbols);
 
 		setMainPage(Constant.UI_PAGE_COMPARE_STOCK_INDEXES_CHARTS);
-		setSubPage(Constant.UI_CHART);
 	};
 
 

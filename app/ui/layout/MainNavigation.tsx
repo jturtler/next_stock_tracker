@@ -10,9 +10,9 @@ export default function MainNavigation() {
 
     const [selected, setSelected] = useState( Constant.UI_PAGE_HOME );
 
-    const {setMainPage, setSubPage} = useMainUi();
+    const { setMainPage } = useMainUi();
     const { user } = useAuth();
-console.log(user);
+
     const handleOnClick = (name: string) => {
         setSelected(name)
         setMainPage(name);

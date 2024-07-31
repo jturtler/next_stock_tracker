@@ -3,19 +3,15 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import * as Constant from "@/lib/constant";
 
+
 interface MainUiContextProps {
 	mainPage: string;
-	subPage: string | null;
 	setMainPage: (pageName: string) => void;
-	setSubPage: (pageName: string | null ) => void;
 }
 
 const MainUiContext = createContext<MainUiContextProps>({
-	// mainPage: Contanst.UI_INTRO_PAGE,
-	mainPage: "",
-	subPage: null,
-	setMainPage: (pageName: String) => {},
-	setSubPage: (pageName: String | null) => {}
+	mainPage: Constant.UI_PAGE_HOME,
+	setMainPage: (pageName: String) => {}
 });
 
 export const useMainUi = (): MainUiContextProps => {
@@ -28,10 +24,9 @@ export const useMainUi = (): MainUiContextProps => {
 
 export const MainUiProvider = ({ children }: { children: ReactNode }) => {
 	const [mainPage, setMainPage] = useState<string>(Constant.UI_PAGE_HOME);
-	const [subPage, setSubPage] = useState<string | null>(null);
 
 	return (
-		<MainUiContext.Provider value={{ mainPage, setMainPage, subPage, setSubPage }}>
+		<MainUiContext.Provider value={{ mainPage, setMainPage }}>
 			{children}
 		</MainUiContext.Provider>
 	);

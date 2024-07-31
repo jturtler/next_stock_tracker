@@ -11,13 +11,12 @@ import Loading from '../layout/Loading';
 
 export default function StockIndexList({ symbols, handleOnItemClick }: { symbols: string[], handleOnItemClick: (item: JSONObject) => void }) {
 
-  const { setMainPage, setSubPage } = useMainUi();
+  const { setMainPage } = useMainUi();
 
   const { stockPriceList, isLoading } = useStockData(symbols);
 
   const itemOnClick = (item: JSONObject) => {
     setMainPage(Constant.UI_SYMBOL_DETAILS);
-    setSubPage(Constant.UI_CHART);
     handleOnItemClick(item);
   }
 
