@@ -14,7 +14,7 @@ export default function CurrentPriceDetails({priceData}: {priceData: JSONObject}
 			<li className="flex flex-row justify-between py-2 border-b border-dotted border-gray-400">Currency: <span className="font-semibold">{priceData.currency}</span></li>
 			<li className="flex flex-row justify-between py-2 border-b border-dotted border-gray-400">
 				<div>Close:<span className="font-semibold pl-2">{Utils.formatDisplayNumber(priceData.regularMarketPrice)}</span></div>
-				<span className={`font-semibold ${priceData.regularMarketChange > 0 ? "text-green-500" : "bg-text-500"}`}>({priceData.regularMarketChange > 0 && "+"}{Utils.formatDisplayNumber(priceData.regularMarketChange * 100)}%)</span>
+				<span className={`font-semibold ${priceData.regularMarketChange > 0 ? "text-green-500" : "bg-text-500"}`}>({priceData.regularMarketChangePercent > 0 && "+"}{Utils.formatDisplayNumber(priceData.regularMarketChangePercent)}%)</span>
 			</li>
 			<li className="flex flex-row justify-between py-2 border-b border-dotted border-gray-400">
 				<span>Open</span>
