@@ -17,7 +17,7 @@ const Loading: React.FC<LoadingProps> = ({ size = 'medium', color = 'blue-500' }
 	return (
 		<div className="flex justify-center items-center h-screen">
 			<div
-				className={`border-t-4 border-solid border-${color} ${sizeClass} border-gray-200 rounded-full animate-spin`}
+				className={`border-t-4 border-solid border-${color} ${sizeClass} border-gray-300 rounded-full animate-spin`}
 			></div>
 		</div>
 	);

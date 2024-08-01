@@ -23,9 +23,9 @@ export default function StockIndexDetails({curPriceData}: {curPriceData: JSONObj
     if( chartData == null ) return ( <Loading />);
 
     return (
-        <div className="flex flex-row p-5">
+        <div className="flex flex-row p-3">
             <div className="flex-1">
-                <h2 className="font-bold text-3xl py-2 flex space-x-3 items-center">
+                <h2 className="font-bold text-3xl flex items-center space-x-2">
                     <div>{curPriceData.longName}</div>
                     {showHistoryData && <PiChartLineDuotone className="text-orange-500 cursor-pointer font-bold shadow-lg" onClick={()=> setShowHistoryData(false)} />}
                     {!showHistoryData && <MdHistory className="text-orange-500 font-semibold cursor-pointer shadow-lg" onClick={()=> setShowHistoryData(true)} />}

@@ -9,6 +9,7 @@ import * as AppStore from "@/lib/AppStore";
 import * as Constant from "@/lib/constant";
 import { useMainUi } from "@/contexts/MainUiContext";
 import { fetchIndividualData } from "@/lib/utils/fetchStockIndexes";
+import Loading from "../layout/Loading";
 
 
 export default function WatchListDetails({ groupName }: { groupName: string }) {
@@ -67,13 +68,14 @@ export default function WatchListDetails({ groupName }: { groupName: string }) {
 		setMainPage(Constant.UI_SYMBOL_DETAILS);
 	}
 
+	if( stocks === null ) return <><Loading /></>
 	return (
 		<>
-			<div className="font-medium w-full border border-purple-200 mt-2 rounded-md">
+			<div className="font-medium w-full mt-2 rounded-md">
 				<div className="flex flex-col w-full">
 					{stocks !== null && stocks.map((stock: JSONObject, idx: number) => (
 						<div
-							className={`flex flex-row w-full ${(idx % 2) === 0 ? "bg-white" : "bg-purple-50"} p-3 cursor-pointer`}
+							className={`flex flex-row ${(idx % 2) === 0 ? "bg-white" : "bg-purple-50"} p-3 cursor-pointer`}
 							key={`watchlist_${idx}`}
 							onClick={() => showStockDetails(stock)}
 						>
@@ -86,20 +88,23 @@ export default function WatchListDetails({ groupName }: { groupName: string }) {
 								</div>
 							</div>
 
-							<div className="flex flex-grow flex-row items-center text-right space-x-4">
-								<div className="text-lg font-semibold p-2">
+							<div className="flex flex-row text-right space-x-4 flex-1 items-end justify-end text-lg font-semibold">
+								<div className="p-2">
 									{Utils.formatDisplayNumber(stock.regularMarketPrice)}
 								</div>
 
+								<div className="p-2 rounded-lg flex-row space-x-2 hidden md:flex">
+									{Utils.formatDisplayNumber(stock.regularMarketChange)}
+								</div>
+
 								{stock.regularMarketChangePercent > 0 && (
-									<div className="bg-green-100 text-green-600 p-2 rounded-lg flex flex-row items-center space-x-2">
+									<div className="bg-green-100 text-green-600 p-2 rounded-lg flex flex-row space-x-2">
 										<FaArrowUp />
 										<div>{Utils.formatDisplayNumber(stock.regularMarketChangePercent)}%</div>
 									</div>
 								)}
-
 								{stock.regularMarketChangePercent < 0 && (
-									<div className="bg-red-100 text-red-600 p-2 rounded-lg flex flex-row items-center space-x-2">
+									<div className="bg-red-100 text-red-600 p-2 rounded-lg flex flex-row space-x-2">
 										<FaArrowDown />
 										<div>{Utils.formatDisplayNumber(stock.regularMarketChangePercent)}%</div>
 									</div>
@@ -107,7 +112,7 @@ export default function WatchListDetails({ groupName }: { groupName: string }) {
 							</div>
 
 							<div
-								className="flex items-center ml-4 cursor-pointer"
+								className="flex items-center ml-4 cursor-pointer text-red-700"
 								onClick={() => removeStockToWatchlist(groupName, stock)}
 							>
 								<IoClose size={26} />

@@ -56,21 +56,6 @@ const CustomTooltip = ({payload, label}: any) => {
 
 export default function StockChart({ chartData }: { chartData: JSONObject[] }) {
 	const [dateRangeName, setDateRangeName] = useState("1D");
-	// const [chartData, setChartData] = useState<JSONObject[]>([]);
-
-	// const fetchStockData = async() => {
-	// 	try{
-	// 		const response = await fetchStockChartData(curPriceData.symbol, dateRangeName);
-	// 		if( response.status == "success" ) {
-	// 			setChartData( response.data );
-	// 		}
-	// 		else {
-	// 			console.error(response.message);
-	// 		}
-	// 	} catch (error) {
-	// 		console.error('Error fetching stock data:', error);
-	// 	}
-	// };
 
 	useEffect(() => {
 		// fetchStockData();
@@ -121,8 +106,8 @@ export default function StockChart({ chartData }: { chartData: JSONObject[] }) {
 
 
 	return (
-		<div className="py-10">
-			<ResponsiveContainer width="100%" height={500}>
+		<div className="pt-7">
+			<ResponsiveContainer width="100%" height={360}>
 				<ComposedChart
 					height={400}
 					data={chartData}
@@ -174,7 +159,7 @@ export default function StockChart({ chartData }: { chartData: JSONObject[] }) {
 				</ComposedChart>
 			</ResponsiveContainer>
 
-			<div className="flex flex-row space-x-6 px-3 font-semibold p-3">
+			<div className="flex flex-row space-x-6 px-3 font-semibold">
 				{Utils.dateRangeList.map((item, i) => (
 					<ChartDateRange key={`dateRange_${i}`} name={item} selected={dateRangeName == item} handleOnClick={(name: string) => setDateRangeName(name)} />
 				))}
