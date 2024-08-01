@@ -42,9 +42,9 @@ export async function POST(request: NextRequest) {
 
 
 export async function PUT(request: NextRequest) {
-	// payload : {userId: "xxx", groupName: "", stock: watchlist item}
+	// payload : {action: "add/remove", userId: "xxx", groupName: "", stock: stockData}
 	const payload: JSONObject = await request.json();
-	const { userId, groupName, stock } = payload;
+	const { action, userId, groupName, stock } = payload;
 
 	try {
 		// Check if the user exists
@@ -56,39 +56,47 @@ export async function PUT(request: NextRequest) {
 		// Check if the group already exists in the watchlist
 		const groupExists = user.watchlist.some((group: any) => group.groupName === groupName);
 
+		let updatedUser;
 		if (groupExists) {
 			// If the group exists, update the stocks array
-			const updatedUser = await User.findOneAndUpdate(
-				{ _id: userId, "watchlist.groupName": groupName },
-				{ $push: { "watchlist.$.stocks": stock } },
-				{ new: true, useFindAndModify: false }
-			).exec();
+			if( action === "add" ) {
+				updatedUser = await User.findOneAndUpdate(
+					{ _id: userId, "watchlist.groupName": groupName },
+					{ $push: { "watchlist.$.stocks": stock } },
+					{ new: true, useFindAndModify: false }
+				).exec();
+			}
+			else if( action === "remove" ) {
+				updatedUser = await User.findOneAndUpdate(
+					{ _id: userId, "watchlist.groupName": groupName },
+					{ $pull: { "watchlist.$.stocks": { symbol: stock.symbol } } },
+					{ new: true, useFindAndModify: false }
+				).exec();
+			}
 
 			if (!updatedUser) {
-				throw new Error('Failed to update watchlist group.');
+				throw new Error('Failed to add watchlist.');
 			}
 
 			console.log('Watchlist updated successfully.');
-
 			return NextResponse.json(updatedUser, { status: 200 });
 
 		} else {
 			// If the group does not exist, create a new group and add the stock
-			const updatedUser = await User.findOneAndUpdate(
+			updatedUser = await User.findOneAndUpdate(
 				{ _id: userId },
 				{ $addToSet: { watchlist: { groupName: groupName, stocks: [stock] } } },
 				{ new: true, useFindAndModify: false }
 			).exec();
 
 			if (!updatedUser) {
-				throw new Error('Failed to add new watchlist group.');
+				throw new Error('Failed to update watchlist.');
 			}
-
-			console.log('Watchlist updated successfully.');
-			return NextResponse.json(updatedUser, { status: 200 }); // Return the updated user document
 		}
 
-
+		console.log('Watchlist updated successfully.');
+		return NextResponse.json(updatedUser, { status: 200 }); // Return the updated user document
+		
 	} catch (error) {
 		return NextResponse.json({ msg: Utils.getErrMessage(error) }, { status: 404 });
 	}

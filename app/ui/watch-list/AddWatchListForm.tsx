@@ -15,7 +15,7 @@ export default function AddWatchListForm() {
 	const addStockToWatchlist = async() => {
         if( groupName !== "" && selectedSymbol !== null ) {
             const newStock = { symbol: selectedSymbol.symbol, name: selectedSymbol.shortname, addedAt: new Date() };
-            const payload = {userId: user!._id, groupName: groupName, stock: newStock}
+            const payload = {action: "add", userId: user!._id, groupName: groupName, stock: newStock}
 
             const response = await fetch("api/auth", {
 				method: "PUT",
@@ -31,6 +31,7 @@ export default function AddWatchListForm() {
 			else {
 				const newUser = await response.json();
 				setUser(newUser);
+                alert("Add successfully !");
 			}
         }
 		// const stock = availableStocks.find(s => s.symbol === selectedStock);

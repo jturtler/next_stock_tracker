@@ -45,20 +45,18 @@ export default function HomePage() {
 
 
 	return (
-		<>
-			<div className='flex flex-col'>
-				
-				<div className="mt-3 mb-2"><CountryList
-					selectedItem="US"
-					onSelectedItem={(countryCode) => handleCountryChange(countryCode)}
-					onCompareMarkets={(countryCode) => handleShowCompareChart(countryCode)}
-				/></div>
+		<div className='flex flex-col'>
+			
+			<div className="mt-3 mb-2"><CountryList
+				selectedItem="US"
+				onSelectedItem={(countryCode) => handleCountryChange(countryCode)}
+				onCompareMarkets={(countryCode) => handleShowCompareChart(countryCode)}
+			/></div>
 
-				{symbolList.length > 0 && <div><StockIndexList symbols={symbolList} handleOnItemClick={(item) => AppStore.setSelectedSymbolData(item)} /></div>}
+			{symbolList.length > 0 && <div><StockIndexList symbols={symbolList} handleOnItemClick={(item) => AppStore.setSelectedSymbolData(item)} /></div>}
 
-				<div className="mt-5 ml-3"><SearchStock handleOnItemSelect={(stockData) => addItem(stockData)} handleOnClose={() => { }} /></div>
+			<div className="mt-5 ml-3"><SearchStock handleOnItemSelect={(stockData) => addItem(stockData)} handleOnClose={() => { }} /></div>
 
-			</div>
-		</>
+		</div>
 	);
 };
