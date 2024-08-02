@@ -14,14 +14,27 @@ export default function CurrentPriceDetails({priceData}: {priceData: JSONObject}
 					({priceData.regularMarketChangePercent > 0 && "+"}{Utils.formatDisplayNumber(priceData.regularMarketChangePercent)}%)
 				</span>
 			</li>
+			
+			{priceData.marketCap && <li className="flex flex-row justify-between py-2 border-b border-dotted border-gray-400">
+				<span>Market Cap:</span>
+				<span className="font-semibold">{Utils.formatDisplayNumber(priceData.marketCap)}</span>
+			</li>}
+			{priceData.dividendYield && <li className="flex flex-row justify-between py-2 border-b border-dotted border-gray-400">
+				<span>Dividend Yield:</span>
+				<span className="font-semibold">{Utils.formatDisplayNumber(priceData.dividendYield)}</span>
+			</li>}
 			<li className="flex flex-row justify-between py-2 border-b border-dotted border-gray-400">
 				<span>Open:</span>
 				<span className="font-semibold">{Utils.formatDisplayNumber(priceData.regularMarketOpen)}</span>
 			</li>
 			<li className="flex flex-row justify-between py-2 border-b border-dotted border-gray-400">
-				<span className="pr-3">Date Range:</span>
+				<span className="pr-3">Day High/Low:</span>
 				<span className="font-semibold">{Utils.formatDisplayNumber(priceData.regularMarketDayLow)} - {Utils.formatDisplayNumber(priceData.regularMarketDayHigh)}</span>
 			</li>
+			{priceData.fiftyTwoWeekLowChange && <li className="flex flex-row justify-between py-2 border-b border-dotted border-gray-400">
+				<span className="pr-3">55 Week High/Low:</span>
+				<span className="font-semibold">{Utils.formatDisplayNumber(priceData.fiftyTwoWeekLow)} - {Utils.formatDisplayNumber(priceData.fiftyTwoWeekHigh)}</span>
+			</li>}
 			<li className="flex flex-row justify-between py-2 border-b border-dotted border-gray-400">
 				<span>Volume:</span>
 				<span className="font-semibold">{Utils.formatDisplayNumber(priceData.regularMarketVolume)}</span>

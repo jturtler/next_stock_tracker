@@ -1,8 +1,4 @@
 import { JSONObject } from "@/lib/definations";
-import axios from "axios";
-import { useState } from "react"
-import { FiSearch } from "react-icons/fi";
-import { FaArrowRight } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
 import SearchStock from "../stock-index-list/SearchStock";
 

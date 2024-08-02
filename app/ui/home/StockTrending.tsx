@@ -5,29 +5,31 @@ import * as Utils from "@/lib/utils";
 import { useMainUi } from "@/contexts/MainUiContext";
 import * as AppStore from "@/lib/AppStore";
 import * as Constant from "@/lib/constant";
+import useStockTrending from "@/lib/hooks/useStockTrending";
+import Loading from "../layout/Loading";
 
 
 export default function StockTrending() {
 
-	const [list, setList] = useState<JSONObject>([]);
 	const {setMainPage} = useMainUi();
+	const {stockTrending, isLoading} = useStockTrending();
 
-	const getStockTrending = async () => {
+	// const getStockTrending = async () => {
 
-		const response = await axios.get(`/api/stock-trending`);
+	// 	const response = await axios.get(`/api/stock-trending`);
 
-		let dataList = response.data;
-		if (dataList === undefined) {
-			setList([]);
-		}
-		else {
-			setList(dataList);
-		}
-	}
+	// 	let dataList = response.data;
+	// 	if (dataList === undefined) {
+	// 		setList([]);
+	// 	}
+	// 	else {
+	// 		setList(dataList);
+	// 	}
+	// }
 
-	useEffect(() => {
-		getStockTrending();
-	}, []);
+	// useEffect(() => {
+	// 	getStockTrending();
+	// }, []);
 
 	
 	const handleItemOnClick = (item: JSONObject) => {
@@ -35,6 +37,8 @@ export default function StockTrending() {
 		setMainPage(Constant.UI_SYMBOL_DETAILS);
 	}
 
+
+	if (isLoading) return <Loading />
 
 	return (
 		<div className="m-3">
@@ -56,7 +60,7 @@ export default function StockTrending() {
 					</thead>
 
 					<tbody className="bg-white divide-y divide-gray-200">
-						{list.map((item: JSONObject, idx: number) => (
+						{stockTrending.map((item: JSONObject, idx: number) => (
 							<tr className="border-b border-gray-200 even:bg-gray-100" key={`trending_${idx}`}>
 								<td className="px-6 py-4 text-left whitespace-nowrap text-sm font-semibold text-blue-700 cursor-pointer" onClick={() => handleItemOnClick(item)}>{item.symbol}</td>
 								<td className="px-6 py-4 text-left whitespace-nowrap text-sm font-semibold">{item.longName}</td>
@@ -74,7 +78,7 @@ export default function StockTrending() {
 			</div>
 
 			<div className="flex flex-col lg:hidden text-sm">
-			{list.map((item: JSONObject, idx: number) => (
+			{stockTrending.map((item: JSONObject, idx: number) => (
 				<div className="p-2 flex flex-col border-b odd:bg-gray-100" key={`trending_${idx}`}>
 					<div className="whitespace-nowrap font-semibold text-blue-700 cursor-pointer" onClick={() => handleItemOnClick(item)}>{item.symbol} - {item.longName}</div>
 					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 p-3">

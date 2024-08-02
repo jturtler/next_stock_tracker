@@ -10,7 +10,8 @@ export async function GET(request: NextRequest) {
 
 	try {
 		const arrSymbols = symbols!.split(",");
-		const result = await yahooFinance.quote(arrSymbols);
+		// const result = await yahooFinance.quote(arrSymbols, { fields: ['peRatio', 'forwardEps', 'trailingEps', 'dividendYield'] });
+		const result = await yahooFinance.quote(arrSymbols, { fields: [ "symbol", "longName", "dividendYield" ] });
 
 		return NextResponse.json(result, { status: 200 });
 	} catch (error: any) {
