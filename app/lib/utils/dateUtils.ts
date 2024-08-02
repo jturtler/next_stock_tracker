@@ -92,11 +92,19 @@ export const formatToDbDate = (date: Date): string => {
 	return `${date.getFullYear()}-${month}-${day}`;
 }
 
+export const formatToDbDateTime = (date: Date): string => {
+	const hours = (date.getHours() + "").padStart(2, '0');
+	const minutes = (date.getMinutes() + "").padStart(2, '0');
+	const seconds = (date.getSeconds() + "").padStart(2, '0');
+
+	return `${formatToDbDate(date)}T${hours}:${minutes}:${seconds}`;
+}
 
 export const formatDistplayDateTime = (dateStr: string): string => {
 	const date = parseISO(dateStr);
 	return format(date, 'MMM dd, yyyy HH:mm');
 }
+
 
 export const formatDistplayDate = (dateStr: string): string => {
 	const date = parseISO(dateStr);
@@ -109,4 +117,18 @@ export const formatDisplayDateFromObj = (timestamp: string): string => {
 
 	const dateStr = parseISO(formatToDbDate(date));
 	return format(dateStr, 'MMM dd, yyyy');
+}
+
+export const formatDisplayTimeFromObj = (timestamp: string): string => {
+	const date = new Date(parseInt(timestamp) * 1000);
+
+	const dateStr = parseISO(formatToDbDateTime(date));
+	return format(dateStr, 'HH:mm');
+}
+
+export const formatDisplayDateTimeFromObj = (timestamp: string): string => {
+	const date = new Date(parseInt(timestamp) * 1000);
+
+	const dateStr = parseISO(formatToDbDateTime(date));
+	return format(dateStr, 'MMM dd, yyyy HH:mm');
 }

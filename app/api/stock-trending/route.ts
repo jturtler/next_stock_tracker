@@ -7,16 +7,10 @@ import yahooFinance from 'yahoo-finance2';
 export async function GET(request: NextRequest) {
 
 	try {
-	console.log("============= symbols");
-	
-		
 		// const queryOptions = { count: 5, lang: 'en-US' };
 		// const trendingSymbols = await yahooFinance.trendingSymbols("US", queryOptions);
 
-		const response = await axios.get(`https://query2.finance.yahoo.com/v1/finance/trending/US?count=5&useQuotes=true&fields=logoUrl,regularMarketChangePercent,regularMarketPrice,shortName,regularMarketChange,regularMarketVolume,marketCap,regularMarketDayHigh,regularMarketDayLow`);
-
-		// const symbols = trendingSymbols.quotes.map((item) => item.symbol).join(",");
-		// const result = await yahooFinance.quote(symbols);
+		const response = await axios.get(`https://query2.finance.yahoo.com/v1/finance/trending/US?count=20&useQuotes=true&fields=logoUrl,regularMarketChangePercent,regularMarketPrice,shortName,regularMarketChange,regularMarketVolume,marketCap,regularMarketDayHigh,regularMarketDayLow`);
 
 		return NextResponse.json(response.data.finance.result[0].quotes, { status: 200 });
 	} catch (error: any) {

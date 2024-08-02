@@ -37,18 +37,18 @@ export default function SearchStock({ handleOnItemSelect, handleOnClose }: { han
 		handleOnItemSelect(data);
 	}
 
-	// const handleClickOutside = (event: MouseEvent) => {
-	// 	if (divRef.current && !divRef.current.contains(event.target as Node)) {
-	// 		setShowSearchResultList(false);
-	// 	}
-	// };
+	const handleClickOutside = (event: MouseEvent) => {
+		if (divRef.current && !divRef.current.contains(event.target as Node)) {
+			setShowSearchResultList(false);
+		}
+	};
 
-	// useEffect(() => {
-	// 	document.addEventListener('mousedown', handleClickOutside);
-	// 	return () => {
-	// 		document.removeEventListener('mousedown', handleClickOutside);
-	// 	};
-	// }, []);
+	useEffect(() => {
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, []);
 
 
 	// Handler for the Enter key release
@@ -61,7 +61,7 @@ export default function SearchStock({ handleOnItemSelect, handleOnClose }: { han
 	};
 	
 	return (
-		<div className="flex flex-col w-1/2 shadow-sm" ref={divRef} >
+		<div className="flex flex-col w-1/2 shadow-sm " ref={divRef} >
 
 			<div className="relative m-1" onClick={() => setShowSearchResultList(true)}>
 				<input
