@@ -21,7 +21,7 @@ export default function StockIndexDetails({curPriceData}: {curPriceData: JSONObj
 
 
     if( chartData == null ) return ( <Loading />);
-
+    
     return (
         <div className="flex flex-row p-3">
             <div className="flex-1">
@@ -43,9 +43,13 @@ export default function StockIndexDetails({curPriceData}: {curPriceData: JSONObj
                         <HistoricalDataList curPriceData={curPriceData} />
                     </div>}
 
-                    <div className="m-3">
+                    <div className="m-3 hidden md:block">
                         <CurrentPriceDetails priceData={curPriceData} />
                     </div>
+                </div>
+
+                <div className="m-3 md:hidden">
+                    <CurrentPriceDetails priceData={curPriceData} />
                 </div>
             </div>
         </div>

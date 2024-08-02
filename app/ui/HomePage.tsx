@@ -9,6 +9,7 @@ import SearchStock from './stock-index-list/SearchStock';
 import { fetchIndividualData } from '@/lib/utils/fetchStockIndexes';
 import * as AppStore from "@/lib/AppStore";
 import CountryList from './stock-index-list/CountryList';
+import StockTrending from './home/StockTrending';
 
 
 export default function HomePage() {
@@ -31,8 +32,8 @@ export default function HomePage() {
 		}
 	}
 
-	const handleCountryChange = (countryCode: string) => {
-		const list: string[] = Constant.SYMBOL_DEFAULT_LIST[countryCode];
+	const handleCountryChange = (cnCode: string) => {
+		const list: string[] = Constant.SYMBOL_DEFAULT_LIST[cnCode];
 		setSymbolList(list);
 	}
 
@@ -57,6 +58,7 @@ export default function HomePage() {
 
 			<div className="mt-5 ml-3"><SearchStock handleOnItemSelect={(stockData) => addItem(stockData)} handleOnClose={() => { }} /></div>
 
+			<StockTrending />
 		</div>
 	);
 };
