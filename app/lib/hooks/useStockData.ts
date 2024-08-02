@@ -38,8 +38,8 @@ const useStockData = (symbols: string[]) => {
 	}
 	
 	useEffect(() => {
-		 // Fetch data immediately
-		 mutate();
+		//  // Fetch data immediately
+		//  mutate();
 		
 		// // Return a cleanup function to stop revalidation by calling mutate 
 		return () => {

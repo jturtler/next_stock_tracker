@@ -1,6 +1,6 @@
 import { JSONObject } from "@/lib/definations";
 import axios from "axios";
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, KeyboardEvent } from "react"
 import { FiSearch } from "react-icons/fi";
 import { FaArrowRight } from "react-icons/fa6";
 
@@ -31,44 +31,49 @@ export default function SearchStock({ handleOnItemSelect, handleOnClose }: { han
 				setList(dataList);
 			}
 		}
-
 	}
 
 	const handleOnSelect = (data: JSONObject) => {
 		handleOnItemSelect(data);
 	}
 
-	const handleClickOutside = (event: MouseEvent) => {
-		if (divRef.current && !divRef.current.contains(event.target as Node)) {
-			setShowSearchResultList(false);
+	// const handleClickOutside = (event: MouseEvent) => {
+	// 	if (divRef.current && !divRef.current.contains(event.target as Node)) {
+	// 		setShowSearchResultList(false);
+	// 	}
+	// };
+
+	// useEffect(() => {
+	// 	document.addEventListener('mousedown', handleClickOutside);
+	// 	return () => {
+	// 		document.removeEventListener('mousedown', handleClickOutside);
+	// 	};
+	// }, []);
+
+
+	// Handler for the Enter key release
+	const handleKeyUp = (event: KeyboardEvent<HTMLInputElement>) => {
+		if (event.key === 'Enter') {
+			event.preventDefault(); // Prevent default form submission if inside a form
+			console.log('Enter key released:', searchcKey);
+			searchStock();
 		}
 	};
-
-
-	useEffect(() => {
-		document.addEventListener('mousedown', handleClickOutside);
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside);
-		};
-	}, []);
-
-
+	
 	return (
-		// <div className="flex flex-col w-1/2 shadow-sm fixed" ref={divRef} >
 		<div className="flex flex-col w-1/2 shadow-sm" ref={divRef} >
 
 			<div className="relative m-1" onClick={() => setShowSearchResultList(true)}>
 				<input
 					className="pl-10 peer block w-full rounded-md border border-gray-400 py-[15px] text-sm outline-2 placeholder:text-gray-500 "
-					id="username"
+					id="search"
 					value={searchcKey}
 					placeholder="Search for stock"
 					required
 					onChange={(e) => setSearchKey(e.target.value)}
+					onKeyUp={handleKeyUp} // Attach the event handler
 				/>
 				<FiSearch className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-
-				<FaArrowRight className="cursor-pointer absolute right-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" onClick={(e) => searchStock()} />
 			</div>
 
 			{showSearchResultList && <div className="flex-1 px-1 mb-1 ">
