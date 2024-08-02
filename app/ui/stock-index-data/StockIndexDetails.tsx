@@ -16,27 +16,24 @@ import { useState } from "react";
 
 export default function StockIndexDetails({curPriceData}: {curPriceData: JSONObject}) {
 
-	const { chartData, dateTimeStamp } = useStockChartData(curPriceData.symbol, "1D");
     const [showHistoryData, setShowHistoryData] = useState(false);
-
-
-    if( chartData == null ) return ( <Loading />);
-    
+    console.log("========== curPriceData");
+    console.log(curPriceData);
     return (
         <div className="flex flex-row p-3">
             <div className="flex-1">
                 <h2 className="font-bold text-3xl flex items-center space-x-2">
-                    <div>{curPriceData.longName}</div>
-                    {showHistoryData && <PiChartLineDuotone className="text-orange-500 cursor-pointer font-bold shadow-lg" onClick={()=> setShowHistoryData(false)} />}
-                    {!showHistoryData && <MdHistory className="text-orange-500 font-semibold cursor-pointer shadow-lg" onClick={()=> setShowHistoryData(true)} />}
+                    <div className="mb-3 mr-3">{curPriceData.longName}</div>
+                    {showHistoryData && <PiChartLineDuotone className="text-orange-500 cursor-pointer font-bold" onClick={()=> setShowHistoryData(false)} />}
+                    {!showHistoryData && <MdHistory className="text-orange-500 font-semibold cursor-pointer " onClick={()=> setShowHistoryData(true)} />}
                 </h2>
                 
                 
-                <div className="text-xs">As of {Utils.formatDistplayDateTime(curPriceData.regularMarketTime)} {curPriceData.exchangeTimezoneShortName}. Market Open.</div>
+                <div className="text-xs">As of {Utils.formatDisplayDateTime(curPriceData.regularMarketTime)} {curPriceData.exchangeTimezoneShortName}. Market Open.</div>
                 
                 <div className="flex flex-row">
                     {!showHistoryData && <div className="flex-1">
-                        <StockChart chartData={chartData.quotes} />
+                        <StockChart symbol={curPriceData.symbol} />
                     </div>}
 
                     {showHistoryData && <div className="flex-1">

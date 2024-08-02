@@ -10,7 +10,7 @@ export const getDateRange = (rangeName: string) => {
 
 	switch (rangeName) {
 		case "1D":
-			dateRange = getDateRangeFromCurrentDate(5);
+			dateRange = getDateRangeFromCurrentDate(2);
 			break;
 		case "7D":
 			dateRange = getDateRangeFromCurrentDate(7);
@@ -100,9 +100,14 @@ export const formatToDbDateTime = (date: Date): string => {
 	return `${formatToDbDate(date)}T${hours}:${minutes}:${seconds}`;
 }
 
-export const formatDistplayDateTime = (dateStr: string): string => {
-	const date = parseISO(dateStr);
-	return format(date, 'MMM dd, yyyy HH:mm');
+export const formatDisplayDateTime = (dateStr: string): string => {
+	if( identifyStringType(dateStr) === "Date" )
+	{ 
+		const date = parseISO(dateStr);
+		return format(date, 'MMM dd, yyyy HH:mm');
+	}
+
+	return formatDisplayDateTimeFromObj(dateStr);
 }
 
 
@@ -131,4 +136,25 @@ export const formatDisplayDateTimeFromObj = (timestamp: string): string => {
 
 	const dateStr = parseISO(formatToDbDateTime(date));
 	return format(dateStr, 'MMM dd, yyyy HH:mm');
+}
+
+export const identifyStringType = (value: string): string => {
+    if (isTimestamp(value)) {
+        return 'Timestamp';
+    } else {
+        return 'Date';
+    }
+}
+
+
+const isTimestamp = (timestampString: string): boolean => {
+    // Check if the string is numeric
+    const isNumeric = /^\d+$/.test(timestampString);
+    if (!isNumeric) return false;
+
+    // Convert to number and check if it's a valid timestamp
+    const timestamp = Number(timestampString);
+    const now = Date.now();
+    // Consider valid timestamps to be within a plausible range
+    return timestamp > 0 && timestamp < now + 100000000000;
 }

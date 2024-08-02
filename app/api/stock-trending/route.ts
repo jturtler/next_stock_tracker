@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
 		// const queryOptions = { count: 5, lang: 'en-US' };
 		// const trendingSymbols = await yahooFinance.trendingSymbols("US", queryOptions);
 
-		const response = await axios.get(`https://query2.finance.yahoo.com/v1/finance/trending/US?count=20&useQuotes=true&fields=logoUrl,regularMarketChangePercent,regularMarketPrice,shortName,regularMarketChange,regularMarketVolume,marketCap,regularMarketDayHigh,regularMarketDayLow`);
+		const response = await axios.get(`https://query2.finance.yahoo.com/v1/finance/trending/US?count=20&useQuotes=true&fields=logoUrl,regularMarketChangePercent,regularMarketPrice,longName,regularMarketChange,regularMarketVolume,marketCap,regularMarketDayHigh,regularMarketDayLow`);
 
 		return NextResponse.json(response.data.finance.result[0].quotes, { status: 200 });
 	} catch (error: any) {

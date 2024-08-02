@@ -54,13 +54,32 @@ const CustomTooltip = ({payload, label}: any) => {
 };
 
 
-export default function StockChart({ chartData }: { chartData: JSONObject[] }) {
+export default function StockChart({ symbol }: { symbol: string }) {
 	const [dateRangeName, setDateRangeName] = useState("1D");
+	const [chartData, setChartData] = useState<JSONObject[] | null>(null);
+
+	const fetchData = async() => {
+		const data = await fetchStockChartData(symbol, dateRangeName);
+
+		if( data !== undefined ) {
+			if( data.statusText === "OK" ) { 
+				setChartData(data.data.quotes);
+			}
+			else {
+				// errMsg = "Error while fetching stock data.";
+			}
+		}
+	
+	}
 
 	useEffect(() => {
-		// fetchStockData();
-	}, [chartData]);
-	
+		fetchData();
+	}, []);
+
+	useEffect(() => {
+		fetchData();
+	}, [symbol,dateRangeName]);
+
 
 	const getYTicks = (): string[] => {
 		let ticks = [];
@@ -102,7 +121,7 @@ export default function StockChart({ chartData }: { chartData: JSONObject[] }) {
 
 	const yTicks = getYTicks();
 
-	// if (errMsg) return <div>{errMsg}</div>;
+	if (chartData === null ) return <div>Loading ...</div>;
 
 
 	return (
