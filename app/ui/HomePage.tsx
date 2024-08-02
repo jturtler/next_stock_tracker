@@ -48,7 +48,7 @@ export default function HomePage() {
 	return (
 		<div className='flex flex-col'>
 			
-			<div className="ml-2"><SearchStock handleOnItemSelect={(stockData) => addItem(stockData)} handleOnClose={() => { }} /></div>
+			<div className="ml-2 w-1/2"><SearchStock handleOnItemSelect={(stockData) => addItem(stockData)} /></div>
 
 			<div className="ml-2 mt-5 mb-2"><CountryList
 				selectedItem="US"

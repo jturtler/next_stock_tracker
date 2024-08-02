@@ -5,7 +5,7 @@ import { FiSearch } from "react-icons/fi";
 import { FaArrowRight } from "react-icons/fa6";
 
 
-export default function SearchStock({ handleOnItemSelect, handleOnClose }: { handleOnItemSelect: (stockData: JSONObject) => void, handleOnClose: () => void }) {
+export default function SearchStock({ handleOnItemSelect }: { handleOnItemSelect: (stockData: JSONObject) => void }) {
 
 	const [searchcKey, setSearchKey] = useState("");
 	const [list, setList] = useState<JSONObject[]>([]);
@@ -61,7 +61,7 @@ export default function SearchStock({ handleOnItemSelect, handleOnClose }: { han
 	};
 	
 	return (
-		<div className="flex flex-col w-1/2 shadow-sm " ref={divRef} >
+		<div className="flex flex-col shadow-sm" ref={divRef} >
 
 			<div className="relative m-1" onClick={() => setShowSearchResultList(true)}>
 				<input
