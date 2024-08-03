@@ -44,8 +44,8 @@ export default function WatchListDetails({ groupName }: { groupName: string }) {
 			const newStock = { symbol: stock.symbol, name: stock.shortname, addedAt: new Date() };
 			const payload = { action: "remove", userId: user!._id, groupName: groupName, stock: newStock }
 
-			const response = await fetch("api/auth", {
-				method: "PUT",
+			const response = await fetch("api/watch-list", {
+				method: "POST",
 				headers: {
 					"Content-type": "application/json"
 				},

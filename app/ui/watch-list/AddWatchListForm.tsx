@@ -17,8 +17,8 @@ export default function AddWatchListForm() {
             const newStock = { symbol: selectedSymbol.symbol, name: selectedSymbol.shortname, addedAt: new Date() };
             const payload = {action: "add", userId: user!._id, groupName: groupName, stock: newStock}
 
-            const response = await fetch("api/auth", {
-				method: "PUT",
+            const response = await fetch("api/watch-list", {
+				method: "POST",
 				headers: {
 					"Content-type": "application/json"
 				},

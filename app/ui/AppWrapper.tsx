@@ -10,12 +10,13 @@ import CompareStocksPage from './compare-stock-indexes-chart/CompareStockPage';
 import LoginForm from './auth/LoginForm';
 import RegisterForm from './auth/RegisterForm';
 import WatchListPage from './watch-list/WatchListPage';
+import PortfolioList from './Portfolio/PortfolioList';
 
 
 export default function AppWrapper() {
 
 	const {mainPage} = useMainUi();
-
+console.log(mainPage);
 	return (
 		<>
 			{(mainPage !== Constant.UI_PAGE_LOGIN && mainPage !== Constant.UI_PAGE_AUTH_REGISTRATION ) && <MainNavigation />}
@@ -25,6 +26,7 @@ export default function AppWrapper() {
 				{ mainPage == Constant.UI_SYMBOL_DETAILS && <StockIndexDetails curPriceData={AppStore.getSelectedSymbolData()} />}
 				{ mainPage == Constant.UI_PAGE_COMPARE_STOCK_INDEXES_CHARTS && <CompareStocksPage />}
 				{ mainPage == Constant.UI_PAGE_WATCH_LIST && <WatchListPage />}
+				{ mainPage == Constant.UI_PAGE_PORTFOLIO && <PortfolioList />}
 				{ mainPage == Constant.UI_PAGE_LOGIN && <LoginForm />}
 				{ mainPage == Constant.UI_PAGE_AUTH_REGISTRATION && <RegisterForm />}
 			</div>

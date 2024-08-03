@@ -43,7 +43,7 @@ export default function StockTrending() {
 
 					<tbody className="bg-white divide-y divide-gray-200">
 						{stockTrending.map((item: JSONObject, idx: number) => (
-							<tr className="border-b border-gray-200 even:bg-gray-100" key={`trending_${idx}`}>
+							<tr className="border-b border-gray-200 even:bg-gray-100 hover:bg-gray-300" key={`trending_${idx}`}>
 								<td className="px-6 py-4 text-left whitespace-nowrap text-sm font-semibold text-blue-700 cursor-pointer" onClick={() => handleItemOnClick(item)}>{item.symbol}</td>
 								<td className="px-6 py-4 text-left whitespace-nowrap text-sm font-semibold">{item.longName}</td>
 								<td className="px-6 py-4 text-right whitespace-nowrap text-sm font-semibold">{Utils.formatDisplayNumber(item.regularMarketPrice)}</td>
@@ -61,7 +61,7 @@ export default function StockTrending() {
 
 			<div className="flex flex-col lg:hidden text-sm">
 			{stockTrending.map((item: JSONObject, idx: number) => (
-				<div className="p-2 flex flex-col border-b odd:bg-gray-100" key={`trending_${idx}`}>
+				<div className="p-2 flex flex-col border-b odd:bg-gray-100 hover:bg-gray-300" key={`trending_${idx}`}>
 					<div className="whitespace-nowrap font-semibold text-blue-700 cursor-pointer" onClick={() => handleItemOnClick(item)}>{item.symbol} - {item.longName}</div>
 					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 p-3">
 						<div>Last Price: <span className="font-semibold">{Utils.formatDisplayNumber(item.regularMarketPrice)}</span></div>
