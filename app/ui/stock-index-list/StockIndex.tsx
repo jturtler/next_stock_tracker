@@ -16,7 +16,8 @@ export default function StockIndex({ stockData, handleOnClick }: { stockData: JS
 		<div className="p-2 border-b-2"
 			onClick={() => handleOnClickItem(stockData.longName)}>
 			<h3 className="font-bold">{stockData.longName}</h3>
-			<p className={`${percent > 0 ? 'text-green-500' : 'text-red-500'}`}>{Utils.formatDisplayNumber(closePrice)} <span className="text-sm">({percent > 0 ? '+' : ''}{percent.toFixed(2)}%)</span></p>
+			<p className={`${percent > 0 ? 'text-green-500' : 'text-red-500'}`}>
+				{Utils.formatDisplayNumber(closePrice)} {percent !== undefined && <span className="text-sm">({percent > 0 ? '+' : ''}{percent.toFixed(2)}%)</span>}</p>
 		</div>
 	)
 }

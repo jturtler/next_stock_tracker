@@ -13,24 +13,6 @@ export default function StockTrending() {
 
 	const {setMainPage} = useMainUi();
 	const {stockTrending, isLoading} = useStockTrending();
-
-	// const getStockTrending = async () => {
-
-	// 	const response = await axios.get(`/api/stock-trending`);
-
-	// 	let dataList = response.data;
-	// 	if (dataList === undefined) {
-	// 		setList([]);
-	// 	}
-	// 	else {
-	// 		setList(dataList);
-	// 	}
-	// }
-
-	// useEffect(() => {
-	// 	getStockTrending();
-	// }, []);
-
 	
 	const handleItemOnClick = (item: JSONObject) => {
 		AppStore.setSelectedSymbolData(item);

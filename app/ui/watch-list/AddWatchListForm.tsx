@@ -63,7 +63,7 @@ export default function AddWatchListForm() {
                 </select>
             </div>
 
-            <SearchStock handleOnItemSelect={(item) => setSelectedSymbol(item)} handleOnClose={() => {} } />
+            <SearchStock handleOnItemSelect={(item) => setSelectedSymbol(item)} />
 
             <button className="bg-yellow-400 p-3 rounded-lg m-3" onClick={() => addStockToWatchlist() }>Add</button>
         </div>
