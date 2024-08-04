@@ -92,8 +92,8 @@ export default function LoginForm() {
 					{/* <FaSpinner className="ml-auto h-5 text-gray-50" size={20} />  */}
 				</button>
 
-				<button onClick={() => handleCancelBtn()} className="grid-cols-1 bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500" style={{ width: "45%" }}>
-					Cancel
+				<button onClick={() => setMainPage(Constant.UI_PAGE_AUTH_REGISTRATION )} className="grid-cols-1 bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500" style={{ width: "45%" }}>
+				Sign-Up
 				</button>
 			</div>
 			<div className="flex h-8 items-end space-x-1">
