@@ -75,7 +75,7 @@ export default function WatchListDetails({ groupName }: { groupName: string }) {
 				<div className="flex flex-col w-full">
 					{stocks !== null && stocks.map((stock: JSONObject, idx: number) => (
 						<div
-							className={`flex flex-row ${(idx % 2) === 0 ? "bg-white" : "bg-purple-50"} p-3 cursor-pointer`}
+							className={`flex flex-row ${(idx % 2) === 0 ? "bg-white" : "bg-gray-100"} p-3 cursor-pointer`}
 							key={`watchlist_${idx}`}
 							onClick={() => showStockDetails(stock)}
 						>

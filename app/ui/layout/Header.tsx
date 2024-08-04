@@ -24,7 +24,7 @@ export default function Header() {
 				</div>
 			</div>
 
-			<div className="flex-1 justify-end hidden md:flex">
+			<div className="flex-1 justify-end flex">
 				<MainNavigation />
 			</div>
 		</header>

@@ -20,11 +20,11 @@ const WatchListPage: React.FC = () => {
 		<div className="m-3">
 			<h2 className="font-semibold text-2xl mb-3">Your Watchlist</h2>
 
-			<div className='flex flex-row w-full'>
+			<div className='w-full'>
 				<WatchList />
 			</div>
 		
-			<button className="fixed bottom-20 right-4 bg-cyan-400 text-lg rounded-full p-5 shadow-lg shadow-cyan-400 hover:bg-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-400">
+			<button className="fixed bottom-20 right-4 bg-[#77e9d0] text-lg rounded-full p-5 shadow-lg shadow-green-300 hover:bg-cyan-400 focus:outline-none focus:ring-2" onClick={() => setShowAddWatchListForm(true)}>
 				<FiPlus />
 			</button>
 

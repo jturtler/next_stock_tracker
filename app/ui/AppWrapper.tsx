@@ -20,9 +20,6 @@ export default function AppWrapper() {
 
 	return (
 		<>
-			{(mainPage !== Constant.UI_PAGE_LOGIN && mainPage !== Constant.UI_PAGE_AUTH_REGISTRATION ) && 
-				<div className="md:hidden bg-[#edf2f7] text-[#2d3748] p-2"><MainNavigation /></div>}
-
 			<div className="bg-[#ffffff] text-[#2d3748]">
 				{ mainPage == Constant.UI_PAGE_HOME && <HomePage />}
 				{ mainPage == Constant.UI_SYMBOL_DETAILS && <StockIndexDetails curPriceData={AppStore.getSelectedSymbolData()} />}

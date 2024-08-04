@@ -5,6 +5,7 @@ import * as Constant from "@/lib/constant";
 import { useMainUi } from "@/contexts/MainUiContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { FaRegUserCircle } from "react-icons/fa";
+import { CiMenuKebab } from "react-icons/ci";
 
 
 export default function MainNavigation() {
@@ -18,9 +19,10 @@ export default function MainNavigation() {
 		setMainPage(name);
 	}
 	return (
-		<nav className="text-xs md:mt-2 lg:mt-2 justify-between md:text-slate-300 lg:text-slate-300 sm:text-black">
+		<nav className="text-xs mt-2 justify-between text-white">
+			<div className="flex lg:hidden"><CiMenuKebab size={18} /></div>
 
-			<ul className="flex space-x-2 font-medium">
+			<ul className="flex space-x-2 font-medium hidden lg:flex">
 				<li><a href="#" className={` ${selected == Constant.UI_PAGE_HOME ? "bg-[#e2e8f0] text-black" : ""} hover:bg-[#e2e8f0] p-1 rounded`} onClick={() => handleOnClick(Constant.UI_PAGE_HOME)}>Home</a></li>
 
 				<li><a href="#" className={` ${selected == Constant.UI_PAGE_TRENDING ? "bg-[#e2e8f0] text-black" : ""} hover:bg-[#e2e8f0] hover:text-black p-1 rounded`} onClick={() => handleOnClick(Constant.UI_PAGE_TRENDING)}>Trending</a></li>
