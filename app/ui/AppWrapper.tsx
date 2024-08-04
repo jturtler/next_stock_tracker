@@ -11,6 +11,7 @@ import LoginForm from './auth/LoginForm';
 import RegisterForm from './auth/RegisterForm';
 import WatchListPage from './watch-list/WatchListPage';
 import PortfolioList from './Portfolio/PortfolioList';
+import StockTrending from './trending/StockTrending';
 
 
 export default function AppWrapper() {
@@ -25,9 +26,12 @@ export default function AppWrapper() {
 			<div className="bg-[#ffffff] text-[#2d3748]">
 				{ mainPage == Constant.UI_PAGE_HOME && <HomePage />}
 				{ mainPage == Constant.UI_SYMBOL_DETAILS && <StockIndexDetails curPriceData={AppStore.getSelectedSymbolData()} />}
+				{ mainPage == Constant.UI_PAGE_TRENDING && <StockTrending />}
 				{ mainPage == Constant.UI_PAGE_COMPARE_STOCK_INDEXES_CHARTS && <CompareStocksPage />}
+
 				{ mainPage == Constant.UI_PAGE_WATCH_LIST && <WatchListPage />}
 				{ mainPage == Constant.UI_PAGE_PORTFOLIO && <PortfolioList />}
+				
 				{ mainPage == Constant.UI_PAGE_LOGIN && <LoginForm />}
 				{ mainPage == Constant.UI_PAGE_AUTH_REGISTRATION && <RegisterForm />}
 			</div>

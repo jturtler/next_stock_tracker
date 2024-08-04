@@ -17,7 +17,9 @@ const WatchListPage: React.FC = () => {
 	const [showAddWatchListForm, setShowAddWatchListForm] = useState(false);
 
 	return (
-		<div>
+		<div className="m-3">
+			<h2 className="font-semibold text-2xl mb-3">Your Watchlist</h2>
+
 			<div className='flex flex-row w-full'>
 				<WatchList />
 			</div>

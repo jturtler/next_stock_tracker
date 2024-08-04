@@ -9,7 +9,7 @@ import SearchStock from './stock-index-list/SearchStock';
 import { fetchIndividualData } from '@/lib/utils/fetchStockIndexes';
 import * as AppStore from "@/lib/AppStore";
 import CountryList from './stock-index-list/CountryList';
-import StockTrending from './home/StockTrending';
+import StockTrending from './trending/StockTrending';
 
 
 export default function HomePage() {
@@ -57,8 +57,6 @@ export default function HomePage() {
 			/></div>
 
 			{symbolList.length > 0 && <div><StockIndexList symbols={symbolList} handleOnItemClick={(item) => AppStore.setSelectedSymbolData(item)} /></div>}
-
-			<StockTrending />
 		</div>
 	);
 };
