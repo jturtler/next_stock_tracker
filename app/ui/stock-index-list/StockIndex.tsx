@@ -13,9 +13,12 @@ export default function StockIndex({ stockData, handleOnClick }: { stockData: JS
 	}
 
 	return (
-		<div className="p-2 border-b-2"
-			onClick={() => handleOnClickItem(stockData.longName)}>
-			<h3 className="font-bold">{stockData.longName}</h3>
+		<div className="p-2 border-b-2" onClick={() => handleOnClickItem(stockData.longName)}>
+			<h3 className="font-bold">
+			<div className="font-bold text-white bg-black rounded-md px-2 py-1 text-sm w-fit">
+				{stockData.symbol}
+			</div>
+								{stockData.longName}</h3>
 			<p className={`${percent > 0 ? 'text-green-500' : 'text-red-500'}`}>
 				{Utils.formatDisplayNumber(closePrice)} {percent !== undefined && <span className="text-sm">({percent > 0 ? '+' : ''}{percent.toFixed(2)}%)</span>}</p>
 		</div>
