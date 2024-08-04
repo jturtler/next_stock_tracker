@@ -10,9 +10,11 @@ import MainNavigation from "./MainNavigation";
 
 export default function Header() {
 
+	// Accent: #F9A8D4 (Light Pink)
+
 
 	return (
-		<header className="w-full flex flex-row p-3 bg-[#2d3748]">
+		 <header className="w-full flex flex-row p-3 bg-[#2d3748]" >
 			<div className="flex flex-row">
 				<FaChartLine size={30} className="mr-3 text-slate-300" />
 				<div className="font-semibold text-2xl text-white mr-2">Stock</div>

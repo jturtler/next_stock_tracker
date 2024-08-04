@@ -18,7 +18,7 @@ export default function MainNavigation() {
 		setMainPage(name);
 	}
 	return (
-		<nav className="text-xs md:mt-2 lg:mt-2 justify-between md:text-white lg:text-white sm:text-black">
+		<nav className="text-xs md:mt-2 lg:mt-2 justify-between md:text-slate-300 lg:text-slate-300 sm:text-black">
 
 			<ul className="flex space-x-2 font-medium">
 				<li><a href="#" className={` ${selected == Constant.UI_PAGE_HOME ? "bg-[#e2e8f0] text-black" : ""} hover:bg-[#e2e8f0] p-1 rounded`} onClick={() => handleOnClick(Constant.UI_PAGE_HOME)}>Home</a></li>
