@@ -19,19 +19,17 @@ export default function AppWrapper() {
 	const {mainPage} = useMainUi();
 
 	return (
-		<>
-			<div className="text-textPrimary">
-				{ mainPage == Constant.UI_PAGE_HOME && <HomePage />}
-				{ mainPage == Constant.UI_SYMBOL_DETAILS && <StockIndexDetails curPriceData={AppStore.getSelectedSymbolData()} />}
-				{ mainPage == Constant.UI_PAGE_TRENDING && <StockTrending />}
-				{ mainPage == Constant.UI_PAGE_COMPARE_STOCK_INDEXES_CHARTS && <CompareStocksPage />}
+		<div className="text-textPrimary">
+			{ mainPage == Constant.UI_PAGE_HOME && <HomePage />}
+			{ mainPage == Constant.UI_SYMBOL_DETAILS && <StockIndexDetails curPriceData={AppStore.getSelectedSymbolData()} />}
+			{ mainPage == Constant.UI_PAGE_TRENDING && <StockTrending />}
+			{ mainPage == Constant.UI_PAGE_COMPARE_STOCK_INDEXES_CHARTS && <CompareStocksPage />}
 
-				{ mainPage == Constant.UI_PAGE_WATCH_LIST && <WatchListPage />}
-				{ mainPage == Constant.UI_PAGE_PORTFOLIO && <PortfolioList />}
-				
-				{ mainPage == Constant.UI_PAGE_LOGIN && <LoginForm />}
-				{ mainPage == Constant.UI_PAGE_AUTH_REGISTRATION && <RegisterForm />}
-			</div>
-		</>
+			{ mainPage == Constant.UI_PAGE_WATCH_LIST && <WatchListPage />}
+			{ mainPage == Constant.UI_PAGE_PORTFOLIO && <PortfolioList />}
+			
+			{ mainPage == Constant.UI_PAGE_LOGIN && <LoginForm />}
+			{ mainPage == Constant.UI_PAGE_AUTH_REGISTRATION && <RegisterForm />}
+		</div>
 	);
 };

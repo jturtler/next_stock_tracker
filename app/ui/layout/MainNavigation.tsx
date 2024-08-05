@@ -32,25 +32,30 @@ export default function MainNavigation() {
 	const renderMenus = () => {
 		return (
 			<>
-				<li><a href="#" className={`tracking-widest ${selected == Constant.UI_PAGE_HOME ? "bg-[#e2e8f0] text-black" : ""} hover:bg-[#e2e8f0] p-1 rounded`} onClick={() => handleOnClick(Constant.UI_PAGE_HOME)}>Home</a></li>
+				<div className="flex-grow"></div>
+				<li><a href="#" className={`hover:text-gold ${selected == Constant.UI_PAGE_HOME ? "text-gold" : ""} p-1 rounded`} onClick={() => handleOnClick(Constant.UI_PAGE_HOME)}>Home</a></li>
 
-				<li><a href="#" className={`tracking-widest ${selected == Constant.UI_PAGE_TRENDING ? "bg-[#e2e8f0] text-black" : ""} hover:bg-[#e2e8f0] hover:text-black p-1 rounded`} onClick={() => handleOnClick(Constant.UI_PAGE_TRENDING)}>Trending</a></li>
+				<li><a href="#" className={`hover:text-gold ${selected == Constant.UI_PAGE_TRENDING ? "text-gold" : ""}  p-1 rounded`} onClick={() => handleOnClick(Constant.UI_PAGE_TRENDING)}>Trending</a></li>
 
-				<li><a href="#" className={`tracking-widest ${selected == Constant.UI_PAGE_COMPARE_STOCK_INDEXES_CHARTS ? "bg-[#e2e8f0] text-black" : ""} hover:bg-[#e2e8f0] hover:text-black p-1 rounded`} onClick={() => handleOnClick(Constant.UI_PAGE_COMPARE_STOCK_INDEXES_CHARTS)}>Compare-Stocks</a></li>
+				<li><a href="#" className={`hover:text-gold ${selected == Constant.UI_PAGE_COMPARE_STOCK_INDEXES_CHARTS ? "hover:text-gold" : ""} p-1 rounded`} onClick={() => handleOnClick(Constant.UI_PAGE_COMPARE_STOCK_INDEXES_CHARTS)}>Compare-Stocks</a></li>
 				
 				{user === null && <>
 					<div className="flex-grow"></div>
-					<li><a href="#" className="bg-pink-600 p-1 tracking-widest cursor-pointer flex-shrink-0 ml-auto space-x-2 items-center rounded px-3 text-white hover:bg-pink-700" onClick={() => handleOnClick(Constant.UI_PAGE_LOGIN)}>Login</a></li>
+					<li>
+						<button className="bg-gold text-navy-blue px-4 py-2 rounded hover:bg-yellow-500" onClick={() => handleOnClick(Constant.UI_PAGE_LOGIN)}>Log-In</button>
+					</li>
 				</>}
 
 				{user !== null && (
 					<>
-						<li><a href="#" className={`tracking-widest ${selected == Constant.UI_PAGE_WATCH_LIST ? "bg-[#e2e8f0] text-black" : ""} hover:bg-[#e2e8f0] hover:text-black p-1 rounded`} onClick={() => handleOnClick(Constant.UI_PAGE_WATCH_LIST)}>Watchlist</a></li>
+						<li><a href="#" className={`hover:text-gold ${selected == Constant.UI_PAGE_WATCH_LIST ? "text-gold" : ""} p-1 rounded`} onClick={() => handleOnClick(Constant.UI_PAGE_WATCH_LIST)}>Watchlist</a></li>
 
-						<li><a href="#" className={`tracking-widest ${selected == Constant.UI_PAGE_PORTFOLIO ? "bg-[#e2e8f0] text-black" : ""} hover:bg-[#e2e8f0] hover:text-black p-1 rounded`} onClick={() => handleOnClick(Constant.UI_PAGE_PORTFOLIO)}>Portfolio</a></li>
+						<li><a href="#" className={`hover:text-gold ${selected == Constant.UI_PAGE_PORTFOLIO ? "text-gold" : ""} p-1 rounded`} onClick={() => handleOnClick(Constant.UI_PAGE_PORTFOLIO)}>Portfolio</a></li>
 
 						<div className="flex-grow"></div>
-						<li><a href="#" className="bg-green-600 p-1 tracking-widest cursor-pointer flex-shrink-0 ml-auto space-x-2 items-center rounded px-3 text-white hover:bg-green-700" onClick={() => handleOnLogout()}>Log-out</a></li>
+						<li>
+							<button className="bg-gold text-navy-blue px-4 py-2 rounded hover:bg-yellow-500" onClick={() => handleOnLogout()}>Log-Out</button>
+						</li>
 					</>
 				)}
 			</>
@@ -74,11 +79,11 @@ export default function MainNavigation() {
 
 
 	return (
-		<>
-		<nav className="text-xs mt-2 justify-between">
-			<div className="flex lg:hidden mr-3" onClick={() => setShowSlideMenu(true) }><CiMenuKebab size={18} /></div>
+		<> 
+		<nav>
+		<div className="flex lg:hidden justify-end" onClick={() => setShowSlideMenu(true) }><CiMenuKebab size={18} /></div>
 			
-			<ul className="flex space-x-2 font-medium hidden lg:flex">
+			<ul className="flex space-x-4 hidden lg:flex items-center">
 				{renderMenus()}
 			</ul>
 		</nav>

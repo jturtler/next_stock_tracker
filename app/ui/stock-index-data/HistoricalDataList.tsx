@@ -57,16 +57,16 @@ export default function HistoricalDataList({ curPriceData }: { curPriceData: JSO
 			</div>
 
 			<div className="flex-1 hidden md:block">
-				<div className="overflow-y-auto h-[calc(100vh-340px)]">
-					<table className="min-w-full border border-gray-400">
-						<thead className="bg-white">
-							<tr className="border border-gray-300">
-								<th className="px-4 py-1 text-start font-semibold">Date</th>
-								<th className="px-4 py-1 text-end font-semibold">Open</th>
-								<th className="px-4 py-1 text-end font-semibold">High</th>
-								<th className="px-4 py-1 text-end font-semibold">Low</th>
-								<th className="px-4 py-1 text-end font-semibold">Close</th>
-								<th className="px-4 py-1 text-end font-semibold">Volume</th>
+				<div className="overflow-y-auto h-[calc(100vh-300px)]">
+					<table className="min-w-full bg-white border border-gray-300">
+						<thead>
+							<tr>
+								<th className="py-2 px-4 border-b text-navy-blue text-start">Date</th>
+								<th className="py-2 px-4 border-b text-navy-blue text-end">Open</th>
+								<th className="py-2 px-4 border-b text-navy-blue text-end">High</th>
+								<th className="py-2 px-4 border-b text-navy-blue text-end">Low</th>
+								<th className="py-2 px-4 border-b text-navy-blue text-end">Close</th>
+								<th className="py-2 px-4 border-b text-navy-blue text-end">Volume</th>
 							</tr>
 						</thead>
 						<tbody>

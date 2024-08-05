@@ -24,35 +24,35 @@ export default function StockTrending() {
 
 	return (
 		<div className="m-3">
-			<h2 className="font-semibold text-2xl mb-3">Trending</h2>
+			<h2 className="text-2xl font-semibold text-navy-blue mb-4">Trending</h2>
 			<div className="hidden lg:block">
 				<table className="min-w-full divide-y divide-gray-200">
 					<thead className="bg-gray-50 font-medium whitespace-nowrap">
 						<tr>
-							<th className="px-6 py-3 text-left">Symbol</th>
-							<th className="px-6 py-3 text-left text-gray-500">Name</th>
-							<th className="px-6 py-3 text-right text-gray-500">Last Price</th>
-							<th className="px-6 py-3 text-right text-gray-500">Market Time</th>
-							<th className="px-6 py-3 text-right text-gray-500">Change</th>
-							<th className="px-6 py-3 text-right text-gray-500">% Change</th>
-							<th className="px-6 py-3 text-right text-gray-500">Volume</th>
-							<th className="px-6 py-3 text-right text-gray-500">Market Cap</th>
-							<th className="px-6 py-3 text-right text-gray-500">Intraday High/Low</th>
+							<th className="py-2 px-4 border-b text-left">Symbol</th>
+							<th className="py-2 px-4 border-b text-left text-navy-blue">Name</th>
+							<th className="py-2 px-4 border-b text-right text-navy-blue">Last Price</th>
+							<th className="py-2 px-4 border-b text-right text-navy-blue">Market Time</th>
+							<th className="py-2 px-4 border-b text-right text-navy-blue">Change</th>
+							<th className="py-2 px-4 border-b text-right text-navy-blue">% Change</th>
+							<th className="py-2 px-4 border-b text-right text-navy-blue">Volume</th>
+							<th className="py-2 px-4 border-b text-right text-navy-blue">Market Cap</th>
+							<th className="py-2 px-4 border-b text-right text-navy-blue">Intraday High/Low</th>
 						</tr>
 					</thead>
 
 					<tbody className="bg-white divide-y divide-gray-200">
 						{stockTrending.map((item: JSONObject, idx: number) => (
-							<tr className="border-b border-gray-200 even:bg-gray-100 hover:bg-gray-300" key={`trending_${idx}`}>
-								<td className="px-6 py-4 text-left whitespace-nowrap text-sm font-semibold text-blue-700 cursor-pointer" onClick={() => handleItemOnClick(item)}>{item.symbol}</td>
-								<td className="px-6 py-4 text-left whitespace-nowrap text-sm font-semibold">{item.longName}</td>
-								<td className="px-6 py-4 text-right whitespace-nowrap text-sm font-semibold">{Utils.formatDisplayNumber(item.regularMarketPrice)}</td>
-								<td className="px-6 py-4 text-right whitespace-nowrap text-sm font-semibold">{Utils.formatDisplayTimeFromObj(item.regularMarketTime)} {item.exchangeTimezoneShortName}</td>
-								<td className={`px-6 py-4 text-right whitespace-nowrap text-sm font-semibold ${item.regularMarketChange > 0 ? "text-green-600" : "text-red-600"} `}>{Utils.formatDisplayNumber(item.regularMarketChange)}</td>
-								<td className={`px-6 py-4 text-right whitespace-nowrap text-sm font-semibold ${item.regularMarketChange > 0 ? "text-green-600" : "text-red-600"} `}>{Utils.formatDisplayNumber(item.regularMarketChangePercent)}%</td>
-								<td className="px-6 py-4 text-right whitespace-nowrap text-sm font-semibold">{Utils.formatNumberToK(item.regularMarketVolume)}</td>
-								<td className="px-6 py-4 text-right whitespace-nowrap text-sm font-semibold">{Utils.formatNumberToK(item.marketCap)}</td>
-								<td className="px-6 py-4 text-right whitespace-nowrap text-sm">{Utils.formatDisplayNumber(item.regularMarketDayHigh)} - {Utils.formatDisplayNumber(item.regularMarketDayLow)}</td>
+							<tr key={`trending_${idx}`} className="hover:bg-slate-200">
+								<td className="text-left whitespace-nowrap py-2 px-4 border-b text-blue-700 cursor-pointer font-semibold" onClick={() => handleItemOnClick(item)}>{item.symbol}</td>
+								<td className="text-left whitespace-nowrap py-2 px-4 border-b">{item.longName}</td>
+								<td className="text-right whitespace-nowrap py-2 px-4 border-b font-semibold">{Utils.formatDisplayNumber(item.regularMarketPrice)}</td>
+								<td className="text-right whitespace-nowrap py-2 px-4 border-b font-semibold">{Utils.formatDisplayTimeFromObj(item.regularMarketTime)} {item.exchangeTimezoneShortName}</td>
+								<td className={`text-right whitespace-nowrap py-2 px-4 border-b font-semibold ${item.regularMarketChange > 0 ? "text-green-600" : "text-red-600"} `}>{Utils.formatDisplayNumber(item.regularMarketChange)}</td>
+								<td className={`text-right whitespace-nowrap py-2 px-4 border-b font-semibold ${item.regularMarketChange > 0 ? "text-green-600" : "text-red-600"} `}>{Utils.formatDisplayNumber(item.regularMarketChangePercent)}%</td>
+								<td className="text-right whitespace-nowrap py-2 px-4 border-b font-semibold">{Utils.formatNumberToK(item.regularMarketVolume)}</td>
+								<td className="text-right whitespace-nowrap py-2 px-4 border-b font-semibold">{Utils.formatNumberToK(item.marketCap)}</td>
+								<td className="text-right whitespace-nowrap py-2 px-4 border-b">{Utils.formatDisplayNumber(item.regularMarketDayHigh)} - {Utils.formatDisplayNumber(item.regularMarketDayLow)}</td>
 							</tr>
 						))}
 					</tbody>
