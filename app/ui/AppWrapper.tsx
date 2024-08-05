@@ -20,7 +20,7 @@ export default function AppWrapper() {
 
 	return (
 		<>
-			<div className="bg-[#ffffff] text-[#2d3748]">
+			<div className="text-textPrimary">
 				{ mainPage == Constant.UI_PAGE_HOME && <HomePage />}
 				{ mainPage == Constant.UI_SYMBOL_DETAILS && <StockIndexDetails curPriceData={AppStore.getSelectedSymbolData()} />}
 				{ mainPage == Constant.UI_PAGE_TRENDING && <StockTrending />}

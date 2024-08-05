@@ -14,11 +14,11 @@ export default function Header() {
 
 
 	return (
-		 <header className="w-full flex flex-row p-3 bg-[#2d3748]" >
+		 <header className="w-full flex flex-row p-3 border bg-header" >
 			<div className="flex flex-row">
-				<FaChartLine size={30} className="mr-3 text-slate-300" />
-				<div className="font-semibold text-2xl text-white mr-2">Stock</div>
-				<div className="flex flex-col text-slate-300 uppercase text-xs">
+				<FaChartLine size={30} className="mr-3 text-textPrimary " />
+				<div className="font-semibold text-2xl tracking-wide text-textPrimary mr-2">Stock</div>
+				<div className="flex flex-col text-textSecondary uppercase text-xs tracking-widest font-semibold">
 					<span>Index</span>
 					<span>Market</span>
 				</div>
