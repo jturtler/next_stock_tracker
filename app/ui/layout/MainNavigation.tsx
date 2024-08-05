@@ -22,6 +22,13 @@ export default function MainNavigation() {
 		setMainPage(name);
 	}
 
+	const handleOnLogout = () => {
+		const ok = confirm("Are you sure you want to log-out ?");
+		if(ok) {
+			logout();
+		}
+	}
+
 	const renderMenus = () => {
 		return (
 			<>
@@ -33,7 +40,7 @@ export default function MainNavigation() {
 				
 				{user === null && <>
 					<div className="flex-grow"></div>
-					<li className="flex flex-row tracking-widest cursor-pointer flex-shrink-0 ml-auto space-x-2" onClick={() => handleOnClick(Constant.UI_PAGE_LOGIN)}><FaRegUserCircle size={18} /><span>Login</span></li>
+					<li className="text-green-600 font-semibold flex flex-row tracking-widest cursor-pointer flex-shrink-0 ml-auto space-x-2 items-center" onClick={() => handleOnClick(Constant.UI_PAGE_LOGIN)}><FaRegUserCircle size={18} /><span>Login</span></li>
 				</>}
 
 				{user !== null && (
@@ -43,7 +50,7 @@ export default function MainNavigation() {
 						<li><a href="#" className={`tracking-widest ${selected == Constant.UI_PAGE_PORTFOLIO ? "bg-[#e2e8f0] text-black" : ""} hover:bg-[#e2e8f0] hover:text-black p-1 rounded`} onClick={() => handleOnClick(Constant.UI_PAGE_PORTFOLIO)}>Portfolio</a></li>
 
 						<div className="flex-grow"></div>
-						<li className="tracking-widest cursor-pointer flex-shrink-0 pr-5 flex flex-row space-x-2" onClick={() => logout()}><FaRegUserCircle size={15} /><span>Log-out</span></li>
+						<li className="text-green-600 font-semibold tracking-widest cursor-pointer flex-shrink-0 pr-5 flex flex-row space-x-2 items-center" onClick={() => handleOnLogout()}><FaRegUserCircle size={15} /><span>Log-out</span></li>
 					</>
 				)}
 			</>
