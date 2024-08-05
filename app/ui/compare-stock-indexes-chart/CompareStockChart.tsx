@@ -1,5 +1,5 @@
 import { JSONObject } from "@/lib/definations";
-import { CartesianGrid, ComposedChart, Line, ReferenceLine, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { Area, CartesianGrid, ComposedChart, Line, ReferenceLine, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import { format, parseISO } from 'date-fns';
 import * as Utils from "@/lib/utils";
 
@@ -40,6 +40,7 @@ export default function CompareStockChart({ chartData, onUpdateDetails }: { char
 
 					{chartData.symbols.map((symbol: string, idx: number) => (
 						<Line type="monotone" key={`${symbol}_${idx}`} dataKey={`${symbol}_percentChange`} stroke={Utils.COLORS_LIST[idx % Utils.COLORS_LIST.length]} dot={false} strokeWidth={2} />
+						// <Area  key={`${symbol}_${idx}`} type="monotone" dataKey={`${symbol}_percentChange`}  strokeWidth={1} activeDot={{ r: 8 }} dot={false} fill={Utils.COLORS_LIST[idx % Utils.COLORS_LIST.length]} opacity={0.5}/>
 					))}
 
 				</ComposedChart>
