@@ -22,8 +22,7 @@ export default function WatchList() {
 				{user!.watchlist.map((item: JSONObject, idx: number) => (
 					<div 
 						key={`watchlist_${idx}`}
-						className={`px-3 py-1 rounded-md hover:bg-pink-800 hover:text-white ${selected !== null && selected.groupName == item.groupName ? "bg-pink-600 text-white" : "bg-gray-200 text-gray-500"}`}
-						// style={{backgroundColor: Utils.COLORS_LIST[idx % Utils.COLORS_LIST.length]}}  
+						className={`px-3 py-1 hover:bg-yellow-600 rounded-md bg-gold text-navy-blue ${selected !== null && selected.groupName == item.groupName ? "bg-gold" : "bg-gray-200 text-gray-500"}`}
 						onClick={() => handleSelectedItem(item)}>
 							{item.groupName}
 					</div>

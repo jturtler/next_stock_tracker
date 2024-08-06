@@ -4,14 +4,11 @@ import { JSONObject } from "@/lib/definations";
 import StockChart from "./StockChart";
 import * as Utils from "@/lib/utils";
 import CurrentPriceDetails from "./CurrentPriceDetails";
-import * as Constant from "@/lib/constant";
 import HistoricalDataList from "./HistoricalDataList";
-import useStockChartData from "@/lib/hooks/useStockChartData";
-import { useMainUi } from "@/contexts/MainUiContext";
 import { MdHistory } from "react-icons/md";
-import { PiChartLineDuotone } from "react-icons/pi";
-import Loading from "../layout/Loading";
 import { useState } from "react";
+import { IoBarChartSharp } from "react-icons/io5";
+import { FaHistory } from "react-icons/fa";
 
 
 export default function StockIndexDetails({curPriceData}: {curPriceData: JSONObject}) {
@@ -24,8 +21,14 @@ export default function StockIndexDetails({curPriceData}: {curPriceData: JSONObj
             <div className="flex-1">
                 <h2 className="font-bold text-3xl flex items-center space-x-2">
                     <div className="mb-3 mr-3">{curPriceData.longName}</div>
-                    {showHistoryData && <PiChartLineDuotone className="text-orange-500 cursor-pointer font-bold" onClick={()=> setShowHistoryData(false)} />}
-                    {!showHistoryData && <MdHistory className="text-orange-500 font-semibold cursor-pointer " onClick={()=> setShowHistoryData(true)} />}
+                   
+                    {showHistoryData &&  <button className="ml-3 text-lg p-5 shadow-lg bg-gold text-navy-blue px-4 py-2 rounded hover:bg-yellow-600" onClick={()=> setShowHistoryData(false)}>
+                        <IoBarChartSharp />
+                    </button>}
+
+                    {!showHistoryData &&  <button className="ml-3 text-lg p-5 shadow-lg bg-gold text-navy-blue px-4 py-2 rounded hover:bg-yellow-600" onClick={()=> setShowHistoryData(true)}>
+                        <FaHistory />
+                    </button>}
                 </h2>
                 
                 

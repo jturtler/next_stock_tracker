@@ -4,9 +4,12 @@
 export default function Footer() {
 
 	return (
-		<footer className="h-30 w-screen py-4 flex bg-pastelBeige text-footerTextPrimary p-4 text-center text-xs items-center">
-			<div className="flex-grow text-center">
-				<p>© 2024 Stock Index Market. All rights reserved.</p>
+		<footer className="bg-navy-blue text-white p-4">
+			<div className="container mx-auto text-center">
+				<p>&copy; 2024 Stock Index Market. All rights reserved.</p>
+				<p>
+					<a href="#" className="hover:text-gold">Privacy Policy</a> | <a href="#" className="hover:text-gold">Terms of Service</a>
+				</p>
 			</div>
 		</footer>
 	)

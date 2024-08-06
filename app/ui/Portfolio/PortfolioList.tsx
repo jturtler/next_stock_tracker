@@ -43,16 +43,18 @@ const PortfolioList = () => {
 
 
     const onUpdateList = (newPortfolio: JSONObject) => {
-        console.log("============= newPortfolio");
-        console.log(newPortfolio);
-
         setList(newPortfolio.investments);
     } 
 
 
     return (
         <div className="m-3">
-            <h2 className="text-2xl font-semibold">Your Portfolio</h2>
+            <h2 className="text-2xl font-semibold mb-3">
+                Your Portfolio
+                <button className="ml-3 text-lg p-2 bg-gold text-navy-blue hover:bg-yellow-600 rounded-full focus:outline-none focus:ring-2 shadow-lg shadow-slate-400" onClick={() => setShowAddForm(true)} >
+					<FiPlus />
+				</button>
+            </h2>
             <div className="p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                 {list.map((investment: any, index: number) => (
                     <div className="p-2 border-b-2 flex space-x-3 items-center" key={index}>
@@ -61,10 +63,6 @@ const PortfolioList = () => {
                     </div>
                 ))}
             </div>
-
-            <button className="fixed bottom-20 right-4 bg-cyan-400 text-lg rounded-full p-5 shadow-lg shadow-cyan-400 hover:bg-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-400" onClick={() => setShowAddForm(true)}>
-				<FiPlus />
-			</button>
 
             {showAddForm && <PortfolioAddForm onSuccess={(newPortfolio) => onUpdateList(newPortfolio) } />}
         </div>

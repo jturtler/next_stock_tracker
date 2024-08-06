@@ -18,16 +18,17 @@ const WatchListPage: React.FC = () => {
 
 	return (
 		<div className="m-3">
-			<h2 className="font-semibold text-2xl mb-3">Your Watchlist</h2>
+			<h2 className="font-semibold text-2xl mb-3">
+				Your Watchlist
+				<button className="ml-3 text-lg p-2 shadow-lg bg-coral text-navy-blue hover:bg-red-600 rounded-full" onClick={() => setShowAddWatchListForm(true)}>
+					<FiPlus />
+				</button>
+			</h2>
 
-			<div className='w-full'>
+			<div className='w-full flex flex-row'>
 				<WatchList />
 			</div>
-		
-			<button className="fixed bottom-20 right-4 bg-[#77e9d0] text-lg rounded-full p-5 shadow-lg shadow-green-300 hover:bg-cyan-400 focus:outline-none focus:ring-2" onClick={() => setShowAddWatchListForm(true)}>
-				<FiPlus />
-			</button>
-
+			
 			{showAddWatchListForm && <AddWatchListForm />}
 		</div>
 	);

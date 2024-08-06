@@ -9,14 +9,10 @@ const config: Config = {
   theme: {
       extend: {
         colors: {
-          "primary": "#003366",
-          "secondary": "#f5f5f5",
-          "accent": "#FFD700",
-
         'navy-blue': '#003366',
         'light-gray': '#f5f5f5',
         'gold': '#FFD700',
-
+        'coral': '#FF6F61',
 
 
           // header: "#A2C2E4",

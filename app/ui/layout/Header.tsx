@@ -17,8 +17,8 @@ export default function Header() {
 		 <header className="bg-navy-blue text-white p-4 shadow-md" >
 			<div className=" mx-auto flex justify-between items-center ml-10">
 				<div className="flex flex-row">
-					<div className="font-semibold text-2xl tracking-wider text-textPrimary mr-2">Stock</div>
-					<div className="flex flex-col text-secondary uppercase text-xs tracking-widest font-semibold">
+					<div className="uppercase text-2xl tracking-wider text-textPrimary mr-2" style={{letterSpacing: "8px"}} >Stock</div>
+					<div className="flex flex-col text-secondary uppercase text-xs font-semibold" style={{letterSpacing: "4px"}} >
 						<span>Index</span>
 						<span>Market</span>
 					</div>

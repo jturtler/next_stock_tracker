@@ -4,9 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import * as Constant from "@/lib/constant";
 import { useMainUi } from "@/contexts/MainUiContext";
 import { useAuth } from "@/contexts/AuthContext";
-import { FaRegUserCircle } from "react-icons/fa";
 import { CiMenuKebab } from "react-icons/ci";
-import SlideMenu from "./SlideMenu";
 
 
 export default function MainNavigation() {
@@ -42,7 +40,7 @@ export default function MainNavigation() {
 				{user === null && <>
 					<div className="flex-grow"></div>
 					<li>
-						<button className="bg-gold text-navy-blue px-4 py-2 rounded hover:bg-yellow-500" onClick={() => handleOnClick(Constant.UI_PAGE_LOGIN)}>Log-In</button>
+						<button className="bg-gold text-navy-blue px-4 py-2 rounded hover:bg-yellow-600" onClick={() => handleOnClick(Constant.UI_PAGE_LOGIN)}>Log-In</button>
 					</li>
 				</>}
 
@@ -54,7 +52,7 @@ export default function MainNavigation() {
 
 						<div className="flex-grow"></div>
 						<li>
-							<button className="bg-gold text-navy-blue px-4 py-2 rounded hover:bg-yellow-500" onClick={() => handleOnLogout()}>Log-Out</button>
+							<button className="bg-gold text-navy-blue px-4 py-2 rounded hover:bg-yellow-600" onClick={() => handleOnLogout()}>Log-Out</button>
 						</li>
 					</>
 				)}
