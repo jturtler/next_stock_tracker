@@ -10,7 +10,7 @@ import CompareStocksPage from './compare-stock-indexes-chart/CompareStockPage';
 import LoginForm from './auth/LoginForm';
 import RegisterForm from './auth/RegisterForm';
 import WatchListPage from './watch-list/WatchListPage';
-import PortfolioList from './Portfolio/PortfolioList';
+import PortfolioList from './portfolio/PortfolioList';
 import StockTrending from './trending/StockTrending';
 
 
