@@ -12,6 +12,7 @@ import RegisterForm from './auth/RegisterForm';
 import WatchListPage from './watch-list/WatchListPage';
 import StockTrending from './trending/StockTrending';
 import PortfolioPage from './portfolio/PortfolioPage';
+import NotificationPage from './notification/NotificationPage';
 
 
 export default function AppWrapper() {
@@ -27,6 +28,7 @@ export default function AppWrapper() {
 
 			{ mainPage == Constant.UI_PAGE_WATCH_LIST && <WatchListPage />}
 			{ mainPage == Constant.UI_PAGE_PORTFOLIO && <PortfolioPage />}
+			{ mainPage == Constant.UI_PAGE_NOTIFICATION_PAGE && <NotificationPage />}
 			
 			{ mainPage == Constant.UI_PAGE_LOGIN && <LoginForm />}
 			{ mainPage == Constant.UI_PAGE_AUTH_REGISTRATION && <RegisterForm />}

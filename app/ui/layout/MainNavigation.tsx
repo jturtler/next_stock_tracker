@@ -5,6 +5,8 @@ import * as Constant from "@/lib/constant";
 import { useMainUi } from "@/contexts/MainUiContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { CiMenuKebab } from "react-icons/ci";
+import DropdownButton from "./DropdownButton";
+import { JSONObject } from "@/lib/definations";
 
 
 export default function MainNavigation() {
@@ -20,12 +22,29 @@ export default function MainNavigation() {
 		setMainPage(name);
 	}
 
+	const handleSettingOptionClick = (option: JSONObject) => {
+		if( option.code == "logout") {
+			handleOnLogout();
+		}
+		else {
+			handleOnClick(option.code);
+		}
+	}
+
 	const handleOnLogout = () => {
 		const ok = confirm("Are you sure you want to log-out ?");
 		if(ok) {
 			logout();
 		}
 	}
+
+	const options = [
+		{ code: Constant.UI_PAGE_WATCH_LIST, name: "Watchlist" },
+		{ code: Constant.UI_PAGE_WATCH_LIST, name: "Portfolio" },
+		{ code: Constant.UI_PAGE_NOTIFICATION_PAGE, name: "Notification" },
+		
+		{ code: "logout", name: "Log-out" }
+	];
 
 	const renderMenus = () => {
 		return (
@@ -46,13 +65,18 @@ export default function MainNavigation() {
 
 				{user !== null && (
 					<>
-						<li><a href="#" className={`hover:text-gold ${selected == Constant.UI_PAGE_WATCH_LIST ? "text-gold" : ""} p-1 rounded`} onClick={() => handleOnClick(Constant.UI_PAGE_WATCH_LIST)}>Watchlist</a></li>
+						 {/*<li><a href="#" className={`hover:text-gold ${selected == Constant.UI_PAGE_WATCH_LIST ? "text-gold" : ""} p-1 rounded`} onClick={() => handleOnClick(Constant.UI_PAGE_WATCH_LIST)}>Watchlist</a></li>
 
 						<li><a href="#" className={`hover:text-gold ${selected == Constant.UI_PAGE_PORTFOLIO ? "text-gold" : ""} p-1 rounded`} onClick={() => handleOnClick(Constant.UI_PAGE_PORTFOLIO)}>Portfolio</a></li>
+						
+						<li><a href="#" className={`hover:text-gold ${selected == Constant.UI_PAGE_NOTIFICATION_PAGE ? "text-gold" : ""} p-1 rounded`} onClick={() => handleOnClick(Constant.UI_PAGE_NOTIFICATION_PAGE)}>Notifications</a></li>
 
-						<div className="flex-grow"></div>
+						<div className="flex-grow"></div> */}
 						<li>
-							<button className="bg-gold text-navy-blue px-4 py-2 rounded hover:bg-yellow-600" onClick={() => handleOnLogout()}>Log-Out</button>
+							{/* <button className="bg-gold text-navy-blue px-4 py-2 rounded hover:bg-yellow-600" onClick={() => handleOnLogout()}>Log-Out</button> */}
+
+							
+							<DropdownButton name="Settings" options={options} handleItemClick={(option) => handleSettingOptionClick(option)}/>
 						</li>
 					</>
 				)}

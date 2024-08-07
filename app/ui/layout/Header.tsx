@@ -6,6 +6,7 @@ import { useState } from "react";
 import { FaChartLine } from "react-icons/fa";
 import * as Constant from "@/lib/constant";
 import MainNavigation from "./MainNavigation";
+import DropdownButton from "./DropdownButton";
 
 
 export default function Header() {
@@ -24,6 +25,7 @@ export default function Header() {
 					</div>
 				</div>
 				<div className="flex-1"><MainNavigation /></div>
+
 			</div>
 		</header>
 	)

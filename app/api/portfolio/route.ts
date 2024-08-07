@@ -44,9 +44,7 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
 	try {
 		const { userId, investment } = await request.json();
-		// userId = new mongoose.Types.ObjectId(userId as string);
-console.log("=========== investment");
-console.log(investment);
+
 		const symbol = investment.symbol;
 		const portfolio = await Portfolio.findOneAndUpdate(
 			{ userId, 'investments.symbol': symbol },

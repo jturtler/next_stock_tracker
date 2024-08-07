@@ -80,7 +80,7 @@ export default function PortfolioList() {
 	return (
 		<div className="flex flex-col space-y-8">
 
-			<div className="w-1/3 bg-gold bg-opacity-30 px-5 py-3 min-w-72 shadow-lg">
+			<div className="w-1/3 bg-gold bg-opacity-30 px-5 py-3 min-w-72 shadow-lg rounded-sm">
 				<div className="flex justify-between">
 					<span className="text-gray-700 whitespace-nowrap">Total Investment:</span>
 					<span className="font-semibold whitespace-nowrap text-navy-blue py-1 px-2">{Utils.formatDisplayNumber(data?.totalInvestment)}</span>
