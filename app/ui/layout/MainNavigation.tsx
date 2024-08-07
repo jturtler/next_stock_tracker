@@ -5,8 +5,9 @@ import * as Constant from "@/lib/constant";
 import { useMainUi } from "@/contexts/MainUiContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { CiMenuKebab } from "react-icons/ci";
-import DropdownButton from "./DropdownButton";
+import SettingsButton from "./SettingsButton";
 import { JSONObject } from "@/lib/definations";
+import { FaUser } from "react-icons/fa";
 
 
 export default function MainNavigation() {
@@ -22,12 +23,12 @@ export default function MainNavigation() {
 		setMainPage(name);
 	}
 
-	const handleSettingOptionClick = (option: JSONObject) => {
-		if( option.code == "logout") {
+	const handleSettingOptionClick = (pageName: string) => {
+		if( pageName == "logout") {
 			handleOnLogout();
 		}
 		else {
-			handleOnClick(option.code);
+			handleOnClick(pageName);
 		}
 	}
 
@@ -37,14 +38,6 @@ export default function MainNavigation() {
 			logout();
 		}
 	}
-
-	const options = [
-		{ code: Constant.UI_PAGE_WATCH_LIST, name: "Watchlist" },
-		{ code: Constant.UI_PAGE_PORTFOLIO, name: "Portfolio" },
-		{ code: Constant.UI_PAGE_NOTIFICATION_PAGE, name: "Notification" },
-		
-		{ code: "logout", name: "Log-out" }
-	];
 
 	const renderMenus = () => {
 		return (
@@ -58,25 +51,18 @@ export default function MainNavigation() {
 				
 				{user === null && <>
 					<div className="flex-grow"></div>
-					<li>
-						<button className="bg-gold text-navy-blue px-4 py-2 rounded hover:bg-yellow-600" onClick={() => handleOnClick(Constant.UI_PAGE_LOGIN)}>Log-In</button>
+					<li className="flex ">
+						<button className="bg-gray-400 text-navy-blue px-2 py-2 rounded-full hover:bg-yellow-600" onClick={() => handleOnClick(Constant.UI_PAGE_LOGIN)}>
+							<FaUser />
+						</button>
 					</li>
 				</>}
 
 				{user !== null && (
 					<>
-						 {/*<li><a href="#" className={`hover:text-gold ${selected == Constant.UI_PAGE_WATCH_LIST ? "text-gold" : ""} p-1 rounded`} onClick={() => handleOnClick(Constant.UI_PAGE_WATCH_LIST)}>Watchlist</a></li>
-
-						<li><a href="#" className={`hover:text-gold ${selected == Constant.UI_PAGE_PORTFOLIO ? "text-gold" : ""} p-1 rounded`} onClick={() => handleOnClick(Constant.UI_PAGE_PORTFOLIO)}>Portfolio</a></li>
-						
-						<li><a href="#" className={`hover:text-gold ${selected == Constant.UI_PAGE_NOTIFICATION_PAGE ? "text-gold" : ""} p-1 rounded`} onClick={() => handleOnClick(Constant.UI_PAGE_NOTIFICATION_PAGE)}>Notifications</a></li>
-
-						<div className="flex-grow"></div> */}
+						<div className="flex-grow"></div>
 						<li>
-							{/* <button className="bg-gold text-navy-blue px-4 py-2 rounded hover:bg-yellow-600" onClick={() => handleOnLogout()}>Log-Out</button> */}
-
-							
-							<DropdownButton name="Settings" options={options} handleItemClick={(option) => handleSettingOptionClick(option)}/>
+							<SettingsButton handleItemClick={(pageName) => handleSettingOptionClick(pageName)}/>
 						</li>
 					</>
 				)}

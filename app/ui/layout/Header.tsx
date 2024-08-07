@@ -6,7 +6,7 @@ import { useState } from "react";
 import { FaChartLine } from "react-icons/fa";
 import * as Constant from "@/lib/constant";
 import MainNavigation from "./MainNavigation";
-import DropdownButton from "./DropdownButton";
+import DropdownButton from "./SettingsButton";
 
 
 export default function Header() {
