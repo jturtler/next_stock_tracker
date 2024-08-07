@@ -40,7 +40,7 @@ export default function MainNavigation() {
 
 	const options = [
 		{ code: Constant.UI_PAGE_WATCH_LIST, name: "Watchlist" },
-		{ code: Constant.UI_PAGE_WATCH_LIST, name: "Portfolio" },
+		{ code: Constant.UI_PAGE_PORTFOLIO, name: "Portfolio" },
 		{ code: Constant.UI_PAGE_NOTIFICATION_PAGE, name: "Notification" },
 		
 		{ code: "logout", name: "Log-out" }
