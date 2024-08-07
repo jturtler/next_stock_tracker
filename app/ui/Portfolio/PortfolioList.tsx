@@ -78,20 +78,20 @@ export default function PortfolioList() {
 	const data = calculatePerformance(list);
 
 	return (
-		<div className="flex flex-col space-y-3">
+		<div className="flex flex-col space-y-8">
 
-			<div className="w-64">
+			<div className="w-1/3 bg-gold bg-opacity-30 px-5 py-3 min-w-72 shadow-lg">
 				<div className="flex justify-between">
-					<span className="text-gray-700">Total Investment:</span>
-					<span className="font-semibold text-navy-blue py-1 px-2">{Utils.formatDisplayNumber(data?.totalInvestment)}</span>
+					<span className="text-gray-700 whitespace-nowrap">Total Investment:</span>
+					<span className="font-semibold whitespace-nowrap text-navy-blue py-1 px-2">{Utils.formatDisplayNumber(data?.totalInvestment)}</span>
 				</div>
 				<div className="flex justify-between">
-					<span className="text-gray-700">Current Value:</span>
-					<span className="font-semibold text-navy-blue py-1 px-2">{Utils.formatDisplayNumber(data?.currentValue)}</span>
+					<span className="text-gray-700 whitespace-nowrap">Current Value:</span>
+					<span className="font-semibold text-navy-blue whitespace-nowrap py-1 px-2">{Utils.formatDisplayNumber(data?.currentValue)}</span>
 				</div>
 				<div className="flex justify-between">
-					<span className="text-gray-700">Profit/Loss:</span>
-					<span className={`font-semibold text-navy-blue ${data?.profitLoss > 0 ? "bg-green-200 text-green-600" : "bg-red-100 text-red-600"} py-1 px-2 rounded-md items-center`}>{Utils.formatDisplayNumber(data?.profitLoss)}</span>
+					<span className="text-gray-700 whitespace-nowrap">Profit/Loss:</span>
+					<span className={`font-semibold text-navy-blue whitespace-nowrap ${data?.profitLoss > 0 ? "bg-green-200 text-green-600" : "bg-red-200 text-red-600"} py-1 px-2 rounded-md items-center`}>{Utils.formatDisplayNumber(data?.profitLoss)}</span>
 				</div>
 			</div>
 
