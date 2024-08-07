@@ -83,15 +83,15 @@ export default function PortfolioList() {
 			<div className="w-64">
 				<div className="flex justify-between">
 					<span className="text-gray-700">Total Investment:</span>
-					<span className="font-semibold text-navy-blue">{Utils.formatDisplayNumber(data?.totalInvestment)}</span>
+					<span className="font-semibold text-navy-blue py-1 px-2">{Utils.formatDisplayNumber(data?.totalInvestment)}</span>
 				</div>
 				<div className="flex justify-between">
 					<span className="text-gray-700">Current Value:</span>
-					<span className="font-semibold text-navy-blue">{Utils.formatDisplayNumber(data?.currentValue)}</span>
+					<span className="font-semibold text-navy-blue py-1 px-2">{Utils.formatDisplayNumber(data?.currentValue)}</span>
 				</div>
 				<div className="flex justify-between">
 					<span className="text-gray-700">Profit/Loss:</span>
-					<span className={`font-semibold text-navy-blue ${data?.profitLoss > 0 ? "text-green-600" : "text-red-600"}`}>{Utils.formatDisplayNumber(data?.profitLoss)}</span>
+					<span className={`font-semibold text-navy-blue ${data?.profitLoss > 0 ? "bg-green-200 text-green-600" : "bg-red-100 text-red-600"} py-1 px-2 rounded-md items-center`}>{Utils.formatDisplayNumber(data?.profitLoss)}</span>
 				</div>
 			</div>
 

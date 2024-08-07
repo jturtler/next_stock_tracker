@@ -4,11 +4,14 @@
 import { JSONObject } from "@/lib/definations";
 import * as Utils from "@/lib/utils";
 import * as Constant from "@/lib/constant";
-
+import { FaArrowDown } from "react-icons/fa";
+import { FaArrowUp } from "react-icons/fa";
 
 
 export default function PortfolioItem({ data, style = "large" }: { data: JSONObject, style: string }) {
 
+	const profitLoss = data.currentValue - data.investmentValue;
+console.log("profitLoss : " + profitLoss);
 	return (
 		<>
 			{style == "large" && <tr className="hover:bg-slate-200">
@@ -16,7 +19,24 @@ export default function PortfolioItem({ data, style = "large" }: { data: JSONObj
 				<td className="py-2 px-4 border-b text-start whitespace-nowrap">{data.longName}</td>
 				<td className="py-2 px-4 border-b text-end whitespace-nowrap">{Utils.formatDisplayNumber(data.investmentValue)}</td>
 				<td className="py-2 px-4 border-b text-end whitespace-nowrap">{Utils.formatDisplayNumber(data.currentValue)}</td>
-				<td className={`py-2 px-4 border-b text-end whitespace-nowrap ${data?.profitLoss > 0 ? "text-green-600" : "text-red-600"}`}>{Utils.formatDisplayNumber(data.currentValue - data.investmentValue)}</td>
+				{profitLoss >= 0 && (
+				<td className="py-2 px-4 border-b text-end whitespace-nowrap font-semibold flex flex-row space-x-2 bg-green-200 rounded-md items-center justify-end">
+					<td className="py-2 px-4 border-b text-end font-semibold flex justify-end">
+					<div className="flex py-1 px-2 rounded-md items-center bg-green-100 text-green-600 whitespace-nowrap space-x-2">
+						<FaArrowDown />
+						<span>{Utils.formatDisplayNumber(profitLoss)}</span>
+					</div>
+				</td>
+				</td>
+				)}
+				{profitLoss < 0 && (
+				<td className="py-2 px-4 border-b text-end font-semibold flex justify-end">
+					<div className="flex py-1 px-2 rounded-md items-center bg-red-100 text-red-600 whitespace-nowrap space-x-2">
+						<FaArrowDown />
+						<span>{Utils.formatDisplayNumber(profitLoss)}</span>
+					</div>
+				</td>
+				)}
 			</tr>}
 
 			{style == "small" && <section className="bg-white p-5 rounded-lg shadow-md mb-2">
@@ -33,7 +53,16 @@ export default function PortfolioItem({ data, style = "large" }: { data: JSONObj
 					</div>
 					<div className="flex justify-between">
 						<span className="text-gray-700">Profit/Loss:</span>
-						<span className={`font-semibold text-navy-blue ${data?.profitLoss > 0 ? "text-green-600" : "text-red-600"}`}>{Utils.formatDisplayNumber(data.currentValue - data.investmentValue)}</span>
+						{profitLoss >= 0 && <div className="font-semibold text-green-600 flex flex-row space-x-2 bg-green-100 py-1 px-2 rounded-md items-center">
+							<FaArrowUp />
+							<span>{Utils.formatDisplayNumber(profitLoss)}</span>
+						</div>}
+						{profitLoss < 0 && <div className="font-semibold text-red-600 flex flex-row space-x-2 bg-red-100 py-1 px-2 rounded-md items-center">
+							<FaArrowDown />
+							<span>{Utils.formatDisplayNumber(profitLoss)}</span>
+						</div>}
+
+
 					</div>
 				</div>
 			</section>}
