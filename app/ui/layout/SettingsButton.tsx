@@ -6,6 +6,7 @@ import * as Constant from "@/lib/constant";
 import { GiTakeMyMoney } from "react-icons/gi";
 import { MdNotificationAdd } from "react-icons/md";
 import { IoLogOutSharp } from "react-icons/io5";
+import { RiStockFill } from "react-icons/ri";
 
 
 export default function SettingsButton({ handleItemClick }: { handleItemClick: (pageName: string) => void }) {
@@ -46,19 +47,19 @@ export default function SettingsButton({ handleItemClick }: { handleItemClick: (
 				<div ref={divRef} className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg">
 					<ul className="py-1">
 						<li className="px-4 py-2 text-gray-700 hover:bg-gray-100 flex space-x-2 items-center" onClick={() => handleItemClick(Constant.UI_PAGE_WATCH_LIST)} >
-							<BiSolidPurchaseTag />
+							<BiSolidPurchaseTag size={22} />
 							<span>Watchlist</span>
 						</li>
 						<li className="px-4 py-2 text-gray-700 hover:bg-gray-100 flex space-x-2 items-center" onClick={() => handleItemClick(Constant.UI_PAGE_PORTFOLIO)} >
-							<GiTakeMyMoney />
+							<RiStockFill size={22} />
 							<span>Portfolio</span>
 						</li>
 						<li className="px-4 py-2 text-gray-700 hover:bg-gray-100 flex space-x-2 items-center border-b border-gray-200" onClick={() => handleItemClick(Constant.UI_PAGE_NOTIFICATION_PAGE)} >
-							<MdNotificationAdd />
+							<MdNotificationAdd size={22} />
 							<span>Notification</span>
 						</li>
 						<li className="px-4 py-2 text-gray-700 hover:bg-gray-100 flex space-x-2 items-center" onClick={() => handleItemClick("logout")} >
-							<IoLogOutSharp />
+							<IoLogOutSharp size={22} />
 							<span>Log-out</span>
 						</li>
 					</ul>
