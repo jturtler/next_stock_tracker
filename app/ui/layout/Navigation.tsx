@@ -19,8 +19,9 @@ export default function Navigation() {
 	const [showSlideMenu, setShowSlideMenu] = useState(false);
 
 	const handleOnClick = (name: string) => {
-		setSelected(name)
+		setSelected(name);
 		setMainPage(name);
+		setShowSlideMenu(false);
 	}
 
 	const handleSettingOptionClick = (pageName: string) => {
@@ -36,6 +37,7 @@ export default function Navigation() {
 		const ok = confirm("Are you sure you want to log-out ?");
 		if (ok) {
 			logout();
+			setMainPage(Constant.UI_PAGE_HOME);
 		}
 	}
 
