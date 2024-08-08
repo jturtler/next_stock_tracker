@@ -1,5 +1,5 @@
 // components/Notification.tsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import useSWR from 'swr';
 import axios from 'axios';
 import { useAuth } from '@/contexts/AuthContext';
@@ -13,10 +13,14 @@ import NotificationAddForm from './NotificationAddForm';
 
 export default function NotificationPage() {
 
+	const notificationListRef = useRef<any>(null);
 	const [showAddForm, setShowAddForm] = useState(false);
 	
 	const onUpdateList = (newNotification: JSONObject) => {
-		// setList(newNotification.investments);
+		if (notificationListRef.current) {
+			// const newNotification: JSONObject = { id: '1', message: 'New notification from parent' };
+			notificationListRef.current.handleOnUpdate(newNotification.notifications);
+		}
 	}
 
 	return (
@@ -28,7 +32,7 @@ export default function NotificationPage() {
 				</button>
 			</h2>
 			<div className="p-2">
-				<NotificationList />
+				<NotificationList ref={notificationListRef} />
 			</div>
 
 			{showAddForm && <NotificationAddForm onSuccess={(newNotification) => onUpdateList(newNotification) } />}

@@ -1,5 +1,5 @@
 // components/Notification.tsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import axios from 'axios';
 import { useAuth } from '@/contexts/AuthContext';
 import { FiPlus } from 'react-icons/fi';
@@ -7,13 +7,27 @@ import { JSONObject } from '@/lib/definations';
 import * as Utils from "@/lib/utils";
 import NotificationItem from './NotificationItem';
 
+// Define the type for the ref object
+interface NotificationListHandles {
+	handleOnUpdate: (newNotification: JSONObject[]) => void;
+  }
 
-export default function NotificationList() {
+const NotificationList = forwardRef<NotificationListHandles>((props, ref) => {
 
 	const { user } = useAuth();
-	const [showAddForm, setShowAddForm] = useState(false);
+	// const [showAddForm, setShowAddForm] = useState(false);
 	const [list, setList] = useState<JSONObject[]>([]);
 
+	// Define the handleOnUpdate function
+	const handleOnUpdate = (newList: JSONObject[]) => {
+		console.log('Updating with:', handleOnUpdate);
+		setList(newList);
+	};
+
+	// Expose the handleOnUpdate function to the parent component
+	useImperativeHandle(ref, () => ({
+		handleOnUpdate
+	}));
 
 	const fetchData = async () => {
 		var response = await axios.get(`/api/notification?userId=${user!._id}`)
@@ -31,7 +45,6 @@ export default function NotificationList() {
 			}
 		}
 	}
-
 
 	useEffect(() => {
 		fetchData();
@@ -68,4 +81,9 @@ export default function NotificationList() {
 
 		</div>
 	);
-};
+});
+
+// Add a display name for better debugging
+NotificationList.displayName = 'NotificationList';
+
+export default NotificationList;
