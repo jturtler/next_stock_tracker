@@ -1,5 +1,5 @@
 // components/Portfolio.tsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import useSWR from 'swr';
 import axios from 'axios';
 import { useAuth } from '@/contexts/AuthContext';
@@ -14,15 +14,13 @@ import PortfolioList from './PortfolioList';
 
 export default function PortfolioPage() {
 
+	const listRef = useRef<any>(null);
 	const [showAddForm, setShowAddForm] = useState(false);
-	// const { user } = useAuth();
-
-	// const [list, setList] = useState<JSONObject[]>([]);
-	// const [currentPrices, setCurrentPrices] = useState<JSONObject[]>([]);
-
-
+	
 	const onUpdateList = (newPortfolio: JSONObject) => {
-		// setList(newPortfolio.investments);
+		if (listRef.current) {
+			listRef.current.handleOnUpdate(newPortfolio.investments);
+		}
 	}
 
 	return (
@@ -34,7 +32,7 @@ export default function PortfolioPage() {
 				</button>
 			</h2>
 			<div className="p-2">
-				<PortfolioList />
+				<PortfolioList ref={listRef} />
 			</div>
 
 			{showAddForm && <UpdatePortfolioForm onSuccess={(newPortfolio) => onUpdateList(newPortfolio) } />}

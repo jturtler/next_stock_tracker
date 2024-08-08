@@ -20,7 +20,6 @@ const NotificationList = forwardRef<NotificationListHandles>((props, ref) => {
 
 	// Define the handleOnUpdate function
 	const handleOnUpdate = (newList: JSONObject[]) => {
-		console.log('Updating with:', handleOnUpdate);
 		setList(newList);
 	};
 

@@ -11,7 +11,7 @@ import { FaArrowUp } from "react-icons/fa";
 export default function PortfolioItem({ data, style = "large" }: { data: JSONObject, style: string }) {
 
 	const profitLoss = data.currentValue - data.investmentValue;
-console.log("profitLoss : " + profitLoss);
+
 	return (
 		<>
 			{style == "large" && <tr className="hover:bg-slate-200">

@@ -1,5 +1,5 @@
 // components/Portfolio.tsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import useSWR from 'swr';
 import axios from 'axios';
 import { useAuth } from '@/contexts/AuthContext';
@@ -11,13 +11,27 @@ import * as Utils from "@/lib/utils";
 import { useQuery } from 'react-query';
 import PortfolioItem from './PortfolioItem';
 
+interface PortfolioListHandles {
+	handleOnUpdate: (investments: JSONObject[]) => void;
+  }
 
-export default function PortfolioList() {
+
+const PortfolioList = forwardRef<PortfolioListHandles>((props, ref) => {
 
 	const { user } = useAuth();
 	const [showAddForm, setShowAddForm] = useState(false);
 	const [list, setList] = useState<JSONObject[]>([]);
 
+	// Define the handleOnUpdate function
+	const handleOnUpdate = async(newList: JSONObject[]) => {
+		const result = await transformData(newList);
+		setList(result);
+	};
+
+	// Expose the handleOnUpdate function to the parent component
+	useImperativeHandle(ref, () => ({
+		handleOnUpdate
+	}));
 
 	const fetchData = async () => {
 		var response = await axios.get(`/api/portfolio?userId=${user!._id}`)
@@ -32,23 +46,9 @@ export default function PortfolioList() {
 			}
 			else {
 				const investments = response.data.investments;
-				const symbols = investments.map((item: JSONObject) => item.symbol);
-				const currentPricesResponse = await axios.get(`/api/stock-index`, {
-					params: {
-						symbols: symbols.join(",")
-					},
-				});
+				const result = await transformData(investments);
 
-				for (var i = 0; i < investments.length; i++) {
-					const item = investments[i];
-					const foundCurrentPrice = Utils.findFromArray(currentPricesResponse.data, item.symbol, "symbol")!;
-
-					item.longName = foundCurrentPrice.longName;
-					item.investmentValue = item.quantity * item.purchasePrice;
-					item.currentValue = item.quantity * foundCurrentPrice.regularMarketPrice;
-				}
-
-				setList(Utils.cloneJSONObject(investments));
+				setList(Utils.cloneJSONObject(result));
 			}
 		}
 	}
@@ -74,8 +74,28 @@ export default function PortfolioList() {
 		fetchData();
 	}, []);
 
+	const transformData = async(investments: JSONObject[]): Promise<JSONObject[]> => {
+		const symbols = investments.map((item: JSONObject) => item.symbol);
+		const currentPricesResponse = await axios.get(`/api/stock-index`, {
+			params: {
+				symbols: symbols.join(",")
+			},
+		});
 
-	const data = calculatePerformance(list);
+		for (var i = 0; i < investments.length; i++) {
+			const item = investments[i];
+			const foundCurrentPrice = Utils.findFromArray(currentPricesResponse.data, item.symbol, "symbol")!;
+
+			item.longName = foundCurrentPrice.longName;
+			item.investmentValue = item.quantity * item.purchasePrice;
+			item.currentValue = item.quantity * foundCurrentPrice.regularMarketPrice;
+		}
+
+		return investments;
+	}
+	
+	const totalData = calculatePerformance(list);
+	 
 
 	return (
 		<div className="flex flex-col space-y-8">
@@ -83,15 +103,15 @@ export default function PortfolioList() {
 			<div className="w-1/3 bg-gold bg-opacity-30 px-5 py-3 min-w-72 shadow-lg rounded-sm">
 				<div className="flex justify-between">
 					<span className="text-gray-700 whitespace-nowrap">Total Investment:</span>
-					<span className="font-semibold whitespace-nowrap text-navy-blue py-1 px-2">{Utils.formatDisplayNumber(data?.totalInvestment)}</span>
+					<span className="font-semibold whitespace-nowrap text-navy-blue py-1 px-2">{Utils.formatDisplayNumber(totalData?.totalInvestment)}</span>
 				</div>
 				<div className="flex justify-between">
 					<span className="text-gray-700 whitespace-nowrap">Current Value:</span>
-					<span className="font-semibold text-navy-blue whitespace-nowrap py-1 px-2">{Utils.formatDisplayNumber(data?.currentValue)}</span>
+					<span className="font-semibold text-navy-blue whitespace-nowrap py-1 px-2">{Utils.formatDisplayNumber(totalData?.currentValue)}</span>
 				</div>
 				<div className="flex justify-between">
 					<span className="text-gray-700 whitespace-nowrap">Profit/Loss:</span>
-					<span className={`font-semibold text-navy-blue whitespace-nowrap ${data?.profitLoss > 0 ? "bg-green-200 text-green-600" : "bg-red-200 text-red-600"} py-1 px-2 rounded-md items-center`}>{Utils.formatDisplayNumber(data?.profitLoss)}</span>
+					<span className={`font-semibold text-navy-blue whitespace-nowrap ${totalData?.profitLoss > 0 ? "bg-green-200 text-green-600" : "bg-red-200 text-red-600"} py-1 px-2 rounded-md items-center`}>{Utils.formatDisplayNumber(totalData?.profitLoss)}</span>
 				</div>
 			</div>
 
@@ -123,4 +143,9 @@ export default function PortfolioList() {
 
 		</div>
 	);
-};
+});
+
+// Add a display name for better debugging
+PortfolioList.displayName = 'PortfolioList';
+
+export default PortfolioList;
