@@ -37,9 +37,9 @@ export default function SettingsButton({ handleItemClick }: { handleItemClick: (
 		<div className="relative inline-block text-left">
 			<button
 				onClick={toggleDropdown}
-				className="p-2 bg-gold text-black rounded-full hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+				className="p-1 bg-gold text-black rounded-full hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500"
 			>
-				<RiUserSettingsFill size={16} />
+				<RiUserSettingsFill size={20} />
 			</button>
 
 			{/* Dropdown menu */}
