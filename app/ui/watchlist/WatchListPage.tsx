@@ -1,15 +1,11 @@
-import { useAuth } from '@/contexts/AuthContext';
-import { JSONObject } from '@/lib/definations';
-import React, { useState, useEffect } from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import WatchList from './WatchList';
 import AddWatchListForm from './AddWatchListForm';
-import { fetchIndividualData } from '@/lib/utils/fetchStockIndexes';
-import * as Utils from "@/lib/utils";
-import * as AppStore from "@/lib/AppStore";
-import { useMainUi } from '@/contexts/MainUiContext';
-import * as Constant from "@/lib/constant";
-import WatchListDetails from './WatchListDetails';
 import { FiPlus } from "react-icons/fi";
+import { Model } from 'mongoose';
+import Modal from '../layout/Modal';
 
 
 const WatchListPage: React.FC = () => {
@@ -29,7 +25,7 @@ const WatchListPage: React.FC = () => {
 				<WatchList />
 			</div>
 			
-			{showAddWatchListForm && <AddWatchListForm />}
+			<Modal isVisible={showAddWatchListForm} onClose={() => setShowAddWatchListForm(false)}><AddWatchListForm handleOnClose={() => setShowAddWatchListForm(false)} /></Modal>
 		</div>
 	);
 };

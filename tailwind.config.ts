@@ -10,9 +10,18 @@ const config: Config = {
       extend: {
         colors: {
         'navy-blue': '#003366',
-        'light-gray': '#f5f5f5',
         'gold': '#FFD700',
-        'coral': '#FF6F61',
+        'light-gray': '#f5f5f5',
+
+        "silver": "#C0C0C0",
+        'coral': '#FF7F50',
+        "red": "#FF0000",
+        "rose": "#FF007F",
+        "fuchsia": "#FF00FF",
+        "turquoise": "#40E0D0",
+        "chartreuse": "#7FFF00",
+        "mint-green": "#98FF98",
+        "pastel-blue": '#A2C2E4',
 
 
           // header: "#A2C2E4",
@@ -25,7 +34,6 @@ const config: Config = {
           // // primary: "#334155",
           // accent: '#A8E6CF',
 
-          // pastelBlue: '#A2C2E4',
           // pastelGreen: '#B2D8B2',
           // pastelLavender: '#D3B4E2',
           // pastelYellow: '#F9E6A1',

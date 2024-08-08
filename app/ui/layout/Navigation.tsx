@@ -58,7 +58,7 @@ export default function Navigation() {
 		return(<>
 			{user === null && 
 				<div className="flex ">
-					<button className="bg-gray-400 text-navy-blue px-2 py-2 rounded-full hover:bg-yellow-600" onClick={() => handleOnClick(Constant.UI_PAGE_LOGIN)}>
+					<button className="bg-gray-400 text-navy-blue p-1 rounded-full hover:bg-yellow-600" onClick={() => handleOnClick(Constant.UI_PAGE_LOGIN)}>
 						<FaUser />
 					</button>
 				</div>}

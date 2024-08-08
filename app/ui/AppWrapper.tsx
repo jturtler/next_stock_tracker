@@ -9,7 +9,7 @@ import * as AppStore from "@/lib/AppStore";
 import CompareStocksPage from './compare-stock-indexes-chart/CompareStockPage';
 import LoginForm from './auth/LoginForm';
 import RegisterForm from './auth/RegisterForm';
-import WatchListPage from './watch-list/WatchListPage';
+import WatchListPage from './watchlist/WatchListPage';
 import StockTrending from './trending/StockTrending';
 import PortfolioPage from './portfolio/PortfolioPage';
 import NotificationPage from './notification/NotificationPage';
