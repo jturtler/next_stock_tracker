@@ -1,6 +1,6 @@
 'use client';
 
-import MainNavigation from './layout/MainNavigation';
+import Navigation from './layout/Navigation';
 import * as Constant from "@/lib/constant";
 import { useMainUi } from '@/contexts/MainUiContext';
 import StockIndexDetails from './stock-index-data/StockIndexDetails';

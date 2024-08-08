@@ -5,7 +5,7 @@ import { useMainUi } from "@/contexts/MainUiContext";
 import { useState } from "react";
 import { FaChartLine } from "react-icons/fa";
 import * as Constant from "@/lib/constant";
-import MainNavigation from "./MainNavigation";
+import Navigation from "./Navigation";
 import DropdownButton from "./SettingsButton";
 
 
@@ -24,7 +24,8 @@ export default function Header() {
 						<span>Market</span>
 					</div>
 				</div>
-				<div className="flex-1"><MainNavigation /></div>
+
+				<div className="flex-1"><Navigation /></div>
 
 			</div>
 		</header>

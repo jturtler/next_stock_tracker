@@ -10,12 +10,12 @@ import { JSONObject } from "@/lib/definations";
 import { FaUser } from "react-icons/fa";
 
 
-export default function MainNavigation() {
+export default function Navigation() {
 
 	const [selected, setSelected] = useState(Constant.UI_PAGE_HOME);
 	const { setMainPage } = useMainUi();
 	const { user, logout } = useAuth();
-	
+
 	const [showSlideMenu, setShowSlideMenu] = useState(false);
 
 	const handleOnClick = (name: string) => {
@@ -24,7 +24,7 @@ export default function MainNavigation() {
 	}
 
 	const handleSettingOptionClick = (pageName: string) => {
-		if( pageName == "logout") {
+		if (pageName == "logout") {
 			handleOnLogout();
 		}
 		else {
@@ -34,12 +34,12 @@ export default function MainNavigation() {
 
 	const handleOnLogout = () => {
 		const ok = confirm("Are you sure you want to log-out ?");
-		if(ok) {
+		if (ok) {
 			logout();
 		}
 	}
 
-	const renderMenus = () => {
+	const renderNavigationMenus = () => {
 		return (
 			<>
 				<div className="flex-grow"></div>
@@ -48,27 +48,25 @@ export default function MainNavigation() {
 				<li><a href="#" className={`hover:text-gold ${selected == Constant.UI_PAGE_TRENDING ? "text-gold" : ""}  p-1 rounded`} onClick={() => handleOnClick(Constant.UI_PAGE_TRENDING)}>Trending</a></li>
 
 				<li><a href="#" className={`hover:text-gold ${selected == Constant.UI_PAGE_COMPARE_STOCK_INDEXES_CHARTS ? "hover:text-gold" : ""} p-1 rounded`} onClick={() => handleOnClick(Constant.UI_PAGE_COMPARE_STOCK_INDEXES_CHARTS)}>Compare-Stocks</a></li>
-				
-				{user === null && <>
-					<div className="flex-grow"></div>
-					<li className="flex ">
-						<button className="bg-gray-400 text-navy-blue px-2 py-2 rounded-full hover:bg-yellow-600" onClick={() => handleOnClick(Constant.UI_PAGE_LOGIN)}>
-							<FaUser />
-						</button>
-					</li>
-				</>}
-
-				{user !== null && (
-					<>
-						<div className="flex-grow"></div>
-						<li>
-							<SettingsButton handleItemClick={(pageName) => handleSettingOptionClick(pageName)}/>
-						</li>
-					</>
-				)}
 			</>
 		)
 	}
+
+	const renderUserRelatedMenus = () => {
+		return(<>
+			{user === null && 
+				<div className="flex ">
+					<button className="bg-gray-400 text-navy-blue px-2 py-2 rounded-full hover:bg-yellow-600" onClick={() => handleOnClick(Constant.UI_PAGE_LOGIN)}>
+						<FaUser />
+					</button>
+				</div>}
+
+			{user !== null && (
+				<SettingsButton handleItemClick={(pageName) => handleSettingOptionClick(pageName)} />
+			)}
+		</>)
+	}
+
 	const menuRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -87,30 +85,34 @@ export default function MainNavigation() {
 
 
 	return (
-		<> 
-		<nav>
-		<div className="flex lg:hidden justify-end" onClick={() => setShowSlideMenu(true) }><CiMenuKebab size={18} /></div>
-			
-			<ul className="flex space-x-4 hidden lg:flex items-center">
-				{renderMenus()}
-			</ul>
-		</nav>
+		<div className="flex items-center justify-center">
+			{/* For the large size */}
+			<nav className="flex-1 flex justify-center">
+				<ul className="flex space-x-4 hidden lg:flex items-center">
+					{renderNavigationMenus()}
+				</ul>
 
-		{showSlideMenu && <div
+			</nav>
+
+			<div>{renderUserRelatedMenus()}</div>
+			<div className="flex lg:hidden justify-end ml-4" onClick={() => setShowSlideMenu(true)}><CiMenuKebab size={18} /></div>
+
+
+			{/* For the medium or small size */}
+			{showSlideMenu && <div
 				ref={menuRef}
-				className={` font-normal fixed top-0 right-0 h-full bg-gray-800 text-white shadow-lg transform ${showSlideMenu ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-300 ease-in-out w-52`}
-				
+				className={`font-normal fixed top-0 right-0 h-full z-50 bg-gray-800 text-white shadow-lg transform ${showSlideMenu ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-300 ease-in-out w-52`}
 			>
-			
-
 				<div className="p-4">
 					<ul className="space-y-5 font-extralight justify-center">
 						<li onClick={() => setShowSlideMenu(false)}><h2 className="text-2xl right-4 text-white font-extrabold text-right">&times;</h2></li>
-						{renderMenus()}
+						{renderNavigationMenus()}
 					</ul>
 				</div>
+				
 			</div>}
-			
-		</>
+
+
+		</div>
 	)
 }

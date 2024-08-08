@@ -14,20 +14,19 @@ import { FaHistory } from "react-icons/fa";
 export default function StockIndexDetails({curPriceData}: {curPriceData: JSONObject}) {
 
     const [showHistoryData, setShowHistoryData] = useState(false);
-    console.log("========== curPriceData");
-    console.log(curPriceData);
+
     return (
         <div className="flex flex-row p-3">
             <div className="flex-1">
-                <h2 className="font-bold text-3xl flex items-center space-x-2">
-                    <div className="mb-3 mr-3">{curPriceData.longName}</div>
+                <h2 className="font-bold text-3xl flex items-center space-x-2 just mb-3">
+                    <div className="mr-2 items-center">{curPriceData.longName}</div>
                    
-                    {showHistoryData &&  <button className="ml-3 text-lg p-5 shadow-lg bg-gold text-navy-blue px-4 py-2 rounded hover:bg-yellow-600" onClick={()=> setShowHistoryData(false)}>
-                        <IoBarChartSharp />
+                    {showHistoryData &&  <button className="items-center text-lg shadow-lg bg-gold p-2 rounded-full hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500" onClick={()=> setShowHistoryData(false)}>
+                        <IoBarChartSharp size={14} className="text-navy-blue" />
                     </button>}
 
-                    {!showHistoryData &&  <button className="ml-3 text-lg p-5 shadow-lg bg-gold text-navy-blue px-4 py-2 rounded hover:bg-yellow-600" onClick={()=> setShowHistoryData(true)}>
-                        <FaHistory />
+                    {!showHistoryData &&  <button className="items-center text-lg shadow-lg bg-gold p-2 rounded-full hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500" onClick={()=> setShowHistoryData(true)}>
+                        <FaHistory size={14}  className="text-navy-blue" />
                     </button>}
                 </h2>
                 
