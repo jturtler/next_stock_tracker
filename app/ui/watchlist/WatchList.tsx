@@ -2,7 +2,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { JSONObject } from "@/lib/definations";
 import { fetchIndividualData } from "@/lib/utils/fetchStockIndexes";
 import { useState } from "react";
-import WatchListDetails from "./WatchListDetails";
+import WatchListItemList from "./WatchListItemList";
 import * as Utils from "@/lib/utils";
 
 
@@ -32,7 +32,7 @@ export default function WatchList() {
 			<hr className="ml-2 border-t-2 border-gray-300 shadow-xl" />
 
 			<div className="flex-1">
-				{selected !== null && <WatchListDetails groupName={selected.groupName}/>}
+				{selected !== null && <WatchListItemList groupName={selected.groupName}/>}
 			</div>
 		</div>
 	)

@@ -10,13 +10,13 @@ import * as Constant from "@/lib/constant";
 import { useMainUi } from "@/contexts/MainUiContext";
 import { fetchIndividualData } from "@/lib/utils/fetchStockIndexes";
 import Loading from "../layout/Loading";
+import StockListItem from "../layout/StockListItem";
 
 
-export default function WatchListDetails({ groupName }: { groupName: string }) {
+export default function WatchListItemList({ groupName }: { groupName: string }) {
 
 	const { user, setUser } = useAuth();
 	const [error, setError] = useState("");
-	const { setMainPage } = useMainUi();
 	const [stocks, setStocks] = useState<JSONObject[] | null>(null);
 
 	const showWatchlistByGroup = async (groupName: string) => {
@@ -39,7 +39,7 @@ export default function WatchListDetails({ groupName }: { groupName: string }) {
 
 
 	const removeStockToWatchlist = async (groupName: string, stock: JSONObject) => {
-		const ok = confirm(`Are you sure you want to remove this stock ${stock.shortname} from the list ?`);
+		const ok = confirm(`Are you sure you want to remove the stock '${stock.longName}' from the list ?`);
 		if (ok) {
 			const newStock = { symbol: stock.symbol, name: stock.shortname, addedAt: new Date() };
 			const payload = { action: "remove", userId: user!._id, groupName: groupName, stock: newStock }
@@ -63,14 +63,54 @@ export default function WatchListDetails({ groupName }: { groupName: string }) {
 		}
 	};
 
-	const showStockDetails = (stock: JSONObject) => {
-		AppStore.setSelectedSymbolData(stock);
-		setMainPage(Constant.UI_SYMBOL_DETAILS);
-	}
-
 	if( stocks === null ) return <><Loading /></>
+
 	return (
 		<>
+		<div className="m-3">
+			<div className="hidden lg:block">
+				<table className="min-w-full divide-y divide-gray-200">
+					<thead className="bg-gray-50 whitespace-nowrap">
+						<tr>
+							<th className="py-2 px-4 border-b text-left">Symbol</th>
+							<th className="py-2 px-4 border-b text-left text-navy-blue">Name</th>
+							<th className="py-2 px-4 border-b text-right text-navy-blue">Last Price</th>
+							<th className="py-2 px-4 border-b text-right text-navy-blue">Market Time</th>
+							<th className="py-2 px-4 border-b text-right text-navy-blue">Change</th>
+							<th className="py-2 px-4 border-b text-right text-navy-blue">% Change</th>
+							<th className="py-2 px-4 border-b text-right text-navy-blue">Volume</th>
+							<th className="py-2 px-4 border-b text-right text-navy-blue">Market Cap</th>
+							<th className="py-2 px-4 border-b text-right text-navy-blue">Intraday High/Low</th>
+							<th className="py-2 px-4 border-b text-right text-navy-blue">Action</th>
+						</tr>
+					</thead>
+
+					<tbody className="bg-white divide-y divide-gray-200">
+						{stocks !== null && stocks.map((item: JSONObject, idx: number) => (
+							<StockListItem
+								key={`watchlist_details_${idx}`} 
+								style="large" 
+								data={item} 
+								handleRemoveStock={(data: JSONObject) => removeStockToWatchlist(groupName, data)} />
+						))}
+					</tbody>
+				</table>
+			</div>
+
+			<div className="flex flex-col lg:hidden text-sm">
+			{stocks !== null && stocks.map((item: JSONObject, idx: number) => (
+					<StockListItem
+						key={`watchlist_details_${idx}`}
+						style="small"
+						data={item}
+						handleRemoveStock={(data: JSONObject) => removeStockToWatchlist(groupName, data)} />
+			))}
+			</div>
+		</div>
+{/* 
+
+
+					
 			<div className="font-medium w-full mt-2 rounded-md">
 				<div className="flex flex-col w-full">
 					{stocks !== null && stocks.map((stock: JSONObject, idx: number) => (
@@ -119,7 +159,7 @@ export default function WatchListDetails({ groupName }: { groupName: string }) {
 							</div>
 						</div>))}
 				</div>
-			</div>
+			</div> */}
 		</>
 	)
 }
