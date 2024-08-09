@@ -50,12 +50,12 @@ const DropdownInput: React.FC<DropdownInputProps> = ({ suggestions, onSelect, on
 	}, []);
 
 	return (
-		<div className="relative dropdown-container">
+		<div className="relative dropdown-container w-full justify-center">
 			<input
 				type="text"
 				value={inputValue}
 				onChange={handleInputChange}
-				className="p-2 border border-gray-300 rounded"
+				className="p-3 border border-gray-300 rounded-md w-full"
 				placeholder="Enter text..."
 			/>
 
