@@ -5,11 +5,12 @@ import axios from 'axios';
 import { useAuth } from '@/contexts/AuthContext';
 import usePortfolio from '@/lib/hooks/updatePortfolio';
 import { FiPlus } from 'react-icons/fi';
-import UpdatePortfolioForm from './UpdatePortfolioForm';
+import PortfolioAddForm from './PortfolioAddForm';
 import { JSONObject } from '@/lib/definations';
 import * as Utils from "@/lib/utils";
 import { useQuery } from 'react-query';
 import PortfolioList from './PortfolioList';
+import Modal from '../layout/Modal';
 
 
 export default function PortfolioPage() {
@@ -27,7 +28,7 @@ export default function PortfolioPage() {
 		<div className="m-3">
 				<h2 className="text-2xl font-semibold mb-3">
 				<span className="text-navy-blue">Your Portfolio</span>
-				<button className="ml-3 text-lg p-2 shadow-lg bg-pink-500 hover:bg-red-500 rounded-full" onClick={() => setShowAddForm(true)} >
+				<button className="ml-3 text-lg p-2 shadow-lg bg-pastel-blue hover:bg-turquoise focus:ring-2 focus:ring-turquoise text-navy-blue hover:bg-red-500 rounded-full" onClick={() => setShowAddForm(true)} >
 					<FiPlus />
 				</button>
 			</h2>
@@ -35,7 +36,9 @@ export default function PortfolioPage() {
 				<PortfolioList ref={listRef} />
 			</div>
 
-			{showAddForm && <UpdatePortfolioForm onSuccess={(newPortfolio) => onUpdateList(newPortfolio) } />}
+			<Modal isVisible={showAddForm} onClose={() => setShowAddForm(false)}>
+				<PortfolioAddForm handleOnClose={() => setShowAddForm(false)} onSuccess={(newPortfolio) => onUpdateList(newPortfolio) } />
+			</Modal>
 		</div>
 	);
 };

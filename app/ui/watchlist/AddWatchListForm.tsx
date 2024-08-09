@@ -14,10 +14,7 @@ export default function AddWatchListForm({ handleOnClose }: { handleOnClose: () 
     const [error, setError] = useState("");
 
     const addStockToWatchlist = async () => {
-        console.log("========= addStockToWatchlist");
-        console.log(groupName);
-        console.log(selectedSymbol);
-
+        
         if (groupName !== "" && selectedSymbol !== null) {
             const newStock = { symbol: selectedSymbol.symbol, name: selectedSymbol.shortname, addedAt: new Date() };
             const payload = { action: "add", userId: user!._id, groupName: groupName, stock: newStock }
@@ -63,7 +60,7 @@ export default function AddWatchListForm({ handleOnClose }: { handleOnClose: () 
                 {/* Error message for group name */}
                 {groupName == "" && <>
                     <div></div>
-                    <div className="text-red italic text-sm">* This field is required</div>
+                    <div className="text-red-500 italic text-sm">* This field is required</div>
                 </>}
 
                 <div>Search a Stock</div>
@@ -71,7 +68,7 @@ export default function AddWatchListForm({ handleOnClose }: { handleOnClose: () 
                 {/* Error message for stock */}
                 {selectedSymbol == null && <>
                     <div></div>
-                    <div className="text-red italic text-sm">* This field is required</div>
+                    <div className="text-red-500 italic text-sm">* This field is required</div>
                 </>}
 
                 <div></div>

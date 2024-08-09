@@ -1,25 +1,21 @@
 // components/Portfolio.tsx
 import { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
-import useSWR from 'swr';
 import axios from 'axios';
 import { useAuth } from '@/contexts/AuthContext';
-import usePortfolio from '@/lib/hooks/updatePortfolio';
-import { FiPlus } from 'react-icons/fi';
-import UpdatePortfolioForm from './UpdatePortfolioForm';
 import { JSONObject } from '@/lib/definations';
 import * as Utils from "@/lib/utils";
-import { useQuery } from 'react-query';
 import PortfolioItem from './PortfolioItem';
+import { FaArrowDown } from "react-icons/fa";
+import { FaArrowUp } from "react-icons/fa";
+
 
 interface PortfolioListHandles {
 	handleOnUpdate: (investments: JSONObject[]) => void;
   }
 
-
 const PortfolioList = forwardRef<PortfolioListHandles>((props, ref) => {
 
 	const { user } = useAuth();
-	const [showAddForm, setShowAddForm] = useState(false);
 	const [list, setList] = useState<JSONObject[]>([]);
 
 	// Define the handleOnUpdate function
@@ -98,20 +94,27 @@ const PortfolioList = forwardRef<PortfolioListHandles>((props, ref) => {
 	 
 
 	return (
-		<div className="flex flex-col space-y-8">
+		<div className="flex flex-col space-y-8 text-navy-blue">
 
-			<div className="w-1/3 bg-gold bg-opacity-30 px-5 py-3 min-w-72 shadow-lg rounded-sm">
+			<div className="w-1/3 bg-pastel-blue bg-opacity-30 px-5 py-3 min-w-72 rounded-sm">
 				<div className="flex justify-between">
 					<span className="text-gray-700 whitespace-nowrap">Total Investment:</span>
-					<span className="font-semibold whitespace-nowrap text-navy-blue py-1 px-2">{Utils.formatDisplayNumber(totalData?.totalInvestment)}</span>
+					<span className="font-semibold whitespace-nowrap py-1 px-2">{Utils.formatDisplayNumber(totalData.totalInvestment)}</span>
 				</div>
 				<div className="flex justify-between">
 					<span className="text-gray-700 whitespace-nowrap">Current Value:</span>
-					<span className="font-semibold text-navy-blue whitespace-nowrap py-1 px-2">{Utils.formatDisplayNumber(totalData?.currentValue)}</span>
+					<span className="font-semibold whitespace-nowrap py-1 px-2">{Utils.formatDisplayNumber(totalData.currentValue)}</span>
 				</div>
 				<div className="flex justify-between">
 					<span className="text-gray-700 whitespace-nowrap">Profit/Loss:</span>
-					<span className={`font-semibold text-navy-blue whitespace-nowrap ${totalData?.profitLoss > 0 ? "bg-green-200 text-green-600" : "bg-red-200 text-red-600"} py-1 px-2 rounded-md items-center`}>{Utils.formatDisplayNumber(totalData?.profitLoss)}</span>
+
+					{totalData.profitLoss >= 0 && <div className={`flex flex-row space-x-2 font-semibold whitespace-nowrap bg-green-200 text-green-600 py-1 px-2 rounded-md items-center`}>
+						<FaArrowUp />
+						<span>{Utils.formatDisplayNumber(totalData?.profitLoss)}</span>
+					</div>}
+					{totalData.profitLoss < 0 && <div className={`flex flex-row space-x-2 font-semibold whitespace-nowrap bg-red-200 text-red-600 py-1 px-2 rounded-md items-center`}>
+						<FaArrowDown />
+						<span>{Utils.formatDisplayNumber(totalData?.profitLoss)}</span></div>}
 				</div>
 			</div>
 
@@ -119,16 +122,17 @@ const PortfolioList = forwardRef<PortfolioListHandles>((props, ref) => {
 				<table className="min-w-full bg-white"> {/* Ensure table takes up at least the full width */}
 					<thead>
 						<tr>
-							<th className="py-2 px-4 border-b text-navy-blue text-start">Symbol</th>
-							<th className="py-2 px-4 border-b text-navy-blue text-start">Name</th>
-							<th className="py-2 px-4 border-b text-navy-blue text-end">Investment Value</th>
-							<th className="py-2 px-4 border-b text-navy-blue text-end">Current Value</th>
-							<th className="py-2 px-4 border-b text-navy-blue text-end">Profit/Loss</th>
+							<th className="py-2 px-4 border-b text-start">Symbol</th>
+							<th className="py-2 px-4 border-b text-start">Name</th>
+							<th className="py-2 px-4 border-b text-end">Investment Value</th>
+							<th className="py-2 px-4 border-b text-end">Current Value</th>
+							<th className="py-2 px-4 border-b text-end">Profit/Loss</th>
+							<th className="py-2 px-4 border-b text-end">#</th>
 						</tr>
 					</thead>
 					<tbody>
 						{list.map((investment: any, index: number) => (
-							<PortfolioItem data={investment} style="large" key={`item_${index}`} />
+							<PortfolioItem data={investment} style="large" key={`item_${index}`} onSuccess={(newPortfolio: JSONObject) => handleOnUpdate(newPortfolio.investments)}/>
 						))}
 					</tbody>
 				</table>
@@ -137,7 +141,7 @@ const PortfolioList = forwardRef<PortfolioListHandles>((props, ref) => {
 			{/* <!-- Divs for smaller screens --> */}
 			<div className="md:hidden">
 				{list.map((investment: any, index: number) => (
-					<PortfolioItem data={investment} style="small" key={`item_${index}`} />
+					<PortfolioItem data={investment} style="small" key={`item_${index}`} onSuccess={(newPortfolio: JSONObject) => handleOnUpdate(newPortfolio.investments)} />
 				))}
 			</div>
 

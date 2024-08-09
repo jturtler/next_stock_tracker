@@ -16,7 +16,7 @@ export default function LoginForm() {
 	const { setMainPage } = useMainUi();
 	const { user, login, loading, error } = useAuth();
 
-	const [email, setEmail] = useState("test1");
+	const [email, setEmail] = useState("test1@gmail.com");
 	const [password, setPassword] = useState("1234");
 
 
@@ -26,16 +26,12 @@ export default function LoginForm() {
 		}
 	}, [user])
 
-
 	const handleLoginBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 
 		login(email, password);
 	};
 
-	const handleCancelBtn = () => {
-		// setMainPage(Constant.UI_INTRO_PAGE);
-	}
 
 	return (
 		<div className="max-w-md mx-auto p-8">
@@ -86,7 +82,7 @@ export default function LoginForm() {
 			</div>
 
 			<div className="flex justify-between space-x-4">
-				<button className="flex flex-row bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-600" style={{ width: "45%" }} onClick={(e) => handleLoginBtn(e)} >
+				<button className="flex flex-row bg-gold px-4 py-2 rounded hover:bg-yellow-600" style={{ width: "45%" }} onClick={(e) => handleLoginBtn(e)} >
 					<span className="flex-1">Log in</span>
 					{loading && <FaSpinner className="ml-auto h-5 text-gray-50" size={20} />}
 					{/* <FaSpinner className="ml-auto h-5 text-gray-50" size={20} />  */}

@@ -9,7 +9,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
 	const { searchParams } = new URL(request.url);
-	``
+	
 	const userId = searchParams.get("userId");
 	const portfolio = await Portfolio.findOne({ userId });
 
@@ -68,7 +68,11 @@ export async function PUT(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
 	try {
-		const { userId, symbol } = await request.json();
+		const { searchParams } = new URL(request.url);
+		const userId = searchParams.get("userId");
+		const symbol = searchParams.get("symbol");
+
+		// const { userId, symbol } = await request.json();
 
 		const updatedPortfolio  = await Portfolio.findOneAndUpdate(
 			{ userId, 'investments.symbol': symbol },

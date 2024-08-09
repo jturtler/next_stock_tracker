@@ -15,14 +15,14 @@ const config: Config = {
 
         "silver": "#C0C0C0",
         'coral': '#FF7F50',
-        "red": "#FF0000",
+        "strong-red": "#FF0000",
         "rose": "#FF007F",
         "fuchsia": "#FF00FF",
         "turquoise": "#40E0D0",
         "chartreuse": "#7FFF00",
         "mint-green": "#98FF98",
-        "pastel-blue": '#A2C2E4',
-
+        "pastel-blue": "#A2C2E4",
+        "pastel-mint": "#A8E6CF",
 
           // header: "#A2C2E4",
           // primary: "#A2C2E4",
